@@ -14,7 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.post("/login", function (req, res) {
     const notId = () => { res.status(200).json("badID"); }
     const badPass = () => { res.status(200).json("badPass"); }
-    const goodPass = () => { res.status(200).json("passOk"); }
+    const goodPass = () => { res.status(200).json("passFreeLance"); }
+    const goodPass1 = () => { res.status(200).json("passEmployee"); }
 
     var identifiant = req.body.id;
     var password = req.body.pass;
@@ -49,6 +50,9 @@ app.post("/login", function (req, res) {
                 if (result[0].Pass === password) {
                     goodPass();
 
+                }
+                else if (result[0].Pass === "password") {
+                    goodPass1();
                 }
                 else {
                     badPass();

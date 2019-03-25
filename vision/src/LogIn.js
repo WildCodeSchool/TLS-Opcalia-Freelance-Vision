@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Button, Form, Message } from 'semantic-ui-react';
 import Axios from 'axios';
-import Cra from './Cra';
+import FreeLance from './FreeLance';
+import Employee from './Employee'
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
-
 
 class LogIn extends Component {
 
@@ -31,7 +31,6 @@ class LogIn extends Component {
             })
     }
 
-
     checkError = () => {
         if (this.state.res === "badID") {
             return (
@@ -51,8 +50,11 @@ class LogIn extends Component {
                 </Message>
             )
         }
-        else if (this.state.res === "passOk") {
+        else if (this.state.res === "passFreeLance") {
             this.setState({ etat: 1 })
+        }
+        else if (this.state.res === "passEmployee") {
+            this.setState({ etat: 2 })
         }
     }
 
@@ -61,15 +63,23 @@ class LogIn extends Component {
         if (this.state.etat === 1) {
             return (
                 <div>
-                    <Cra />
+                    <FreeLance />
+                </div>
+            )
+        }
+        if (this.state.etat === 2) {
+            return (
+                <div>
+                    <Employee />
                 </div>
             )
         }
 
-
         return (
             <div>
-
+                <div>
+                    <h2><span className="logo1">FREELANCE </span>&nbsp;<span className="logo" > VISION</span></h2>
+                </div>
                 <Form onSubmit={this.handleSubmit} className="FormLogin">
                     <h1 className="title"> Connection </h1>
                     <Form.Field>

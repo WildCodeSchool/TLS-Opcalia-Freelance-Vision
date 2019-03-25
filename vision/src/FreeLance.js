@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import dateFns from 'date-fns';
 import "./Cra.css";
 
+class FreeLance extends Component {
 
-class Calendar extends Component {
-    
     state = {
         currentMonth: new Date(),
         selectedDate: new Date()
-        
     }
-    
+
     renderHeader() {
         const dateFormat = "MMMM YYYY";
         return (
@@ -30,9 +28,7 @@ class Calendar extends Component {
                 </div>
             </div>
         );
-        
     }
-    
 
     renderCells() {
         const { currentMonth, selectedDate } = this.state;
@@ -40,7 +36,7 @@ class Calendar extends Component {
         const monthEnd = dateFns.endOfMonth(monthStart);
         const endDate = monthEnd;
         const dateFormat = "dddd";
-        const dateFormat1 = "D";
+        const dateFormat1 = "DD";
         const rows = [];
         let days = [];
         let day = monthStart;
@@ -48,46 +44,40 @@ class Calendar extends Component {
         let formattedDate1 = "";
 
         while (day <= endDate) {
-          
-          
             for (let i = 0; i < 7; i++) {
-                
-                
+                formattedDate = dateFns.format(day, dateFormat);
+                formattedDate1 = dateFns.format(day, dateFormat1);
+                const cloneDay = day;
+                days.push(
 
-                    formattedDate = dateFns.format(day, dateFormat);
-                    formattedDate1 = dateFns.format(day, dateFormat1);
-                    const cloneDay = day;
-                    days.push(
-                        
-                        <div className={`container  ${!dateFns.isSameMonth(day, monthStart)
-                            ? "disabled"
-                                    : dateFns.isSameDay(day, selectedDate) ? "selected" : ""}`}
-                            key={day}
-                            onClick={() => this.onDateClick(dateFns.parse(cloneDay))}>
-                            <span className="">{formattedDate}&nbsp;</span>
-                            <span className="">{formattedDate1}&nbsp;</span>
-                            <span>Présence </span>
+                    <div
+                        className={`container 
+                        ${!dateFns.isSameMonth(day, monthStart)
+                                ? "disabled"
+                                : dateFns.isSameDay(day, selectedDate) ? "selected" : ""}`}
+                        key={day}
+                        onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
+                    >
+                        <span className="borderDay">{formattedDate1}&nbsp; &nbsp; &nbsp;{formattedDate}</span>
+                        {/* <span className="borderNum">{formattedDate1}</span> */}
+                        <span className="borderPresence">
+                            &nbsp; &nbsp; &nbsp;
+                            Présence
                             0<input type="checkbox"></input>
                             1/2<input type="checkbox"></input>
                             1<input type="checkbox"></input>
-                            <textarea row="10" col="1000" type="text" placeHolder="commentaire"></textarea>
-                            </div>
-                        
-                            
-                    );
-                    
-                    
-                    day = dateFns.addDays(day, 1);
-                    
-                    // console.log("début "+day.getDay());
-                    // console.log("fin "+endDate.getDay());
-                    if (day.getDay() >= endDate.getDay()) {
-                        console.log("je sort");
-                        break;
-                        
-                    }
-                    
-                
+                        </span>
+                        <input className="floatInput" type="text" placeHolder="commentaire"></input>
+                    </div>
+                );
+                day = dateFns.addDays(day, 1);
+                // console.log("début "+day.getDay());
+                // console.log("fin "+endDate.getDay());
+                if (day.getDay() >= endDate.getDay()) {
+                    //console.log("je sort");
+                    break;
+                }
+
             }
             rows.push(
                 <div className="" key={day}>
@@ -98,7 +88,7 @@ class Calendar extends Component {
         }
         return (
             <div>
-                <div className="body">
+                <div className="">
                     {rows}
                     <br />
                 </div>
@@ -127,17 +117,19 @@ class Calendar extends Component {
 
     render() {
         return (
-            <div className="calendar">
-                {this.renderHeader()}
-                
-                <table>
-                <tr>
-                <th>{this.renderCells()}</th>
-                </tr>
-                </table>
+            <div>
+                <h2><span className="logo1">Espace</span> <span className="logo">FreeLance</span></h2>
+                <h4>Prénon : Claire</h4>
+                <h4>Nom : Artigues</h4>
+                <div className="calendar">
+                    {this.renderHeader()}
+                    {this.renderCells()}
+                </div>
+                <h5>Total jours travaillé : 0</h5>
+
             </div>
         )
     }
 }
 
-export default Calendar;
+export default FreeLance;
