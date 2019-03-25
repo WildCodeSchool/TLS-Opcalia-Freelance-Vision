@@ -41,7 +41,7 @@ class LogIn extends Component {
                 </Message>
             )
         }
-        else if (this.state.res === "badPass") {
+        if (this.state.res === "badPass") {
             return (
                 <Message negative>
                     <Message.Header>
@@ -50,12 +50,13 @@ class LogIn extends Component {
                 </Message>
             )
         }
-        else if (this.state.res === "passFreeLance") {
+        if (this.state.res === "passFreeLance") {
             this.setState({ etat: 1 })
         }
         else if (this.state.res === "passEmployee") {
             this.setState({ etat: 2 })
         }
+        return null;
     }
 
     render() {
