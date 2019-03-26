@@ -3,6 +3,9 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mySql = require('mysql');
 
+const jwt = require('jsonwebtoken');
+const expressJwt = require('express-jwt');
+
 const port = 4000;
 
 
@@ -11,12 +14,17 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const jwtSecret = '1234';
+app.use(expressJwt({
+  secret: jwtSecret
+}).unless({
+  path: ['/login', '/signup']
+}));
+
 
 app.post('/login', (req, res) => {
   const notId = () => { res.status(200).json('badID'); };
   const badPass = () => { res.status(200).json('badPass'); };
-  const goodPass = () => { res.status(200).json('passFreeLance'); };
-  const goodPass1 = () => { res.status(200).json('passEmployee'); };
 
   const identifiant = req.body.id;
   const password = req.body.pass;
@@ -47,13 +55,34 @@ app.post('/login', (req, res) => {
           console.log(err1);
         }
         if (result1[0].Pass === password) {
-          goodPass();
-        } else if (result1[0].Pass === 'password') {
-          goodPass1();
+          if (result1[0].type === 'E') {
+            const token = jwt.sign({
+            }, jwtSecret);
+            res.status(200).json({
+              auth: true,
+              token,
+              result: 'Employee'
+            });
+          } else if (result1[0].type === 'F') {
+            const token = jwt.sign({
+            }, jwtSecret);
+            res.status(200).json({
+              auth: true,
+              token,
+              result: 'Freelance'
+            });
+          } else {
+            const token = jwt.sign({
+            }, jwtSecret);
+            res.status(200).json({
+              auth: true,
+              token,
+              result: 'Admin'
+            });
+          }
         } else {
           badPass();
         }
-        console.log(result1[0].Pass);
       });
     } else {
       notId();

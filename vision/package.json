@@ -15,7 +15,9 @@
     "express": "^4.16.4",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-redux": "^6.0.1",
     "react-scripts": "2.1.8",
+    "redux": "^4.0.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.86.0",
     "typescript": "^3.3.4000"
@@ -34,6 +36,7 @@
       "serviceworker": true
     },
     "rules": {
+      "react/prop-types": 0,
       "react/jsx-filename-extension": 0,
       "react/jsx-one-expression-per-line": 0,
       "react/prefer-stateless-function": 0,
