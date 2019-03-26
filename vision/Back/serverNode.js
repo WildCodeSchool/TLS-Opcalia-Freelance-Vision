@@ -18,7 +18,7 @@ const jwtSecret = '1234';
 app.use(expressJwt({
   secret: jwtSecret
 }).unless({
-  path: ['/login', '/signup']
+  path: ['/login']
 }));
 
 
