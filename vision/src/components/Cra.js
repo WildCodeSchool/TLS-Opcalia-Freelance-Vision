@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
 import dateFns from 'date-fns';
-import './Cra.css';
+import './Vision.css';
 
 
 class Cra extends Component {
@@ -15,15 +15,15 @@ class Cra extends Component {
 
   nextMonth = () => {
     this.setState({
-     currentMonth: dateFns.addMonths(this.state.currentMonth, 1)
+      currentMonth: dateFns.addMonths(this.state.currentMonth, 1)
     });
-}
+  }
 
-prevMonth = () => {
+  prevMonth = () => {
     this.setState({
-     currentMonth: dateFns.subMonths(this.state.currentMonth, 1)
+      currentMonth: dateFns.subMonths(this.state.currentMonth, 1)
     })
-}
+  }
 
   renderHeader() {
     const { currentMonth } = this.state;
@@ -66,17 +66,34 @@ prevMonth = () => {
         formattedDate1 = dateFns.format(day, dateFormat1);
         days.push(
           <div
-            className="container"
-          >
+            className="container">
             <span className="borderDay">{formattedDate1}&nbsp; &nbsp; &nbsp;{formattedDate}</span>
             <span className="borderPresence">
               &nbsp; &nbsp; &nbsp;
               Présence
-              0<input type="checkbox" />
-              1/2<input type="checkbox" />
-              1<input type="checkbox" />
+              0<input type="checkbox" id="0" onClick={(event) => {
+                if (event.target.checked === true) {
+                  console.log("is true");
+                  document.getElementById("1").checked = false
+                  document.getElementById("2").checked = false
+                }
+              }} />
+              1/2<input type="checkbox" id="1" onClick={(event) => {
+                if (event.target.checked === true) {
+                  console.log("is true");
+                  document.getElementById("0").checked = false
+                  document.getElementById("2").checked = false
+                }
+              }} />
+              1<input type="checkbox" id="2" onClick={(event) => {
+                if (event.target.checked === true) {
+                  console.log("is true");
+                  document.getElementById("0").checked = false
+                  document.getElementById("1").checked = false
+                }
+              }} />
             </span>
-            <input className="floatInput" type="text" placeHolder="commentaire" />
+            <input className="floatInput" type="text" placeholder="commentaire" />
           </div>
         );
         day = dateFns.addDays(day, 1);
@@ -97,7 +114,6 @@ prevMonth = () => {
           {rows}
           <br />
         </div>
-        <input className="ButtonEnvoye" type="submit" value="soumettre" />
       </div>
     );
   }
@@ -109,6 +125,8 @@ prevMonth = () => {
         <div className="calendar">
           {this.renderHeader()}
           {this.renderCells()}
+          <h3><span className="logo">Nombre de </span><span className="logo1">jour travaillé: </span><br /></h3>
+          <input className="ButtonEnvoye" type="submit" value="soumettre" />
         </div>
       </div>
     );

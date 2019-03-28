@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom';
 import Profile from './Profile';
 import Cra from './Cra';
-import './Cra.css';
+import './Vision.css';
 
 class FreeLance extends Component {
   render() {

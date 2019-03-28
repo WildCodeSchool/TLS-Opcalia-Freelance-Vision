@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import React, { Component } from 'react';
+import './Vision.css';
 
 
 class NoteDeFrais extends Component {
@@ -64,7 +65,8 @@ class NoteDeFrais extends Component {
             <td><input /></td><td><input /></td><td><input /></td><td><input /></td><td><input /></td><td><input /></td><td><input /></td><td><input /></td><td><input /></td><td><input /></td>
           </tr>
         </table>
-        <h5>Total notes de frais : 0</h5>
+        <br />
+        <h3><span className="logo">Total </span><span className="logo1">frais: </span></h3>
       </div>
     );
   }

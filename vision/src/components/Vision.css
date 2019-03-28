@@ -23,7 +23,7 @@ body{
   font-feature-settings: 'liga';
 }
 
-/* GENERAL */
+/*header*/
 
 
 header {
@@ -152,7 +152,7 @@ header #logo .icon {
   border : 2px #3794EB solid;
   border-radius : 5px;
   color : white;
-  margin : auto;
+  margin-top : 30px;
 }
 .floatInput{
 float: right;
@@ -166,12 +166,8 @@ h2{
 h3{
   text-align: center
 }
-.logo1{
-  color : #3794EB;
-}
-.logo{
-  color : #EE9D43;
-}
+/*Note de frais*/
+
 table{
   border: 2px solid;
   
@@ -184,9 +180,27 @@ td input{
 th{
   border: 1px solid ; 
 }
+/*Géneral*/
+
+.logo1{
+  color : #3794EB;
+}
+.logo{
+  color : #EE9D43;
+}
+
 .pagePerso{
   text-align: center;
   font-weight: bolder;
   font-size: 20px;
+}
+/* Profile */
+
+.profile{
+  border : 2px solid #EE9D43;
+  margin-left : 20%;
+  margin-right : 20%;
+  margin-top : 50px;
+  padding : 10px;
 }
 

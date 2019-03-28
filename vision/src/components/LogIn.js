@@ -21,7 +21,9 @@ class LogIn extends Component {
 
   handleChange(event) {
     console.log(event.target.value);
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({
+      [event.target.name]: event.target.value
+    });
   }
 
   handleSubmit(event) {
@@ -31,7 +33,10 @@ class LogIn extends Component {
       .then(res => {
         const { dispatch } = this.props;
         dispatch({ type: 'CREATE_TOKEN', token: res.data.token });
-        dispatch({ type: 'PROFILE', profileType: res.data.result });
+        dispatch({ type: 'PROFILETYPE', profileType: res.data.result });
+        dispatch({
+          type: 'PROFILE', nomProfile: res.data.nomProfile, prenomProfile: res.data.prenomProfile, identifiantProfile: res.data.identifiantProfile, typeProfile: res.data.typeProfile, eMailProfile: res.data.eMailProfile
+        });
         console.log(res.data);
         this.setState({ res: res.data });
         // dispatch action profile loading

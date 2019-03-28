@@ -21,7 +21,6 @@ app.use(expressJwt({
   path: ['/login']
 }));
 
-
 app.post('/login', (req, res) => {
   const notId = () => { res.status(200).json('badID'); };
   const badPass = () => { res.status(200).json('badPass'); };
@@ -55,21 +54,31 @@ app.post('/login', (req, res) => {
           console.log(err1);
         }
         if (result1[0].Pass === password) {
-          if (result1[0].type === 'E') {
+          if (result1[0].Type === 'E') {
             const token = jwt.sign({
             }, jwtSecret);
             res.status(200).json({
               auth: true,
               token,
-              result: 'Employee'
+              result: 'Employee',
+              nomProfile: result1[0].Nom,
+              prenomProfile: result1[0].Prenom,
+              identifiantProfile: result1[0].Identifiant,
+              typeProfile: result1[0].Type,
+              eMailProfile: result1[0].eMail
             });
-          } else if (result1[0].type === 'F') {
+          } else if (result1[0].Type === 'F') {
             const token = jwt.sign({
             }, jwtSecret);
             res.status(200).json({
               auth: true,
               token,
-              result: 'Freelance'
+              result: 'Freelance',
+              nomProfile: result1[0].Nom,
+              prenomProfile: result1[0].Prenom,
+              identifiantProfile: result1[0].Identifiant,
+              typeProfile: result1[0].Type,
+              eMailProfile: result1[0].eMail
             });
           } else {
             const token = jwt.sign({
@@ -79,6 +88,7 @@ app.post('/login', (req, res) => {
               token,
               result: 'Admin'
             });
+            console.log(`testprofile${res.data}`);
           }
         } else {
           badPass();

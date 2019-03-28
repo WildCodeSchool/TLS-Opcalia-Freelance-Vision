@@ -8,7 +8,7 @@ import {
 import NoteDeFrais from './NoteDeFrais';
 import Profile from './Profile';
 import Cra from './Cra';
-import './Cra.css';
+import './Vision.css';
 
 class Employee extends Component {
   render() {

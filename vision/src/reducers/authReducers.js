@@ -4,11 +4,18 @@ export default function (store = {}, action) {
       const { token } = action;
       return { ...store, token };
     }
-    case 'PROFILE': {
-      // const { admin, employee, freelance } = action;
+    case 'PROFILETYPE': {
       const { profileType } = action;
       return {
         ...store, profileType
+      };
+    }
+    case 'PROFILE': {
+      const {
+        nomProfile, prenomProfile, identifiantProfile, typeProfile, eMailProfile
+      } = action;
+      return {
+        ...store, nomProfile, prenomProfile, identifiantProfile, typeProfile, eMailProfile
       };
     }
     default:
