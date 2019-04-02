@@ -1,0 +1,70 @@
+
+
+.FormLogin{
+  margin : auto;
+  margin-top :7%;
+  width : 85%;
+  padding : 5%;
+  background-image:url('http://hdbackgroundspic.com/wp-content/uploads/2017/12/Cool-digital-wallpaper.jpg');
+  background-size: cover;
+  box-shadow : 6px 6px 6px
+}
+.title{
+  text-align: center;
+} 
+.navbar{
+  
+  width: 90%;
+  font-size: 1.6em;
+}
+.col-sm{
+ text-align: center;
+}
+.content{
+  margin-top: 10%;
+}
+.profil{
+  margin-top: 5%;
+  margin-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border-bottom: blue solid 2px;
+  padding: 2%;
+  box-shadow: 1px 3px 1px;
+}
+.name{
+ display: flex;
+ justify-content: center;
+ font-size: 1.7em;
+}
+.emailandType{
+  font-size: 1.5em;
+}
+.add{
+  display: flex;
+  justify-content: center;
+}
+.inputMail{
+  width: 100%;
+}
+.buttonAdd{
+  width: 100%;
+}
+.inline{
+  display: flex;
+  font-size: 1.3em;
+
+}
+.FormatProfile{
+
+  margin: 25%;
+  
+background-color: whitesmoke;
+  
+
+}
+.FormatProfile h2{
+  border: none;
+
+}
