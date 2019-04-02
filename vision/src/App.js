@@ -14,8 +14,10 @@ class App extends Component {
         {(profileType === 'Employee') && (<Employee />)}
         {(profileType === 'Freelance') && (<Freelance />)}
         {(!profileType) && (<LogIn />)}
+        <form>
+          <button type="submit" className="ButtonEnvoye">Déconnection</button>
+        </form>
       </div>
-
     );
   }
 }
