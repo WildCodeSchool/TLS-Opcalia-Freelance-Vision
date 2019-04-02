@@ -1,0 +1,14 @@
+
+
+.FormLogin{
+  margin : auto;
+  margin-top :7%;
+  width : 85%;
+  padding : 5%;
+  background-image:url('http://hdbackgroundspic.com/wp-content/uploads/2017/12/Cool-digital-wallpaper.jpg');
+  background-size: cover;
+  box-shadow : 6px 6px 6px
+}
+.title{
+  text-align: center;
+}
