@@ -7,9 +7,8 @@ class UserList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
       userAdd: '',
-      type: 'Feelance',
+      type: 'Freelance',
       id: '',
     };
     this.handleChange = this.handleChange.bind(this);
@@ -35,6 +34,7 @@ class UserList extends Component {
                 + `<p>${userAdd}</p>`
                 + '<h3>Type: </h3>'
                 + `<p>${type}</p>`,
+
       showCloseButton: true,
       showCancelButton: true,
       focusConfirm: false,

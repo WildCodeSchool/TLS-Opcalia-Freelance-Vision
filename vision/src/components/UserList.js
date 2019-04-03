@@ -13,12 +13,12 @@ class UserList extends Component {
   }
 
   componentWillMount() {
-    const t = this;
+    // const t = this;
     axios.get('http://localhost:4000/getusers')
       .then((response) => {
         // handle success
-        console.log(response.data);
-        t.setState({ data: response.data });
+        console.log('response.data', response.data);
+        this.setState({ data: response.data });
       });
   }
 

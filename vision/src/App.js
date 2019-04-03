@@ -14,6 +14,7 @@ class App extends Component {
         {(profileType === 'Employee') && (<Employee />)}
         {(profileType === 'Freelance') && (<Freelance />)}
         {(!profileType) && (<LogIn />)}
+        <br />
         <form>
           <button type="submit" className="ButtonEnvoye">Déconnection</button>
         </form>
@@ -22,7 +23,8 @@ class App extends Component {
   }
 }
 const mapStateToProps = (store) => ({
-  token: store.auth.token,
+  tokenUser: store.auth.tokenUser,
+  tokenAdmin: store.auth.tokenAdmin,
   profileType: store.auth.profileType
 });
 export default connect(mapStateToProps)(App);
