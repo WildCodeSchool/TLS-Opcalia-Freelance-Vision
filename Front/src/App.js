@@ -23,7 +23,8 @@ class App extends Component {
   }
 }
 const mapStateToProps = (store) => ({
-  token: store.auth.token,
+  tokenUser: store.auth.tokenUser,
+  tokenAdmin: store.auth.tokenAdmin,
   profileType: store.auth.profileType
 });
 export default connect(mapStateToProps)(App);
