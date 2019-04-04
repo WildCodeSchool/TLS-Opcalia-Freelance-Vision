@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mySql = require('mysql');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
+const connect = require('./configMysql');
 
 const port = 4000;
 
@@ -30,76 +31,54 @@ app.post('/adduser', (req, res) => {
     type = 'F';
   }
 
-  const connect = mySql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'Serval7*',
-    database: 'FreelanceVision'
-  });
-
   connect.connect((err) => {
     if (err) {
       console.log('err');
     }
   });
 
-  const sql1 = `INSERT INTO salariés (Identifiant, eMail, type) VALUES (${mySql.escape(req.body.id)}, ${mySql.escape(req.body.userToAdd)},${mySql.escape(type)} )`;
-  connect.query(sql1, (err1, result1) => {
-    if (err1) {
-      console.log(err1);
+  const addUser = `INSERT INTO salariés (Identifiant, eMail, type) VALUES (${mySql.escape(req.body.id)}, ${mySql.escape(req.body.userToAdd)},${mySql.escape(type)} )`;
+  connect.query(addUser, (err, resultAddUser) => {
+    if (err) {
+      console.log(err);
     }
-    console.log(result1);
+  
     // SELECT sur salariés en utilisant result1.insertId
     // attention le select renvoie un tableau et tu peux recup tableau[0]
-    res.status(200).json(result1);
+    res.status(200).json(resultAddUser);
   });
 });
 
 app.post('/removeuser', (req, res) => {
   console.log('remove', req.body.userToremove);
 
-  const connect = mySql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'Serval7*',
-    database: 'FreelanceVision'
-  });
   connect.connect((err) => {
     if (err) {
       console.log('err');
     }
   });
-
-  const sql1 = `DELETE FROM salariés WHERE Identifiant = ${mySql.escape(req.body.userToremove)} `;
-  connect.query(sql1, (err1, result1) => {
-    if (err1) {
-      console.log(err1);
+  const deleteUser = `DELETE FROM salariés WHERE Identifiant = ${mySql.escape(req.body.userToremove)} `;
+  connect.query(deleteUser, (err, resultDeleteUser) => {
+    if (err) {
+      console.log(err);
     }
-    console.log(result1);
-    res.status(200).json(result1);
+    res.status(200).json(resultDeleteUser);
   });
 });
 
 
 app.get('/getusers', (req, res) => {
-  console.log('reveived request');
-
-  const connect = mySql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'Serval7*',
-    database: 'FreelanceVision'
-  });
   connect.connect((err) => {
     if (err) {
-      console.log('err');
+      console.log(err);
     }
   });
-
-  const sql1 = 'SELECT * FROM salariés WHERE 1';
-  connect.query(sql1, (err1, result1) => {
-    console.log(result1);
-    const allUsers = result1;
+  const getUsers = 'SELECT * FROM salariés WHERE 1';
+  connect.query(getUsers, (err, resultGetUsers) => {
+    if (err) {
+      console.log(err);
+    }
+    const allUsers = resultGetUsers;
     res.send(allUsers);
   });
 });
@@ -113,57 +92,50 @@ app.post('/login', (req, res) => {
   console.log('/login');
   console.log(req.body);
 
-  const connect = mySql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'Serval7*',
-    database: 'FreelanceVision'
-  });
+
   connect.connect((err) => {
     if (err) {
       console.log('err');
     }
   });
 
-  const sql = `SELECT COUNT(*) FROM salariés WHERE identifiant = ${mySql.escape(identifiant)}`;
-  connect.query(sql, (err, result) => {
-    console.log(result);
-    const idPresent = JSON.stringify(result).indexOf(1);
-    console.log(idPresent);
-    if (idPresent > 0) {
-      const sql1 = `SELECT * FROM salariés WHERE identifiant = ${mySql.escape(identifiant)}`;
-      connect.query(sql1, (err1, result1) => {
-        if (err1) {
-          console.log(err1);
+  const checkUserIsPresent = `SELECT COUNT(*) FROM salariés WHERE identifiant = ${mySql.escape(identifiant)}`;
+  connect.query(checkUserIsPresent, (errCheck, resultCheckUser) => {
+    if (errCheck) {
+      console.log(errCheck);
+    }
+    const index = JSON.stringify(resultCheckUser).indexOf(1);
+    if (index > 0) {
+      const selectUser = `SELECT * FROM salariés WHERE identifiant = ${mySql.escape(identifiant)}`;
+      connect.query(selectUser, (err, resultSelectUser) => {
+        if (err) {
+          console.log(err);
         }
-        if (result1[0].Pass === password) {
-          if (result1[0].Type === 'E') {
+        if (resultSelectUser[0].Pass === password) {
+          if (resultSelectUser[0].userType === 'Employee') {
             console.log('renvoie de employee');
             const token = jwt.sign({
             }, jwtSecret);
             res.status(200).json({
               auth: true,
               token,
-              result: 'Employee'
+              result: resultSelectUser[0].userType
             });
-          } else if (result1[0].Type === 'F') {
-            console.log('renvoie de freelance');
-
+          } else if (resultSelectUser[0].userType === 'Freelance') {
             const token = jwt.sign({
             }, jwtSecret);
             res.status(200).json({
               auth: true,
               token,
-              result: 'Freelance'
+              result: resultSelectUser[0].userType
             });
           } else {
-            console.log('renvoie de admin');
             const token = jwt.sign({
             }, jwtSecret);
             res.status(200).json({
               auth: true,
               token,
-              result: 'Admin'
+              result: resultSelectUser[0].userType
             });
           }
         } else {
