@@ -34,7 +34,7 @@ class DisplayOneUser extends Component {
         <p className="inline"><h2>Nom: &nbsp;</h2> {nom}</p>
         <p className="inline"><h2>Prénom: &nbsp;</h2> {prenom}</p>
         <p className="inline"><h2>Type: &nbsp;</h2>{userType} </p>
-        {(userType !== 'Admin') && (<input userType="button" value="Supprimer" onClick={() => this.removeUser(id)} />)}
+        {(userType !== 'Admin') && (<input type="button" value="Supprimer" onClick={() => this.removeUser(id)} />)}
         <br />
         <br />
 

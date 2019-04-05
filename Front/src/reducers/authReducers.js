@@ -1,8 +1,12 @@
 export default function (store = {}, action) {
   switch (action.type) {
-    case 'CREATE TOKEN': {
-      const { token } = action;
-      return { ...store, token };
+    case 'CREATE TOKEN USER': {
+      const { tokenUser } = action;
+      return { ...store, tokenUser };
+    }
+    case 'CREATE TOKEN ADMIN': {
+      const { tokenAdmin } = action;
+      return { ...store, tokenAdmin };
     }
     case 'PROFILETYPE': {
       const { profileType } = action;

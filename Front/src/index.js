@@ -3,9 +3,6 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {
-  Route, BrowserRouter as Router
-} from 'react-router-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import allReducers from './reducers';
@@ -15,16 +12,10 @@ const store = createStore(
   // eslint-disable-next-line no-underscore-dangle
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
-const Deconection = (
-  <Router>
-    <div>
-      <Route exact path="/" component={App} />
-    </div>
-  </Router>
-);
+
 ReactDOM.render(
   <Provider store={store}>
-    {Deconection}
+    <App />
   </Provider>,
   document.getElementById('root')
 );

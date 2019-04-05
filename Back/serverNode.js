@@ -4,11 +4,7 @@ const bodyParser = require('body-parser');
 const mySql = require('mysql');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
-<<<<<<< HEAD
 const connect = require('./configMysql');
-=======
-// const bcrypt = require('bcrypt');
->>>>>>> origin/serverToken
 
 const port = 4000;
 
@@ -37,9 +33,9 @@ app.post('/adduser', (req, res) => {
   console.log(req.body);
   let type = '';
   if (req.body.typeToAdd === 'Employé') {
-    type = 'E';
+    type = 'Employee';
   } else {
-    type = 'F';
+    type = 'Freelance';
   }
 
   connect.connect((err) => {
@@ -48,7 +44,7 @@ app.post('/adduser', (req, res) => {
     }
   });
 
-  const addUser = `INSERT INTO salariés (Identifiant, eMail, type) VALUES (${mySql.escape(req.body.id)}, ${mySql.escape(req.body.userToAdd)},${mySql.escape(type)} )`;
+  const addUser = `INSERT INTO salariés (Identifiant, eMail, userType) VALUES (${mySql.escape(req.body.id)}, ${mySql.escape(req.body.userToAdd)},${mySql.escape(type)} )`;
   connect.query(addUser, (err, resultAddUser) => {
     if (err) {
       console.log(err);
@@ -79,16 +75,6 @@ app.post('/removeuser', (req, res) => {
 
 
 app.get('/getusers', (req, res) => {
-<<<<<<< HEAD
-=======
-  console.log('reveived request');
-  const connect = mySql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'Serval7*',
-    database: 'FreelanceVision'
-  });
->>>>>>> origin/serverToken
   connect.connect((err) => {
     if (err) {
       console.log(err);
@@ -106,24 +92,18 @@ app.get('/getusers', (req, res) => {
 
 app.post('/updateProfile', (req, res) => {
   console.log('req.body.carteGrise', req.body);
-  const connect = mySql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'Serval7*',
-    database: 'FreelanceVision'
-  });
   connect.connect((err) => {
     if (err) {
       console.log('err');
     }
   });
-  const sql1 = `UPDATE salariés SET carteGrise =${mySql.escape(req.body.addCarteGrise)} WHERE eMAil = ${mySql.escape(req.body.eMail)}`;
-  connect.query(sql1, (err1, result1) => {
+  const changeUserInfo = `UPDATE salariés SET carteGrise =${mySql.escape(req.body.addCarteGrise)} WHERE eMAil = ${mySql.escape(req.body.eMail)}`;
+  connect.query(changeUserInfo, (err1, resultChange) => {
     if (err1) {
       console.log(err1);
     }
-    console.log(result1);
-    res.status(200).json(result1);
+    console.log(resultChange);
+    res.status(200).json(resultChange);
   });
 });
 
@@ -162,58 +142,34 @@ app.post('/login', (req, res) => {
             }, jwtSecretUser);
             res.status(200).json({
               auth: true,
-<<<<<<< HEAD
-              token,
-              result: resultSelectUser[0].userType
+              tokenUser,
+              result: resultSelectUser[0].userType,
+              nomProfile: resultSelectUser[0].Nom,
+              prenomProfile: resultSelectUser[0].Prenom,
+              identifiantProfile: resultSelectUser[0].Identifiant,
+              typeProfile: resultSelectUser[0].userType,
+              eMailProfile: resultSelectUser[0].eMail
             });
           } else if (resultSelectUser[0].userType === 'Freelance') {
-            const token = jwt.sign({
-            }, jwtSecret);
-            res.status(200).json({
-              auth: true,
-              token,
-              result: resultSelectUser[0].userType
-            });
-          } else {
-            const token = jwt.sign({
-            }, jwtSecret);
-            res.status(200).json({
-              auth: true,
-              token,
-              result: resultSelectUser[0].userType
-=======
-              tokenUser,
-              result: 'Employee',
-              nomProfile: result1[0].Nom,
-              prenomProfile: result1[0].Prenom,
-              identifiantProfile: result1[0].Identifiant,
-              typeProfile: result1[0].Type,
-              eMailProfile: result1[0].eMail
-            });
-          } else if (result1[0].Type === 'F') {
-            console.log('renvoie de freelance');
-
             const tokenUser = jwt.sign({
             }, jwtSecretUser);
             res.status(200).json({
               auth: true,
               tokenUser,
-              result: 'Freelance',
-              nomProfile: result1[0].Nom,
-              prenomProfile: result1[0].Prenom,
-              identifiantProfile: result1[0].Identifiant,
-              typeProfile: result1[0].Type,
-              eMailProfile: result1[0].eMail
+              result: resultSelectUser[0].userType,
+              nomProfile: resultSelectUser[0].Nom,
+              prenomProfile: resultSelectUser[0].Prenom,
+              identifiantProfile: resultSelectUser[0].Identifiant,
+              typeProfile: resultSelectUser[0].userType,
+              eMailProfile: resultSelectUser[0].eMail
             });
           } else {
-            console.log('renvoie de admin');
             const tokenAdmin = jwt.sign({
             }, jwtSecretAdmin);
             res.status(200).json({
               auth: true,
               tokenAdmin,
-              result: 'Admin'
->>>>>>> origin/serverToken
+              result: resultSelectUser[0].userType
             });
           }
         } else {
