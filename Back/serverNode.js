@@ -4,7 +4,11 @@ const bodyParser = require('body-parser');
 const mySql = require('mysql');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
+<<<<<<< HEAD
 const connect = require('./configMysql');
+=======
+// const bcrypt = require('bcrypt');
+>>>>>>> origin/serverToken
 
 const port = 4000;
 
@@ -14,11 +18,18 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const jwtSecret = '1234';
+const jwtSecretAdmin = '1234';
 app.use(expressJwt({
-  secret: jwtSecret
+  secret: jwtSecretAdmin
 }).unless({
-  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser']
+  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile']
+}));
+
+const jwtSecretUser = '1234';
+app.use(expressJwt({
+  secret: jwtSecretUser
+}).unless({
+  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile']
 }));
 
 app.post('/adduser', (req, res) => {
@@ -68,6 +79,16 @@ app.post('/removeuser', (req, res) => {
 
 
 app.get('/getusers', (req, res) => {
+<<<<<<< HEAD
+=======
+  console.log('reveived request');
+  const connect = mySql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'Serval7*',
+    database: 'FreelanceVision'
+  });
+>>>>>>> origin/serverToken
   connect.connect((err) => {
     if (err) {
       console.log(err);
@@ -80,6 +101,29 @@ app.get('/getusers', (req, res) => {
     }
     const allUsers = resultGetUsers;
     res.send(allUsers);
+  });
+});
+
+app.post('/updateProfile', (req, res) => {
+  console.log('req.body.carteGrise', req.body);
+  const connect = mySql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'Serval7*',
+    database: 'FreelanceVision'
+  });
+  connect.connect((err) => {
+    if (err) {
+      console.log('err');
+    }
+  });
+  const sql1 = `UPDATE salariés SET carteGrise =${mySql.escape(req.body.addCarteGrise)} WHERE eMAil = ${mySql.escape(req.body.eMail)}`;
+  connect.query(sql1, (err1, result1) => {
+    if (err1) {
+      console.log(err1);
+    }
+    console.log(result1);
+    res.status(200).json(result1);
   });
 });
 
@@ -114,10 +158,11 @@ app.post('/login', (req, res) => {
         if (resultSelectUser[0].Pass === password) {
           if (resultSelectUser[0].userType === 'Employee') {
             console.log('renvoie de employee');
-            const token = jwt.sign({
-            }, jwtSecret);
+            const tokenUser = jwt.sign({
+            }, jwtSecretUser);
             res.status(200).json({
               auth: true,
+<<<<<<< HEAD
               token,
               result: resultSelectUser[0].userType
             });
@@ -136,6 +181,39 @@ app.post('/login', (req, res) => {
               auth: true,
               token,
               result: resultSelectUser[0].userType
+=======
+              tokenUser,
+              result: 'Employee',
+              nomProfile: result1[0].Nom,
+              prenomProfile: result1[0].Prenom,
+              identifiantProfile: result1[0].Identifiant,
+              typeProfile: result1[0].Type,
+              eMailProfile: result1[0].eMail
+            });
+          } else if (result1[0].Type === 'F') {
+            console.log('renvoie de freelance');
+
+            const tokenUser = jwt.sign({
+            }, jwtSecretUser);
+            res.status(200).json({
+              auth: true,
+              tokenUser,
+              result: 'Freelance',
+              nomProfile: result1[0].Nom,
+              prenomProfile: result1[0].Prenom,
+              identifiantProfile: result1[0].Identifiant,
+              typeProfile: result1[0].Type,
+              eMailProfile: result1[0].eMail
+            });
+          } else {
+            console.log('renvoie de admin');
+            const tokenAdmin = jwt.sign({
+            }, jwtSecretAdmin);
+            res.status(200).json({
+              auth: true,
+              tokenAdmin,
+              result: 'Admin'
+>>>>>>> origin/serverToken
             });
           }
         } else {
