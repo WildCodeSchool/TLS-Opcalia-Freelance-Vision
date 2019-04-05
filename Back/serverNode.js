@@ -42,7 +42,7 @@ app.post('/adduser', (req, res) => {
     if (err) {
       console.log(err);
     }
-  
+
     // SELECT sur salariés en utilisant result1.insertId
     // attention le select renvoie un tableau et tu peux recup tableau[0]
     res.status(200).json(resultAddUser);
