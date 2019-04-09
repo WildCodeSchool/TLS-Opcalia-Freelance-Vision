@@ -152,6 +152,9 @@ header #logo .icon {
   color : white;
   margin-top : 30px;
 }
+.buttonDivAdmin{
+  background-color: none;
+}
 
 h2{
   text-align: center;

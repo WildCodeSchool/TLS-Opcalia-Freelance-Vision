@@ -1,4 +1,7 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
+import { Button, Icon } from 'semantic-ui-react';
 import UserList from './UserList';
 import AddUser from './AddUser';
 
@@ -32,8 +35,19 @@ class GestUser extends Component {
         <h2 className="logo">Gestion utilisateur </h2>
         <section>
           <div>
-            <button type="button" className="ButtonEnvoye" onClick={() => this.displayUserPage('Ajout')}>Ajouter un utilisateur </button>&nbsp;&nbsp;
-            <button type="button" className="ButtonEnvoye" onClick={() => this.displayUserPage('Liste')}>Liste utilisateurs </button>
+
+            <Button icon labelPosition="left" onClick={() => this.displayUserPage('Ajout')}>
+              Ajouter utilisateur
+              <Icon name="plus circle" />
+            </Button>
+
+
+            <Button icon labelPosition="left" onClick={() => this.displayUserPage('Liste')}>
+              Liste utilisateurs
+              <Icon name="list" />
+            </Button>
+
+            {/* <button type="button" className="ButtonEnvoye" onClick={() => this.displayUserPage('Liste')}>Liste utilisateurs </button> */}
           </div>
 
           {(actualised === 'liste') && (<UserList />)}

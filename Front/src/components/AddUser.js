@@ -46,7 +46,7 @@ class UserList extends Component {
       cancelButtonAriaLabel: 'Thumbs down',
     }).then((result) => {
       if (result.value) {
-        console.log('je usis la');
+        // console.log('je suis la');
         axios.post('http://localhost:4000/adduser', { userToAdd: userAdd, typeToAdd: type, id })
           .then((response) => {
             console.log('response.data', response.data);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Table } from 'semantic-ui-react';
+import { Table, Button, Icon } from 'semantic-ui-react';
 
 
 class DisplayOneUser extends Component {
@@ -40,7 +40,14 @@ class DisplayOneUser extends Component {
         <Table.Cell>{nom}</Table.Cell>
         <Table.Cell>{prenom}</Table.Cell>
         <Table.Cell>{userType}</Table.Cell>
-        <Table.Cell> {(userType !== 'Admin') && (<input type="button" value="Supprimer" onClick={() => this.removeUser(id)} />)}</Table.Cell>
+        <Table.Cell> {(userType !== 'Admin')
+          && (
+            <Button icon onClick={() => this.removeUser(id)}>
+              <Icon name="x" />
+            </Button>
+          )
+        }
+        </Table.Cell>
       </Table.Row>
     );
   }
