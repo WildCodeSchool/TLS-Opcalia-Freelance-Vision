@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { Table } from 'semantic-ui-react';
 import DisplayOneUser from './DisplayOneUser';
 
 
 class UserList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data: [],
-    };
+    // this.state = {
+
+    // };
     this.AddProfileItem = this.AddProfileItem.bind(this);
   }
 
@@ -44,7 +45,23 @@ class UserList extends Component {
   render() {
     return (
       <div className="FormatProfile">
-        {this.AddProfileItem()}
+        <Table celled>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Identifiant</Table.HeaderCell>
+              <Table.HeaderCell>Nom</Table.HeaderCell>
+              <Table.HeaderCell>Prénom</Table.HeaderCell>
+              <Table.HeaderCell>Type utilisateur</Table.HeaderCell>
+              <Table.HeaderCell>Supprimer utilisateur</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            {this.AddProfileItem()}
+          </Table.Body>
+        </Table>
+
+
       </div>
     );
   }
