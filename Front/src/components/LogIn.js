@@ -43,7 +43,8 @@ class LogIn extends Component {
           prenomProfile: res.data.prenomProfile,
           identifiantProfile: res.data.identifiantProfile,
           typeProfile: res.data.typeProfile,
-          eMailProfile: res.data.eMailProfile
+          eMailProfile: res.data.eMailProfile,
+          passwordProfile: res.data.passwordProfile
         });
         console.log(res.data);
         this.setState({ res: res.data });

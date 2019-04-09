@@ -12,7 +12,7 @@ class GestMessage extends Component {
     return (
       <div>
 
-        <h1>Gestion messages</h1>
+        <h2 className="logo">Gestion messages</h2>
 
       </div>
     );

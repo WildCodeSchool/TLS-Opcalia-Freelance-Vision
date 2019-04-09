@@ -15,7 +15,7 @@ class FreeLance extends Component {
         <BrowserRouter>
           <div>
             <div className="pagePerso"><NavLink exact to="/" activeClassName="current"><span className="logo1">CRA</span></NavLink></div>
-            <div className="pagePerso"><NavLink to="/Mon-profile" activeClassName="current"><span className="logo">MON PROFILE</span></NavLink></div>
+            <div className="pagePerso"><NavLink to="/Mon-profile" activeClassName="current"><span className="logo">MON PROFIL</span></NavLink></div>
             <Switch>
               <Route exact path="/" component={Cra} />
               <Route path="/Mon-profile" component={Profile} />
