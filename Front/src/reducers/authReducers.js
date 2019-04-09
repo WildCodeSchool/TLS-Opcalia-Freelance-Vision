@@ -1,4 +1,4 @@
-export default function (store = {}, action) {
+export default function (store = { userTable: [] }, action) {
   switch (action.type) {
     case 'CREATE TOKEN USER': {
       const { tokenUser } = action;
@@ -7,6 +7,10 @@ export default function (store = {}, action) {
     case 'CREATE TOKEN ADMIN': {
       const { tokenAdmin } = action;
       return { ...store, tokenAdmin };
+    }
+    case 'USER LIST': {
+      const { userTable } = action;
+      return { ...store, userTable };
     }
     case 'PROFILETYPE': {
       const { profileType } = action;
