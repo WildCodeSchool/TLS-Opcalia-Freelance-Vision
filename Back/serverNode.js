@@ -119,11 +119,17 @@ app.post('/updateProfile', (req, res) => {
     password: 'Serval7*',
     database: 'FreelanceVision'
   });
+
   connect.connect((err) => {
     if (err) {
       console.log('err');
     }
   });
+  // SET Nom =${mySql.escape(req.body.changeNom)},
+  // SET Prenom =${mySql.escape(req.body.changePrenom)},
+  // SET Identifiant =${mySql.escape(req.body.changeIdentifiant)},
+  // SET eMail =${mySql.escape(req.body.changeEmail)},
+  
   const sql1 = `UPDATE salariés SET carteGrise =${mySql.escape(req.body.addCarteGrise)} WHERE eMAil = ${mySql.escape(req.body.eMail)}`;
   connect.query(sql1, (err1, result1) => {
     if (err1) {
@@ -179,7 +185,8 @@ app.post('/login', (req, res) => {
               prenomProfile: result1[0].Prenom,
               identifiantProfile: result1[0].Identifiant,
               typeProfile: result1[0].Type,
-              eMailProfile: result1[0].eMail
+              eMailProfile: result1[0].eMail,
+              passwordProfile: result1[0].Pass
             });
           } else if (result1[0].Type === 'F') {
             console.log('renvoie de freelance');
@@ -194,7 +201,8 @@ app.post('/login', (req, res) => {
               prenomProfile: result1[0].Prenom,
               identifiantProfile: result1[0].Identifiant,
               typeProfile: result1[0].Type,
-              eMailProfile: result1[0].eMail
+              eMailProfile: result1[0].eMail,
+              passwordProfile: result1[0].Pass
             });
           } else {
             console.log('renvoie de admin');

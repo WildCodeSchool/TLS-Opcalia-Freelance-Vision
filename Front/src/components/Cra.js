@@ -9,15 +9,16 @@ class Cra extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      somme: 0,
       currentMonth: new Date(),
       days: this.createArrayDays(new Date()),
-      // totalRate: 0
     };
 
     this.nextMonth = this.nextMonth.bind(this);
     this.prevMonth = this.prevMonth.bind(this);
     this.createArrayDays = this.createArrayDays.bind(this);
     this.inputComment = this.inputComment.bind(this);
+    this.totalRate = this.totalRate.bind(this);
   }
 
   nextMonth() {
@@ -52,21 +53,21 @@ class Cra extends Component {
     const daysCopy = [...days];
     daysCopy[index].rate = event.target.value;
     this.setState({ days: daysCopy });
+    this.totalRate(daysCopy);
     console.log('choiceRate', event.target.value, index);
     console.log(daysCopy[index].rate);
+    console.log('days', days);
   }
 
-  // addRate() {
-  //   const totalRate = 0;
-  //   let addRate = 0;
-  //   const { days } = this.state;
-  //   for (let i = 0; i < days.lenght; i += 1) {
-  //     addRate[i] += 1;
-  //     addRate = totalRate;
-  //   }
-  //   console.log('totalRate', totalRate);
-  //   return totalRate;
-  // }
+  totalRate(days) {
+    let somme = 0;
+    console.log('somme', somme);
+    // eslint-disable-next-line no-return-assign
+    days.map((item) => (
+      somme += Number(item.rate)
+    ));
+    this.setState({ somme });
+  }
 
   // eslint-disable-next-line class-methods-use-this
   createArrayDays(currentMonth) {
@@ -109,7 +110,7 @@ class Cra extends Component {
                     <input
                       type="radio"
                       id="zero"
-                      name="rate"
+                      name={`rate${index}`}
                       value="0"
                       onChange={event => this.choiceRate(index, event)}
                     />
@@ -119,7 +120,7 @@ class Cra extends Component {
                     <input
                       type="radio"
                       id="demi"
-                      name="rate"
+                      name={`rate${index}`}
                       value="0.5"
                       onChange={event => this.choiceRate(index, event)}
                     />
@@ -129,7 +130,7 @@ class Cra extends Component {
                     <input
                       type="radio"
                       id="un"
-                      name="rate"
+                      name={`rate${index}`}
                       value="1"
                       onChange={event => this.choiceRate(index, event)}
                     />
@@ -171,13 +172,14 @@ class Cra extends Component {
   }
 
   render() {
+    const { somme } = this.state;
     return (
       <div>
         <br /><br />
         <div className="calendar">
           {this.renderHeader()}
           {this.renderCell()}
-          <h3><span className="logo">Nombre de </span><span className="logo1">jour travaillé: <p className="JourTravaillé">{}</p></span><br /></h3>
+          <h3><span className="logo">Nombre de </span><span className="logo1">jours travaillés: <span className="logo">{somme}</span></span><br /></h3>
           <input className="ButtonEnvoye" type="submit" value="soumettre" />
         </div>
       </div>

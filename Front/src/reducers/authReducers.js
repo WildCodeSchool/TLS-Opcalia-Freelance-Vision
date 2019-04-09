@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export default function (store = {}, action) {
   switch (action.type) {
     case 'CREATE TOKEN USER': {
@@ -16,10 +17,10 @@ export default function (store = {}, action) {
     }
     case 'PROFILE': {
       const {
-        nomProfile, prenomProfile, identifiantProfile, typeProfile, eMailProfile
+        nomProfile, prenomProfile, identifiantProfile, typeProfile, eMailProfile, passwordProfile
       } = action;
       return {
-        ...store, nomProfile, prenomProfile, identifiantProfile, typeProfile, eMailProfile
+        ...store, nomProfile, prenomProfile, identifiantProfile, typeProfile, eMailProfile, passwordProfile
       };
     }
     default:

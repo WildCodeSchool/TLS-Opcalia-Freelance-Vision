@@ -14,13 +14,13 @@ class Employee extends Component {
   render() {
     return (
       <div>
-        <h2><span className="logo1">Espace</span> <span className="logo">Employee</span></h2>
+        <h2><span className="logo1">Espace</span> <span className="logo">Employé</span></h2>
         <br />
         <BrowserRouter>
           <div>
             <div className="pagePerso"><NavLink exact to="/" className="link" activeClassName="current"><span className="logo1">CRA</span></NavLink></div>
             <div className="pagePerso"><NavLink to="/Ma-note-de-frais" className="link" activeClassName="current"><span className="logo">NOTE DE FRAIS</span></NavLink></div>
-            <div className="pagePerso"><NavLink to="/Mon-profile" className="link" activeClassName="current"><span className="logo1">MON PROFILE</span></NavLink></div>
+            <div className="pagePerso"><NavLink to="/Mon-profile" className="link" activeClassName="current"><span className="logo1">MON PROFIL</span></NavLink></div>
             <Switch>
               <Route exact path="/" component={Cra} />
               <Route path="/Ma-note-de-frais" component={NoteDeFrais} />

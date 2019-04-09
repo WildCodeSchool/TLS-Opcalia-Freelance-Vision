@@ -36,7 +36,13 @@ class LogIn extends Component {
         dispatch({ type: 'CREATE_TOKEN_ADMIN', tokenAdmin: res.data.tokenAdmin });
         dispatch({ type: 'PROFILETYPE', profileType: res.data.result });
         dispatch({
-          type: 'PROFILE', nomProfile: res.data.nomProfile, prenomProfile: res.data.prenomProfile, identifiantProfile: res.data.identifiantProfile, typeProfile: res.data.typeProfile, eMailProfile: res.data.eMailProfile
+          type: 'PROFILE',
+          nomProfile: res.data.nomProfile,
+          prenomProfile: res.data.prenomProfile,
+          identifiantProfile: res.data.identifiantProfile,
+          typeProfile: res.data.typeProfile,
+          eMailProfile: res.data.eMailProfile,
+          passwordProfile: res.data.passwordProfile
         });
         console.log(res.data);
         this.setState({ res: res.data });

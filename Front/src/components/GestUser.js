@@ -29,9 +29,12 @@ class GestUser extends Component {
 
     return (
       <div>
-        <h1>Gestion users</h1>
+        <h2 className="logo">Gestion utilisateur </h2>
         <section>
-          <div><button type="button" onClick={() => this.displayUserPage('Ajout')}>Ajouter un utilisateur</button><button type="button" onClick={() => this.displayUserPage('Liste')}>Liste utilisateurs</button></div>
+          <div>
+            <button type="button" className="ButtonEnvoye" onClick={() => this.displayUserPage('Ajout')}>Ajouter un utilisateur </button>&nbsp;&nbsp;
+            <button type="button" className="ButtonEnvoye" onClick={() => this.displayUserPage('Liste')}>Liste utilisateurs </button>
+          </div>
 
           {(actualised === 'liste') && (<UserList />)}
           {(actualised === 'add') && (<AddUser />)}
