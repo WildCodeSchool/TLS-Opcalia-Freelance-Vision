@@ -46,13 +46,13 @@ class GestUser extends Component {
               Liste utilisateurs
               <Icon name="list" />
             </Button>
-
-            {/* <button type="button" className="ButtonEnvoye" onClick={() => this.displayUserPage('Liste')}>Liste utilisateurs </button> */}
+            {/* <button type="button" className="ButtonEnvoye" 
+          onClick={() => this.displayUserPage('Liste')}>Liste utilisateurs </button> */}
           </div>
 
           {(actualised === 'liste') && (<UserList />)}
           {(actualised === 'add') && (<AddUser />)}
-          <hr />
+          <br />
           <div />
         </section>
       </div>

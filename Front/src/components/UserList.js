@@ -45,6 +45,7 @@ class UserList extends Component {
   render() {
     return (
       <div className="FormatProfile">
+        <br />
         <Table celled>
           <Table.Header>
             <Table.Row>
@@ -52,6 +53,7 @@ class UserList extends Component {
               <Table.HeaderCell>Nom</Table.HeaderCell>
               <Table.HeaderCell>Prénom</Table.HeaderCell>
               <Table.HeaderCell>Type utilisateur</Table.HeaderCell>
+              <Table.HeaderCell>Carte grise</Table.HeaderCell>
               <Table.HeaderCell>Supprimer utilisateur</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
