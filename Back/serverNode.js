@@ -91,13 +91,15 @@ app.get('/getusers', (req, res) => {
 });
 
 app.post('/updateProfile', (req, res) => {
-  console.log('req.body.carteGrise', req.body);
+  console.log('req.body.GreyCard', req.body);
   connect.connect((err) => {
     if (err) {
       console.log('err');
     }
+
   });
-  const changeUserInfo = `UPDATE salariés SET carteGrise =${mySql.escape(req.body.addCarteGrise)} WHERE eMAil = ${mySql.escape(req.body.eMail)}`;
+  const changeUserInfo = `UPDATE salariés SET carteGrise =${mySql.escape(req.body.addGreyCard)} WHERE eMAil =${mySql.escape(req.body.eMail)}`;
+
   connect.query(changeUserInfo, (err1, resultChange) => {
     if (err1) {
       console.log(err1);
