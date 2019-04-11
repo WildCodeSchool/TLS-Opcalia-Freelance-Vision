@@ -1,8 +1,9 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { DateInput } from 'semantic-ui-calendar-react';
 import './Vision.css';
-import { Table } from 'semantic-ui-react';
+import { Table, Button } from 'semantic-ui-react';
 // import { Form } from 'semantic-ui-react';
 
 
@@ -11,23 +12,11 @@ class NoteDeFrais extends Component {
     super(props);
     this.state = {
       date: '',
-      costs: this.addEmptyLine([])
-
+      costs: []
     };
     this.inputComment = this.inputComment.bind(this);
     // this.createArrayCosts = this.createArrayCosts.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
-  }
-
-  handleDateChange(event, { name, value }) {
-    // eslint-disable-next-line react/destructuring-assignment
-    // eslint-disable-next-line no-prototype-builtins
-    const hasOwnProperty = this.state.hasOwnProperty(name);
-    const newCosts = this.addEmptyLine(this.state.costs);
-
-    if (hasOwnProperty) {
-      this.setState({ [name]: value, costs: newCosts });
-    }
   }
 
   inputComment(index, event) {
@@ -39,16 +28,29 @@ class NoteDeFrais extends Component {
     console.log('inputComment', event.target.value, index);
   }
 
+  // eslint-disable-next-line no-unused-vars
+  handleDateChange(event, { name, value }, index) {
+    const { costs } = this.state;
+    const copyTable = [...costs];
+    console.log('before', copyTable[index]);
+    copyTable[index].value = value;
+    console.log('after', copyTable[index]);
+    this.setState({ costs: copyTable });
+  }
+
   // eslint-disable-next-line class-methods-use-this
   addEmptyLine(costs) {
     costs.push({
       Date, Client: '', Description: '', KM: '', Forfait: '', Hôtel: '', Repas: '', Essence: '', Divers: ''
     });
-    return costs;
+    console.log(costs);
+    this.setState({ costs });
   }
 
   render() {
-    const { costs, date } = this.state;
+    const { costs } = this.state;
+    console.log(costs);
+
     return (
       <div>
         <Table celled fixed singleLine>
@@ -70,17 +72,21 @@ class NoteDeFrais extends Component {
             <Table.Body>
               <Table.Row>
                 <Table.Cell> <DateInput
-                  name="date"
+                  name={json.date}
                   placeholder="Date"
-                  value={date}
+                  value={json.value}
                   iconPosition="left"
                   className="style_input_date"
-                  onChange={this.handleDateChange}
+                  onChange={(event, { name, value }) => this.handleDateChange(
+                    event,
+                    { name, value },
+                    index
+                  )}
                 />
                 </Table.Cell>
                 <Table.Cell><input type="text" className="style_input" name="Client" value={json.Client} onChange={event => this.inputComment(index, event)} /></Table.Cell>
                 <Table.Cell><input type="text" className="style_input" name="Description" value={json.Description} onChange={event => this.inputComment(index, event)} /></Table.Cell>
-                <Table.Cell><input type="text" className="style_input" name="KM" value={json.KM} onChange={event => this.inputComment(index, event)} /></Table.Cell>
+                <Table.Cell><input type="text" disabled="disabled" className="style_input" name="KM" value={json.KM} onChange={event => this.inputComment(index, event)} /></Table.Cell>
                 <Table.Cell><input type="text" className="style_input" name="Forfait" value={json.Forfait} onChange={event => this.inputComment(index, event)} /></Table.Cell>
                 <Table.Cell><input type="text" className="style_input" name="Hôtel" value={json.Hôtel} onChange={event => this.inputComment(index, event)} /></Table.Cell>
                 <Table.Cell><input type="text" className="style_input" name="Repas" value={json.Repas} onChange={event => this.inputComment(index, event)} /></Table.Cell>
@@ -89,9 +95,11 @@ class NoteDeFrais extends Component {
                 <Table.Cell><input type="text" className="style_input" /></Table.Cell>
               </Table.Row>
             </Table.Body>
+
           ))
-        }
+          }
         </Table>
+        <Button onClick={() => this.addEmptyLine(costs)} icon="plus circle" />
         <input className="ButtonEnvoye" type="submit" value="soumettre" />
       </div>
     );
