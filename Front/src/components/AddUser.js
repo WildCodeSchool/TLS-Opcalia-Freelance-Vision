@@ -9,7 +9,7 @@ class UserList extends Component {
     this.state = {
 
       userAdd: '',
-      type: 'Feelance',
+      type: 'Freelance',
       id: '',
     };
     this.handleChange = this.handleChange.bind(this);
