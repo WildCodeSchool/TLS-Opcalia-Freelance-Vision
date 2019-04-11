@@ -23,7 +23,13 @@ export default function (store = { userTable: [] }, action) {
         nomProfile, prenomProfile, identifiantProfile, typeProfile, eMailProfile, passwordProfile
       } = action;
       return {
-        ...store, nomProfile, prenomProfile, identifiantProfile, typeProfile, eMailProfile, passwordProfile
+        ...store,
+        nomProfile,
+        prenomProfile,
+        identifiantProfile,
+        typeProfile,
+        eMailProfile,
+        passwordProfile
       };
     }
     default:
