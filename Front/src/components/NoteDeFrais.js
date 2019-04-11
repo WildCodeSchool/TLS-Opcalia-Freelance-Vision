@@ -77,7 +77,11 @@ class NoteDeFrais extends Component {
                   value={json.value}
                   iconPosition="left"
                   className="style_input_date"
-                  onChange={(event, { name, value }) => this.handleDateChange(event, { name, value }, index)}
+                  onChange={(event, { name, value }) => this.handleDateChange(
+                    event,
+                    { name, value },
+                    index
+                  )}
                 />
                 </Table.Cell>
                 <Table.Cell><input type="text" className="style_input" name="Client" value={json.Client} onChange={event => this.inputComment(index, event)} /></Table.Cell>
