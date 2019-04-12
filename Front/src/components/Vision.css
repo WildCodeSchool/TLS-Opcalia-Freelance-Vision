@@ -94,11 +94,11 @@ header #logo .icon {
   font-weight: 500;
   font-size: 140%;
   padding: 1.5em 0;
-  border : 1px solid #EE9D43 ;
-  box-shadow: 2px 2px 10px 2px #3794EB;
-  color : #3794EB;
+  border : 1px solid rgb(238, 162, 118);
+  box-shadow: 2px 2px 10px 2px teal;
+  color : teal;
   -webkit-text-stroke: 1px;
-  -webkit-text-stroke-color:#EE9D43;
+  -webkit-text-stroke-color:rgb(238, 162, 118);
   width : 50%;
   height : 80px;
   margin : auto;
@@ -120,7 +120,7 @@ header #logo .icon {
 .calendar .header .icon:first-of-type {
   margin-left: 1em;
   font-size : 30px;
-  box-shadow: 2px 2px 10px 2px #3794EB;
+  box-shadow: 2px 2px 10px 2px teal;
   border-radius: 50%;
   margin-bottom: 10px; 
 }
@@ -128,7 +128,7 @@ header #logo .icon {
 .calendar .header .icon:last-of-type {
   margin-right: 1em;
   font-size : 30px;
-  box-shadow: 2px 2px 10px 2px #3794EB;
+  box-shadow: 2px 2px 10px 2px teal;
   border-radius: 50%;
   margin-bottom: 10px;
   margin-left: 25px
@@ -145,8 +145,8 @@ header #logo .icon {
 }
 
 .ButtonEnvoye{
-  background-color : #EE9D43;
-  border : 2px #3794EB solid;
+  background-color : rgb(238, 162, 118);
+  border : 2px teal;
   border-radius : 5px;
   box-shadow : 6px 6px 6px;
   color : white;
@@ -158,7 +158,7 @@ header #logo .icon {
 
 h2{
   text-align: center;
-  border  : 2px solid #3794EB;
+  border  : 2px solid teal;
 }
 
 h3{
@@ -167,8 +167,8 @@ h3{
 
 table{
   text-align: left;
-  border : 2px #3794EB solid;
-  background-image :  linear-gradient(45deg, #EE9D43 0%,white 40%,rgb(233, 175, 109) );
+  border : 2px teal solid;
+  background-image :  linear-gradient(45deg, rgb(223, 156, 130) 0%,white 40%,rgb(238, 162, 118) );
 }
 
 td input.inputCra{
@@ -177,7 +177,7 @@ td input.inputCra{
 }
 
 th{
-  border-right : 2px #3794EB solid; 
+  border-right : 2px teal solid; 
   width : 10%;
   text-align : left;
   padding : none
@@ -190,11 +190,11 @@ td{
 /*Géneral*/
 
 .logo1{
-  color : #3794EB;
+  color : teal;
 }
 
 .logo{
-  color : #EE9D43;
+  color : rgb(238, 162, 118);
 }
 
 .pagePerso{
@@ -206,7 +206,7 @@ td{
 /* Profile */
 
 .profile{
-  border : 2px solid #EE9D43;
+  border : 2px solid rgb(238, 162, 118);
   margin-left : 20%;
   margin-right : 20%;
   margin-top : 50px;
@@ -238,12 +238,12 @@ td input{
   height : 150px;
   margin : 3.5% auto;
   border-radius : 16px;
-  border: 4px solid #3794EB;
+  border: 4px solid teal;
   padding-top : 15px
 }
 .ButtonEnvoye1{
-  background-color : #EE9D43;
-  border : 2px #3794EB solid;
+  background-color : rgb(238, 162, 118);
+  border : 2px teal solid;
   border-radius : 5px;
   box-shadow : 6px 6px 6px;
   color : white;

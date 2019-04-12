@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable max-len */
 import React, { Component } from 'react';
+import 'semantic-ui-react';
 import { connect } from 'react-redux';
 import './Vision.css';
 import 'react-dropzone-uploader/dist/styles.css';

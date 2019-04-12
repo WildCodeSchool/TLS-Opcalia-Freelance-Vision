@@ -99,7 +99,7 @@ class NoteDeFrais extends Component {
           ))
           }
         </Table>
-        <Button onClick={() => this.addEmptyLine(costs)} icon="plus circle" />
+        <Button color="teal" onClick={() => this.addEmptyLine(costs)} icon="plus circle" />
         <input className="ButtonEnvoye" type="submit" value="soumettre" />
       </div>
     );
