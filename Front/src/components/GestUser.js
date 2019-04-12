@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
-import { Button, Icon } from 'semantic-ui-react';
+import { Button, Icon, } from 'semantic-ui-react';
 import UserList from './UserList';
 import AddUser from './AddUser';
 
@@ -36,13 +36,13 @@ class GestUser extends Component {
         <section>
           <div>
 
-            <Button icon labelPosition="left" onClick={() => this.displayUserPage('Ajout')}>
+            <Button color="teal" icon labelPosition="left" onClick={() => this.displayUserPage('Ajout')}>
               Ajouter utilisateur
               <Icon name="plus circle" />
             </Button>
 
 
-            <Button icon labelPosition="left" onClick={() => this.displayUserPage('Liste')}>
+            <Button color="teal" icon labelPosition="left" onClick={() => this.displayUserPage('Liste')}>
               Liste utilisateurs
               <Icon name="list" />
             </Button>
