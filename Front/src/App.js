@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Button } from 'semantic-ui-react';
 import LogIn from './components/LogIn';
 import Admin from './components/Admin';
 import Freelance from './components/FreeLance';
@@ -16,7 +17,7 @@ class App extends Component {
         {(!profileType) && (<LogIn />)}
         <br />
         <form>
-          <button type="submit" className="ButtonEnvoye">Déconnection</button>
+          <Button color="teal" icon="power off" type="submit" />
         </form>
       </div>
     );

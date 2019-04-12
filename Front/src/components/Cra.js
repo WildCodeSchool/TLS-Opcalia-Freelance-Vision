@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
+import 'semantic-ui-react';
 import dateFns from 'date-fns';
 import './Vision.css';
 
