@@ -43,7 +43,8 @@ class Employee extends Component {
       <div>
           
         <Segment color= 'teal'inverted>
-        <Menu  inverted pointing secondary>
+        <Menu 
+         inverted pointing secondary>
           <Menu.Item name='Cra' active={activeItem === 'Cra'} onClick={this.handleItemClick} />
           <Menu.Item
             name='Profil'
