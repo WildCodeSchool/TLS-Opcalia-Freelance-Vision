@@ -95,7 +95,7 @@ class Cra extends Component {
       <div>
         <div>
           {days.map((json, index) => (
-            <div>
+            <div key={index}>
               <table className="container">
                 <th>
                   <td className="borderDay">{json.dayNumber}</td>

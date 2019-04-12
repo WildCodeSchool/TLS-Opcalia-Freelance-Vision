@@ -71,18 +71,19 @@ class NoteDeFrais extends Component {
           {costs.map((json, index) => (
             <Table.Body>
               <Table.Row>
-                <Table.Cell> <DateInput
-                  name={json.date}
-                  placeholder="Date"
-                  value={json.value}
-                  iconPosition="left"
-                  className="style_input_date"
-                  onChange={(event, { name, value }) => this.handleDateChange(
-                    event,
-                    { name, value },
-                    index
-                  )}
-                />
+                <Table.Cell>
+                  <DateInput
+                    name={json.date}
+                    placeholder="Date"
+                    value={json.value}
+                    iconPosition="left"
+                    className="style_input_date"
+                    onChange={(event, { name, value }) => this.handleDateChange(
+                      event,
+                      { name, value },
+                      index
+                    )}
+                  />
                 </Table.Cell>
                 <Table.Cell><input type="text" className="style_input" name="Client" value={json.Client} onChange={event => this.inputComment(index, event)} /></Table.Cell>
                 <Table.Cell><input type="text" className="style_input" name="Description" value={json.Description} onChange={event => this.inputComment(index, event)} /></Table.Cell>
