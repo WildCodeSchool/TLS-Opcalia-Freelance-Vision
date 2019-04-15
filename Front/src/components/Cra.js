@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
+import { Table } from 'semantic-ui-react';
 import dateFns from 'date-fns';
 import './Vision.css';
 
@@ -96,50 +97,54 @@ class Cra extends Component {
         <div>
           {days.map((json, index) => (
             <div key={index}>
-              <table className="container">
-                <th>
-                  <td className="borderDay">{json.dayNumber}</td>
-                </th>
-                <th>
-                  <td className="borderPresence">{json.dayName}</td>
-                </th>
-                <th>
-                  <span> Présence : </span>
-                  <span>
-                    <span> 0: </span>
-                    <input
-                      type="radio"
-                      id="zero"
-                      name={`rate${index}`}
-                      value="0"
-                      onChange={event => this.choiceRate(index, event)}
-                    />
-                  </span>
-                  <span>
-                    <span> 1/2: </span>
-                    <input
-                      type="radio"
-                      id="demi"
-                      name={`rate${index}`}
-                      value="0.5"
-                      onChange={event => this.choiceRate(index, event)}
-                    />
-                  </span>
-                  <span>
-                    <span> 1: </span>
-                    <input
-                      type="radio"
-                      id="un"
-                      name={`rate${index}`}
-                      value="1"
-                      onChange={event => this.choiceRate(index, event)}
-                    />
-                  </span>
-                </th>
-                <th>
-                  <td><input className="inputCra" value={json.comment} onChange={event => this.inputComment(index, event)} /></td>
-                </th>
-              </table>
+              <Table.Body className="container">
+                <Table.Row>
+                  <th>
+                    <Table.Cell className="borderDay">{json.dayNumber}</Table.Cell>
+                  </th>
+                  <th>
+                    <Table.Cell className="borderPresence">{json.dayName}</Table.Cell>
+                  </th>
+                  <th>
+                    <tr>
+                      <span> Présence : </span>
+                      <span>
+                        <span> 0: </span>
+                        <input
+                          type="radio"
+                          id="zero"
+                          name={`rate${index}`}
+                          value="0"
+                          onChange={event => this.choiceRate(index, event)}
+                        />
+                      </span>
+                      <span>
+                        <span> 1/2: </span>
+                        <input
+                          type="radio"
+                          id="demi"
+                          name={`rate${index}`}
+                          value="0.5"
+                          onChange={event => this.choiceRate(index, event)}
+                        />
+                      </span>
+                      <span>
+                        <span> 1: </span>
+                        <input
+                          type="radio"
+                          id="un"
+                          name={`rate${index}`}
+                          value="1"
+                          onChange={event => this.choiceRate(index, event)}
+                        />
+                      </span>
+                    </tr>
+                  </th>
+                  <th>
+                    <Table.Cell><input className="inputCra" value={json.comment} onChange={event => this.inputComment(index, event)} /></Table.Cell>
+                  </th>
+                </Table.Row>
+              </Table.Body>
             </div>
           ))
           }
