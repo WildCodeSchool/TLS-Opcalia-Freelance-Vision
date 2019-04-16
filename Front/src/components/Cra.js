@@ -1,7 +1,7 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
-// import { DateInput } from 'semantic-ui-calendar-react';
 import { Table, Icon, Button } from 'semantic-ui-react';
 import dateFns from 'date-fns';
 import './Vision.css';
@@ -95,61 +95,62 @@ class Cra extends Component {
     const { days } = this.state;
     return (
       <div>
-        <div>
-          {days.map((json, index) => (
-            <div key={index}>
-              <Table.Body className="container">
-                <Table.Row>
-                  <th>
-                    <Table.Cell className="borderDay">{json.dayNumber}</Table.Cell>
-                  </th>
-                  <th>
-                    <Table.Cell className="borderPresence">{json.dayName}</Table.Cell>
-                  </th>
-                  <th>
-                    <tr>
-                      <span> Présence : </span>
-                      <span>
-                        <span> 0: </span>
-                        <input
-                          type="radio"
-                          id="zero"
-                          name={`rate${index}`}
-                          value="0"
-                          onChange={event => this.choiceRate(index, event)}
-                        />
-                      </span>
-                      <span>
-                        <span> 1/2: </span>
-                        <input
-                          type="radio"
-                          id="demi"
-                          name={`rate${index}`}
-                          value="0.5"
-                          onChange={event => this.choiceRate(index, event)}
-                        />
-                      </span>
-                      <span>
-                        <span> 1: </span>
-                        <input
-                          type="radio"
-                          id="un"
-                          name={`rate${index}`}
-                          value="1"
-                          onChange={event => this.choiceRate(index, event)}
-                        />
-                      </span>
-                    </tr>
-                  </th>
-                  <th>
-                    <Table.Cell><input className="inputCra" value={json.comment} onChange={event => this.inputComment(index, event)} /></Table.Cell>
-                  </th>
-                </Table.Row>
-              </Table.Body>
-            </div>
-          ))
-          }
-          <br />
+        <div className="scrollBoxCRA">
+          <Table celled>
+            <Table.Body>
+              {days.map((json, index) => (
+                <div key={index}>
+                  <Table.Row>
+                    <th>
+                      <Table.Cell><Button color="teal" onClick="" icon="plus circle" />{json.dayNumber}</Table.Cell>
+                    </th>
+                    <th>
+                      <Table.Cell>{json.dayName}</Table.Cell>
+                    </th>
+                    <th>
+                      <tr>
+                        <span> Présence : </span>
+                        <span>
+                          <span> 0: </span>
+                          <input
+                            type="radio"
+                            id="zero"
+                            name={`rate${index}`}
+                            value="0"
+                            onChange={event => this.choiceRate(index, event)}
+                          />
+                        </span>
+                        <span>
+                          <span> 1/2: </span>
+                          <input
+                            type="radio"
+                            id="demi"
+                            name={`rate${index}`}
+                            value="0.5"
+                            onChange={event => this.choiceRate(index, event)}
+                          />
+                        </span>
+                        <span>
+                          <span> 1: </span>
+                          <input
+                            type="radio"
+                            id="un"
+                            name={`rate${index}`}
+                            value="1"
+                            onChange={event => this.choiceRate(index, event)}
+                          />
+                        </span>
+                      </tr>
+                    </th>
+                    <th>
+                      <Table.Cell><input className="inputCra" value={json.comment} onChange={event => this.inputComment(index, event)} /></Table.Cell>
+                    </th>
+                  </Table.Row>
+                </div>
+              ))
+              }
+            </Table.Body>
+          </Table>
         </div>
       </div>
     );
@@ -167,13 +168,6 @@ class Cra extends Component {
         </div>
         <div className="col col-center">
           <span>
-            {/* <DateInput
-              name="Date"
-              placeholder="Date"
-              value="Date"
-              iconPosition="left"
-              className=""
-            />  */}
             {dateFns.format(currentMonth, dateFormat)}
           </span>
         </div>
@@ -188,7 +182,6 @@ class Cra extends Component {
     const { somme } = this.state;
     return (
       <div>
-        <br /><br />
         <div className="calendar">
           {this.renderHeader()}
           {this.renderCell()}

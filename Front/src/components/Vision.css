@@ -133,22 +133,11 @@ h2{
   border  : 2px solid teal;
 }
 
-td input.inputCra{
-  text-align: left;
-  width: 150%
-}
-
 th{
-  border-right : 2px teal solid; 
   width : 10%;
-  text-align : left;
-  padding : none
+  border: 1px solid teal;
+  text-align: center;
 }
-
-td{
-  text-align: left
-}
-
 /* Profile */
 
 .profile{
@@ -161,11 +150,15 @@ td{
 /* Note de frais */
 
 td input{
- text-align: left;
- width: 99%;
- border : none
+  text-align: left;
+  width: 200%;
+  border : none
 }
 
+td input.inputCra{
+  text-align: left;
+  width: 150%
+}
 .style_input_date{
   border:none;
   width:99px;
@@ -192,6 +185,20 @@ td input{
   margin-left : 65%;
   font-size : 2em;
 }
-.container{
-  border: 4px solid teal;
+.scrollBoxCRA{
+  -webKit-flex : 1 1 auto;
+ overflow-y : auto;
+ width : 100%;
+ height: 25em
+}
+.scrollBoxNDF{
+  -webKit-flex : 1 1 auto;
+ overflow-y : auto;
+ width : 100%;
+ height: 30em
+}
+.buttonAdd{
+  display : inline-flex;
+  width : 10px;
+  height : 10px
 }
