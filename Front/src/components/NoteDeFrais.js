@@ -3,8 +3,7 @@
 import React, { Component } from 'react';
 import { DateInput } from 'semantic-ui-calendar-react';
 import './Vision.css';
-import { Table, Button } from 'semantic-ui-react';
-// import { Form } from 'semantic-ui-react';
+import { Table, Button, Icon } from 'semantic-ui-react';
 
 
 class NoteDeFrais extends Component {
@@ -100,8 +99,10 @@ class NoteDeFrais extends Component {
           ))
           }
         </Table>
-        <Button onClick={() => this.addEmptyLine(costs)} icon="plus circle" />
-        <input className="ButtonEnvoye" type="submit" value="soumettre" />
+        <Button color="teal" onClick={() => this.addEmptyLine(costs)} icon="plus circle" />
+        <br />
+        <br />
+        <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Soumettre</Button>
       </div>
     );
   }

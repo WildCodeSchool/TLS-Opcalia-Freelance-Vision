@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Vision.css';
+import { Button, Icon } from 'semantic-ui-react';
 import 'react-dropzone-uploader/dist/styles.css';
 import Axios from 'axios';
 // import Dropzone from 'react-dropzone-uploader';
@@ -134,7 +135,7 @@ class Profile extends Component {
             // }}
             /> */}
             <div>
-              <button className="ButtonEnvoye" type="submit">Envoyer</button>
+              <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Envoyer</Button>
             </div>
           </form>
           <img src={Miniature} alt="" />

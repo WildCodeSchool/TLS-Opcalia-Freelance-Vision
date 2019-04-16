@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
-import { Table } from 'semantic-ui-react';
+// import { DateInput } from 'semantic-ui-calendar-react';
+import { Table, Icon, Button } from 'semantic-ui-react';
 import dateFns from 'date-fns';
 import './Vision.css';
 
@@ -166,6 +167,13 @@ class Cra extends Component {
         </div>
         <div className="col col-center">
           <span>
+            {/* <DateInput
+              name="Date"
+              placeholder="Date"
+              value="Date"
+              iconPosition="left"
+              className=""
+            />  */}
             {dateFns.format(currentMonth, dateFormat)}
           </span>
         </div>
@@ -185,7 +193,7 @@ class Cra extends Component {
           {this.renderHeader()}
           {this.renderCell()}
           <h3><span className="logo">Nombre de </span><span className="logo1">jours travaillés: <span className="logo">{somme}</span></span><br /></h3>
-          <input className="ButtonEnvoye" type="submit" value="soumettre" />
+          <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Envoyer</Button>
         </div>
       </div>
     );
