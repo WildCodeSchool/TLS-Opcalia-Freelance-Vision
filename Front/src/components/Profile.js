@@ -44,7 +44,7 @@ class Profile extends Component {
     } = this.state;
     console.log(eMail);
 
-    Axios.post('http://localhost:4000/updateProfile', {
+    Axios.post('http://5.135.190.93:4000/updateProfile', {
       eMail,
       addGreyCard: GreyCard,
       changeIdentifiant: identifiant,

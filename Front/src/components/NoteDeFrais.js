@@ -40,7 +40,7 @@ class NoteDeFrais extends Component {
   // eslint-disable-next-line class-methods-use-this
   addEmptyLine(costs) {
     costs.push({
-      Date, Client: '', Description: '', KM: '', Forfait: '', Hôtel: '', Repas: '', Essence: '', Divers: ''
+      Date, Client: '', Description: '', KM: '', Forfait: '', Hôtel: '', Repas: '', Divers: ''
     });
     console.log(costs);
     this.setState({ costs });
@@ -60,10 +60,9 @@ class NoteDeFrais extends Component {
                 <Table.HeaderCell>Client</Table.HeaderCell>
                 <Table.HeaderCell>Description</Table.HeaderCell>
                 <Table.HeaderCell>KM</Table.HeaderCell>
-                <Table.HeaderCell>Forfait (Cciaux)</Table.HeaderCell>
+                <Table.HeaderCell>Forfait URSSAF</Table.HeaderCell>
                 <Table.HeaderCell>Hôtel</Table.HeaderCell>
                 <Table.HeaderCell>Repas</Table.HeaderCell>
-                <Table.HeaderCell>Essence</Table.HeaderCell>
                 <Table.HeaderCell>Divers(taxi/péage/tél)</Table.HeaderCell>
                 <Table.HeaderCell>Total Frais</Table.HeaderCell>
               </Table.Row>
@@ -91,7 +90,6 @@ class NoteDeFrais extends Component {
                   <Table.Cell><input type="text" className="style_input" name="Forfait" value={json.Forfait} onChange={event => this.inputComment(index, event)} /></Table.Cell>
                   <Table.Cell><input type="text" className="style_input" name="Hôtel" value={json.Hôtel} onChange={event => this.inputComment(index, event)} /></Table.Cell>
                   <Table.Cell><input type="text" className="style_input" name="Repas" value={json.Repas} onChange={event => this.inputComment(index, event)} /></Table.Cell>
-                  <Table.Cell><input type="text" className="style_input" name="Essence" value={json.Essence} onChange={event => this.inputComment(index, event)} /></Table.Cell>
                   <Table.Cell><input type="text" className="style_input" name="Divers" value={json.Divers} onChange={event => this.inputComment(index, event)} /></Table.Cell>
                   <Table.Cell><input type="text" className="style_input" /></Table.Cell>
                 </Table.Row>
