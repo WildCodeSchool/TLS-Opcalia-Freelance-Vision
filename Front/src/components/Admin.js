@@ -10,7 +10,7 @@ class Admin extends Component {
   constructor() {
     super();
     this.state = ({
-      activeItem: 'User',
+      activeItem: 'Utilisateur',
     });
   }
 
@@ -21,14 +21,14 @@ class Admin extends Component {
     return (
       <div>    
             <Menu color="teal" tabular>
-              <Menu.Item name="User" active={activeItem === 'User'} onClick={this.handleItemClick} />
+              <Menu.Item name="Utilisateur" active={activeItem === 'Utilisateur'} onClick={this.handleItemClick} />
               <Menu.Item name="Message" active={activeItem === 'Message'} onClick={this.handleItemClick} />
             </Menu>
         <br />
         <br />
 
         <div className="content">
-          {(activeItem === "User") && (<GestUser />)}
+          {(activeItem === "Utilisateur") && (<GestUser />)}
           {(activeItem === "Message") && (<GestMessage />)}
         </div>
 
