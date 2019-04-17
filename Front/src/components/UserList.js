@@ -18,7 +18,7 @@ class UserList extends Component {
   componentWillMount() {
     const t = this;
     const { dispatch } = this.props;
-    axios.get('http://localhost:4000/getusers')
+    axios.get('http://51.254.207.207:4000/getusers')
       .then((response) => {
         // handle success
         console.log('JE SUIS UN LOG');

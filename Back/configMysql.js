@@ -3,9 +3,9 @@ const mySql = require('mysql');
 
 const connect = mySql.createConnection({
   host: 'localhost',
-  user: 'root',
-  password: 'Serval7*',
-  database: 'FreelanceVision'
+  user: 'phpmyadmin',
+  password: 'azerty1234',
+  database: 'freelanceVision'
 });
 
 module.exports = connect;
