@@ -9,7 +9,6 @@ class GestUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
       actualised: 'liste',
     };
     this.displayUserPage = this.displayUserPage.bind(this);
@@ -24,12 +23,7 @@ class GestUser extends Component {
   }
 
   render() {
-    const { data, actualised } = this.state;
-    // console.log(this.displayUsersName);
-    const renderItem = data;
-    console.log(renderItem);
-
-
+    const { actualised } = this.state;
     return (
       <div>
         <h2 className="logo">Gestion utilisateur </h2>
