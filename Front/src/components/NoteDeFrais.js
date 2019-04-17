@@ -3,8 +3,7 @@
 import React, { Component } from 'react';
 import { DateInput } from 'semantic-ui-calendar-react';
 import './Vision.css';
-import { Table, Button } from 'semantic-ui-react';
-// import { Form } from 'semantic-ui-react';
+import { Table, Button, Icon } from 'semantic-ui-react';
 
 
 class NoteDeFrais extends Component {
@@ -53,54 +52,60 @@ class NoteDeFrais extends Component {
 
     return (
       <div>
-        <Table celled fixed singleLine>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Date</Table.HeaderCell>
-              <Table.HeaderCell>Client</Table.HeaderCell>
-              <Table.HeaderCell>Description</Table.HeaderCell>
-              <Table.HeaderCell>KM</Table.HeaderCell>
-              <Table.HeaderCell>Forfait (Cciaux)</Table.HeaderCell>
-              <Table.HeaderCell>Hôtel</Table.HeaderCell>
-              <Table.HeaderCell>Repas</Table.HeaderCell>
-              <Table.HeaderCell>Essence</Table.HeaderCell>
-              <Table.HeaderCell>Divers(taxi/péage/tél)</Table.HeaderCell>
-              <Table.HeaderCell>Total Frais</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          {costs.map((json, index) => (
-            <Table.Body>
+        <div className="scrollBoxNDF">
+          <Table celled fixed singleLine>
+            <Table.Header>
               <Table.Row>
-                <Table.Cell> <DateInput
-                  name={json.date}
-                  placeholder="Date"
-                  value={json.value}
-                  iconPosition="left"
-                  className="style_input_date"
-                  onChange={(event, { name, value }) => this.handleDateChange(
-                    event,
-                    { name, value },
-                    index
-                  )}
-                />
-                </Table.Cell>
-                <Table.Cell><input type="text" className="style_input" name="Client" value={json.Client} onChange={event => this.inputComment(index, event)} /></Table.Cell>
-                <Table.Cell><input type="text" className="style_input" name="Description" value={json.Description} onChange={event => this.inputComment(index, event)} /></Table.Cell>
-                <Table.Cell><input type="text" disabled="disabled" className="style_input" name="KM" value={json.KM} onChange={event => this.inputComment(index, event)} /></Table.Cell>
-                <Table.Cell><input type="text" className="style_input" name="Forfait" value={json.Forfait} onChange={event => this.inputComment(index, event)} /></Table.Cell>
-                <Table.Cell><input type="text" className="style_input" name="Hôtel" value={json.Hôtel} onChange={event => this.inputComment(index, event)} /></Table.Cell>
-                <Table.Cell><input type="text" className="style_input" name="Repas" value={json.Repas} onChange={event => this.inputComment(index, event)} /></Table.Cell>
-                <Table.Cell><input type="text" className="style_input" name="Essence" value={json.Essence} onChange={event => this.inputComment(index, event)} /></Table.Cell>
-                <Table.Cell><input type="text" className="style_input" name="Divers" value={json.Divers} onChange={event => this.inputComment(index, event)} /></Table.Cell>
-                <Table.Cell><input type="text" className="style_input" /></Table.Cell>
+                <Table.HeaderCell>Date</Table.HeaderCell>
+                <Table.HeaderCell>Client</Table.HeaderCell>
+                <Table.HeaderCell>Description</Table.HeaderCell>
+                <Table.HeaderCell>KM</Table.HeaderCell>
+                <Table.HeaderCell>Forfait (Cciaux)</Table.HeaderCell>
+                <Table.HeaderCell>Hôtel</Table.HeaderCell>
+                <Table.HeaderCell>Repas</Table.HeaderCell>
+                <Table.HeaderCell>Essence</Table.HeaderCell>
+                <Table.HeaderCell>Divers(taxi/péage/tél)</Table.HeaderCell>
+                <Table.HeaderCell>Total Frais</Table.HeaderCell>
               </Table.Row>
-            </Table.Body>
-
-          ))
-          }
-        </Table>
+            </Table.Header>
+            {costs.map((json, index) => (
+              <Table.Body>
+                <Table.Row>
+                  <Table.Cell>
+                    <DateInput
+                      name={json.date}
+                      placeholder="Date"
+                      value={json.value}
+                      iconPosition="left"
+                      className="style_input_date"
+                      onChange={(event, { name, value }) => this.handleDateChange(
+                        event,
+                        { name, value },
+                        index
+                      )}
+                    />
+                  </Table.Cell>
+                  <Table.Cell><input type="text" className="style_input" name="Client" value={json.Client} onChange={event => this.inputComment(index, event)} /></Table.Cell>
+                  <Table.Cell><input type="text" className="style_input" name="Description" value={json.Description} onChange={event => this.inputComment(index, event)} /></Table.Cell>
+                  <Table.Cell><input type="text" disabled="disabled" className="style_input" name="KM" value={json.KM} onChange={event => this.inputComment(index, event)} /></Table.Cell>
+                  <Table.Cell><input type="text" className="style_input" name="Forfait" value={json.Forfait} onChange={event => this.inputComment(index, event)} /></Table.Cell>
+                  <Table.Cell><input type="text" className="style_input" name="Hôtel" value={json.Hôtel} onChange={event => this.inputComment(index, event)} /></Table.Cell>
+                  <Table.Cell><input type="text" className="style_input" name="Repas" value={json.Repas} onChange={event => this.inputComment(index, event)} /></Table.Cell>
+                  <Table.Cell><input type="text" className="style_input" name="Essence" value={json.Essence} onChange={event => this.inputComment(index, event)} /></Table.Cell>
+                  <Table.Cell><input type="text" className="style_input" name="Divers" value={json.Divers} onChange={event => this.inputComment(index, event)} /></Table.Cell>
+                  <Table.Cell><input type="text" className="style_input" /></Table.Cell>
+                </Table.Row>
+              </Table.Body>
+            ))
+            }
+          </Table>
+        </div>
+        <br />
+        <br />
         <Button color="teal" onClick={() => this.addEmptyLine(costs)} icon="plus circle" />
-        <input className="ButtonEnvoye" type="submit" value="soumettre" />
+        <br />
+        <br />
+        <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Soumettre</Button>
       </div>
     );
   }

@@ -1,12 +1,12 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable max-len */
 import React, { Component } from 'react';
-import 'semantic-ui-react';
 import { connect } from 'react-redux';
 import './Vision.css';
+import { Button, Icon } from 'semantic-ui-react';
 import 'react-dropzone-uploader/dist/styles.css';
 import Axios from 'axios';
-import Dropzone from 'react-dropzone-uploader';
+// import Dropzone from 'react-dropzone-uploader';
 // import Base64 from 'base64-img';
 
 
@@ -21,8 +21,8 @@ class Profile extends Component {
     };
     this.postGreyCard = this.postGreyCard.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChangeStatus = this.handleChangeStatus.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
+    // this.handleChangeStatus = this.handleChangeStatus.bind(this);
     // this.getUploadParams = this.getUploadParams.bind(this);
   }
 
@@ -81,19 +81,19 @@ class Profile extends Component {
   }
 
 
-  getUploadParams({ meta }) {
-    const url = 'http://localhost:4000/updateProfile';
-    return { url, meta: { fileUrl: `${url}/${encodeURIComponent(meta.name)}` } };
-  }
+  // getUploadParams({ meta }) {
+  //   const url = 'http://localhost:4000/updateProfile';
+  //   return { url, meta: { fileUrl: `${url}/${encodeURIComponent(meta.name)}` } };
+  // }
 
-  handleChangeStatus({ meta }, status) {
-    console.log(status, meta);
-  }
+  // handleChangeStatus({ meta }, status) {
+  //   console.log(status, meta);
+  // }
 
-  handleSubmit(files, allFiles) {
-    console.log(files.map(f => f.meta));
-    allFiles.forEach(f => f.remove());
-  }
+  // handleSubmit(files, allFiles) {
+  //   console.log(files.map(f => f.meta));
+  //   allFiles.forEach(f => f.remove());
+  // }
 
   render() {
     const {
@@ -121,7 +121,7 @@ class Profile extends Component {
               <input className="ButtonEnvoye" id="carteGrise" name="GreyCard" type="file" onChange={this.handleChange} />
               <div id="carteGrise" />
             </div>
-            <Dropzone
+            {/* <Dropzone
               name="GreyCard"
               getUploadParams={this.getUploadParams}
               onChangeStatus={this.handleChangeStatus}
@@ -133,9 +133,9 @@ class Profile extends Component {
             //   dropzoneReject: { borderColor: 'red', backgroundColor: '#DAA' },
             //   inputLabel: (extra) => (extra.reject ? { color: 'red' } : {}),
             // }}
-            />
+            /> */}
             <div>
-              <button className="ButtonEnvoye" type="submit">Envoyer</button>
+              <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Envoyer</Button>
             </div>
           </form>
           <img src={Miniature} alt="" />

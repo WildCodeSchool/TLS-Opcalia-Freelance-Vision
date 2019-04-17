@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
-import 'semantic-ui-react';
+import { Table, Icon, Button } from 'semantic-ui-react';
 import dateFns from 'date-fns';
 import './Vision.css';
 
@@ -94,57 +95,62 @@ class Cra extends Component {
     const { days } = this.state;
     return (
       <div>
-        <div>
-          {days.map((json, index) => (
-            <div>
-              <table className="container">
-                <th>
-                  <td className="borderDay">{json.dayNumber}</td>
-                </th>
-                <th>
-                  <td className="borderPresence">{json.dayName}</td>
-                </th>
-                <th>
-                  <span> Présence : </span>
-                  <span>
-                    <span> 0: </span>
-                    <input
-                      type="radio"
-                      id="zero"
-                      name={`rate${index}`}
-                      value="0"
-                      onChange={event => this.choiceRate(index, event)}
-                    />
-                  </span>
-                  <span>
-                    <span> 1/2: </span>
-                    <input
-                      type="radio"
-                      id="demi"
-                      name={`rate${index}`}
-                      value="0.5"
-                      onChange={event => this.choiceRate(index, event)}
-                    />
-                  </span>
-                  <span>
-                    <span> 1: </span>
-                    <input
-                      type="radio"
-                      id="un"
-                      name={`rate${index}`}
-                      value="1"
-                      onChange={event => this.choiceRate(index, event)}
-                    />
-                  </span>
-                </th>
-                <th>
-                  <td><input className="inputCra" value={json.comment} onChange={event => this.inputComment(index, event)} /></td>
-                </th>
-              </table>
-            </div>
-          ))
-          }
-          <br />
+        <div className="scrollBoxCRA">
+          <Table celled>
+            <Table.Body>
+              {days.map((json, index) => (
+                <div key={index}>
+                  <Table.Row>
+                    <th>
+                      <Table.Cell><Button color="teal" onClick="" icon="plus circle" />{json.dayNumber}</Table.Cell>
+                    </th>
+                    <th>
+                      <Table.Cell>{json.dayName}</Table.Cell>
+                    </th>
+                    <th>
+                      <tr>
+                        <span> Présence : </span>
+                        <span>
+                          <span> 0: </span>
+                          <input
+                            type="radio"
+                            id="zero"
+                            name={`rate${index}`}
+                            value="0"
+                            onChange={event => this.choiceRate(index, event)}
+                          />
+                        </span>
+                        <span>
+                          <span> 1/2: </span>
+                          <input
+                            type="radio"
+                            id="demi"
+                            name={`rate${index}`}
+                            value="0.5"
+                            onChange={event => this.choiceRate(index, event)}
+                          />
+                        </span>
+                        <span>
+                          <span> 1: </span>
+                          <input
+                            type="radio"
+                            id="un"
+                            name={`rate${index}`}
+                            value="1"
+                            onChange={event => this.choiceRate(index, event)}
+                          />
+                        </span>
+                      </tr>
+                    </th>
+                    <th>
+                      <Table.Cell><input className="inputCra" value={json.comment} onChange={event => this.inputComment(index, event)} /></Table.Cell>
+                    </th>
+                  </Table.Row>
+                </div>
+              ))
+              }
+            </Table.Body>
+          </Table>
         </div>
       </div>
     );
@@ -176,12 +182,11 @@ class Cra extends Component {
     const { somme } = this.state;
     return (
       <div>
-        <br /><br />
         <div className="calendar">
           {this.renderHeader()}
           {this.renderCell()}
           <h3><span className="logo">Nombre de </span><span className="logo1">jours travaillés: <span className="logo">{somme}</span></span><br /></h3>
-          <input className="ButtonEnvoye" type="submit" value="soumettre" />
+          <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Envoyer</Button>
         </div>
       </div>
     );

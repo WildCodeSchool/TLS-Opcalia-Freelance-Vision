@@ -1,16 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
-html{
-  max-height: 100%;
-  max-width : 100%;
-  padding : 10px;
-}
-
 body{
   max-height: 100%;
   max-width : 100%;
-  padding : 10px ;
+  padding : 20px ;
 }
 
 .icon {
@@ -134,79 +128,20 @@ header #logo .icon {
   margin-left: 25px
 }
 
-/*calendar*/
-
-.JourTravaillé{
- width : 25px;
-}
-
-.borderDay{
-  text-align: left
-}
-
-.ButtonEnvoye{
-  background-color : rgb(238, 162, 118);
-  border : 2px teal;
-  border-radius : 5px;
-  box-shadow : 6px 6px 6px;
-  color : white;
-  margin-top : 30px;
-}
-.buttonDivAdmin{
-  background-color: none;
-}
-
 h2{
   text-align: center;
   border  : 2px solid teal;
 }
 
-h3{
-  text-align: center
-}
-
-table{
-  text-align: left;
-  border : 2px teal solid;
-  background-image :  linear-gradient(45deg, rgb(223, 156, 130) 0%,white 40%,rgb(238, 162, 118) );
-}
-
-td input.inputCra{
-  text-align: left;
-  width: 150%
-}
-
 th{
-  border-right : 2px teal solid; 
   width : 10%;
-  text-align : left;
-  padding : none
-}
-
-td{
-  text-align: left
-}
-
-/*Géneral*/
-
-.logo1{
-  color : teal;
-}
-
-.logo{
-  color : rgb(238, 162, 118);
-}
-
-.pagePerso{
+  border: 1px solid teal;
   text-align: center;
-  font-weight: bolder;
-  font-size: 20px;
 }
-
 /* Profile */
 
 .profile{
-  border : 2px solid rgb(238, 162, 118);
+  border : 2px solid teal;
   margin-left : 20%;
   margin-right : 20%;
   margin-top : 50px;
@@ -215,11 +150,15 @@ td{
 /* Note de frais */
 
 td input{
- text-align: left;
- width: 99%;
- border : none
+  text-align: left;
+  width: 200%;
+  border : none
 }
 
+td input.inputCra{
+  text-align: left;
+  width: 150%
+}
 .style_input_date{
   border:none;
   width:99px;
@@ -241,13 +180,25 @@ td input{
   border: 4px solid teal;
   padding-top : 15px
 }
-.ButtonEnvoye1{
-  background-color : rgb(238, 162, 118);
-  border : 2px teal solid;
-  border-radius : 5px;
-  box-shadow : 6px 6px 6px;
-  color : white;
-  margin-top : 30px;
-  width: 150px;
-  height : 20px;
+
+.titleSpace{
+  margin-left : 65%;
+  font-size : 2em;
+}
+.scrollBoxCRA{
+  -webKit-flex : 1 1 auto;
+ overflow-y : auto;
+ width : 100%;
+ height: 25em
+}
+.scrollBoxNDF{
+  -webKit-flex : 1 1 auto;
+ overflow-y : auto;
+ width : 100%;
+ height: 30em
+}
+.buttonAdd{
+  display : inline-flex;
+  width : 10px;
+  height : 10px
 }

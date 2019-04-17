@@ -31,9 +31,9 @@ class LogIn extends Component {
     // to do add dispatch action profile loading true
     Axios.post('http://localhost:4000/login', this.state)
       .then(res => {
-        console.log(res.data);
-
         const { dispatch } = this.props;
+        console.log(res.data);
+        this.setState({ res: res.data });
         dispatch({ type: 'CREATE_TOKEN_USER', token: res.data.tokenUser });
         dispatch({ type: 'CREATE_TOKEN_ADMIN', token: res.data.tokenAdmin });
         dispatch({ type: 'PROFILETYPE', profileType: res.data.result });
@@ -47,7 +47,6 @@ class LogIn extends Component {
           passwordProfile: res.data.passwordProfile
         });
         console.log(res.data);
-        this.setState({ res: res.data });
         // dispatch action profile loading
       });
   }
