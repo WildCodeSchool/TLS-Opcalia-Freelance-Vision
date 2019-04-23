@@ -7,9 +7,13 @@ Clôner la branche dev.
 
 A la racine du projet...
 Lancer l'installation:
+
 exécuter la commande:
+
 >npm run install
+
 Démarrer le projet:
+
 >npm run launch
 
 Corriger les fix d'installations:
