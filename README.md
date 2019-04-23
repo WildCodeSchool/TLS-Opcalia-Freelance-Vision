@@ -2,7 +2,8 @@
 
   **Installation du projet**
   
-Le projet est en ReactJs
+Le projet est en ReactJs.
+
 Clôner la branche dev.
 
 A la racine du projet...
