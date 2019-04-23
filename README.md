@@ -1,4 +1,10 @@
-                                              Mise en ligne du projet
+Présentation
+Projet de gestion de données administratives pour FreelanceVision société de portage salarial.
+Le projet s'articule autour de tableaux de relévé d'informations de présence et de frais pour crée des bases de données.
+
+
+                                             
+                                             Mise en ligne du projet
 
   **Installation du projet**
   
