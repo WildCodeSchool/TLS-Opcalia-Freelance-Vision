@@ -20,6 +20,7 @@ Corriger les fix d'installations:
 -Changer son contenu par vos identifiants Mysql (Export de la BDD à la racine du projet).
 
 -Trois types d'utilisateurs sont déjà disponibles dans la base de donnée:
+```
 
     Administrateur
 -ID: Admin
@@ -33,6 +34,6 @@ Corriger les fix d'installations:
  ID: Tony
  MDP: 1234
 
-
+```
 
 
