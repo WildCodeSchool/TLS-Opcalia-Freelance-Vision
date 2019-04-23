@@ -200,3 +200,6 @@ td input.inputCra{
   width : 10px;
   height : 10px
 }
+.copiedClass{
+  background : blueviolet;
+}

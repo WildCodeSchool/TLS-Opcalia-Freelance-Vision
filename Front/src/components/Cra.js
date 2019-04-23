@@ -55,7 +55,7 @@ class Cra extends Component {
     const { days } = this.state;
     const daysCopy = [...days];
     daysCopy[index].rate = event.target.value;
-    console.log('days Copy', daysCopy);   
+    console.log('days Copy', daysCopy);
     this.setState({ days: daysCopy });
     this.totalRate(daysCopy);
     console.log('choiceRate', event.target.value, index);
@@ -93,12 +93,17 @@ class Cra extends Component {
     return days;
   }
 
-  copyLine(index) {
-    const { days } = this.state;
+  copyLine(index, days) {
     const copyDays = [...days];
-    const copyLine = days[index];
+    const newLine = {
+      dayName: days[index].dayName,
+      dayNumber: days[index].dayNumber,
+      rate: '',
+      comment: '',
+      isCopied: true
+    };
     console.log(copyDays);
-    copyDays.splice(index, 0, copyLine);
+    copyDays.splice(index + 1, 0, newLine);
     console.log(copyDays);
     this.setState({ days: copyDays });
   }
@@ -112,9 +117,9 @@ class Cra extends Component {
             <Table.Body>
               {days.map((json, index) => (
                 <div key={index}>
-                  <Table.Row>
+                  <Table.Row className={days[index].isCopied ? 'copiedClass' : ''}>
                     <th>
-                      <Table.Cell><Button color="teal" onClick={() => this.copyLine(index)} icon="plus circle" />{json.dayNumber}</Table.Cell>
+                      <Table.Cell><Button color="teal" onClick={() => this.copyLine(index, days)} icon="plus circle" />{json.dayNumber}</Table.Cell>
                     </th>
                     <th>
                       <Table.Cell>{json.dayName}</Table.Cell>
