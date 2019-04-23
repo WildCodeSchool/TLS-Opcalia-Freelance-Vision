@@ -21,6 +21,7 @@ class Cra extends Component {
     this.createArrayDays = this.createArrayDays.bind(this);
     this.inputComment = this.inputComment.bind(this);
     this.totalRate = this.totalRate.bind(this);
+    this.copyLine = this.copyLine.bind(this);
   }
 
   nextMonth() {
@@ -54,6 +55,7 @@ class Cra extends Component {
     const { days } = this.state;
     const daysCopy = [...days];
     daysCopy[index].rate = event.target.value;
+    console.log('days Copy', daysCopy);   
     this.setState({ days: daysCopy });
     this.totalRate(daysCopy);
     console.log('choiceRate', event.target.value, index);
@@ -91,6 +93,16 @@ class Cra extends Component {
     return days;
   }
 
+  copyLine(index) {
+    const { days } = this.state;
+    const copyDays = [...days];
+    const copyLine = days[index];
+    console.log(copyDays);
+    copyDays.splice(index, 0, copyLine);
+    console.log(copyDays);
+    this.setState({ days: copyDays });
+  }
+
   renderCell() {
     const { days } = this.state;
     return (
@@ -102,7 +114,7 @@ class Cra extends Component {
                 <div key={index}>
                   <Table.Row>
                     <th>
-                      <Table.Cell><Button color="teal" onClick="" icon="plus circle" />{json.dayNumber}</Table.Cell>
+                      <Table.Cell><Button color="teal" onClick={() => this.copyLine(index)} icon="plus circle" />{json.dayNumber}</Table.Cell>
                     </th>
                     <th>
                       <Table.Cell>{json.dayName}</Table.Cell>

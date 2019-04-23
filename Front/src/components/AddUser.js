@@ -53,7 +53,7 @@ class UserList extends Component {
     }).then((result) => {
       if (result.value) {
         // console.log('je suis la');
-        axios.post('http://51.254.207.207:4000/adduser', { userToAdd: userAdd, typeToAdd: type, id })
+        axios.post('http://localhost:4000/adduser', { userToAdd: userAdd, typeToAdd: type, id })
           .then((response) => {
             console.log('response.data', response.data);
           });
