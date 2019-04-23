@@ -16,8 +16,6 @@ Démarrer le projet:
 
 >npm run launch
 
-Corriger les fix d'installations:
->npm audit fix
 
 -Copier le contenu du fichier configMysql.txt dans un nouveau fichier configMysql.js.
 
