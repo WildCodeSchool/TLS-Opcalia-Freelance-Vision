@@ -7,9 +7,8 @@ Le projet est en ReactJs.
 Clôner la branche dev.
 
 A la racine du projet...
-Lancer l'installation:
 
-exécuter la commande:
+Lancer l'installation:
 
 >npm run install
 
