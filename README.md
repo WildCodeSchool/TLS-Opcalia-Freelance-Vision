@@ -5,7 +5,10 @@
 Le projet est en ReactJs
 Clôner la branche dev.
 
-Installer les dépendences en back et en front (npm install)
+Lancer l'installation:
+cd lancer à la racine du projet,
+exécuter la commande:
+>npm run install
 Corriger les fix d'installations (npm audit fix)
 
 copier le contenu du fichier configMysql.txt dans un nouveau fichier configMysql.js.
