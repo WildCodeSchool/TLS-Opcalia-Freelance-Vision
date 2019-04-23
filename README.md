@@ -15,9 +15,10 @@ Démarrer le projet:
 Corriger les fix d'installations:
 >npm audit fix
 
-Copier le contenu du fichier configMysql.txt dans un nouveau fichier configMysql.js.
-Changer son contenu par vos identifiants Mysql (Export de la BDD à la racine du projet).
-Trois types d'utilisateurs sont déjà disponibles dans la base de donnée:
+-Copier le contenu du fichier configMysql.txt dans un nouveau fichier configMysql.js.
+
+-Changer son contenu par vos identifiants Mysql (Export de la BDD à la racine du projet).
+-Trois types d'utilisateurs sont déjà disponibles dans la base de donnée:
     Administrateur
 -ID: Admin
  MDP: 1234
