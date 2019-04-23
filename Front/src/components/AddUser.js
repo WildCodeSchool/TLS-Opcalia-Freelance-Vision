@@ -61,7 +61,7 @@ class UserList extends Component {
     this.swalCheck().then((result) => {
       if (result.value) {
         // console.log('je suis la');
-        axios.post('http://5.135.190.93:4000/adduser', { userToAdd: userAdd, typeToAdd: type, id })
+        axios.post('http://localhost:4000/adduser', { userToAdd: userAdd, typeToAdd: type, id })
           .then((response) => {
             console.log('response.data', response.data);
           });

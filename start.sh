@@ -1,2 +1,1 @@
-start react.sh
-start startNode.sh
+cd Back && nodemon serverNode.js & cd Front && npm start & cd .. 

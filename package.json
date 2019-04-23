@@ -1,0 +1,21 @@
+{
+  "name": "tls-opcalia-freelance-vision",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install": "./startinstall.sh",
+    "launch": "./start.sh",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WildCodeSchool/TLS-Opcalia-Freelance-Vision.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WildCodeSchool/TLS-Opcalia-Freelance-Vision/issues"
+  },
+  "homepage": "https://github.com/WildCodeSchool/TLS-Opcalia-Freelance-Vision#readme"
+}

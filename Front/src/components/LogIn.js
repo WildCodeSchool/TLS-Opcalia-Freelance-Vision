@@ -29,7 +29,7 @@ class LogIn extends Component {
   handleSubmit(event) {
     event.preventDefault();
     // to do add dispatch action profile loading true
-    Axios.post('http://5.135.190.93:4000/login', this.state)
+    Axios.post('http://localhost:4000/login', this.state)
       .then(res => {
         const { dispatch } = this.props;
         console.log(res.data);
