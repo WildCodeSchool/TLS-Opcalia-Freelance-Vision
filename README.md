@@ -23,9 +23,17 @@ Démarrer le projet:
 >npm run launch
 
 
--Copier le contenu du fichier configMysql.txt dans un nouveau fichier configMysql.js.
-
--Changer son contenu par vos identifiants Mysql (Export de la BDD à la racine du projet).
+créer un fichier config.json à la racine du projet (avant le dossier Front et Back):
+Copier ce contenu:
+>{
+  "IP": "localhost",
+  "DB":{
+    "user": "appUser",
+    "Pass": "appUser",
+    "Database": "FreelanceVision",
+    "PORT": "4080"
+  }
+}
 
 -Trois types d'utilisateurs sont déjà disponibles dans la base de donnée:
 ```
