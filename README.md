@@ -24,6 +24,7 @@ Démarrer le projet:
 
 
 créer un fichier config.json à la racine du projet (avant le dossier Front et Back):
+
 Copier ce contenu:
 >{
   "IP": "localhost",
