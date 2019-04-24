@@ -23,7 +23,7 @@ Démarrer le projet:
 >npm run launch
 
 
-créer un fichier config.json à la racine du projet (avant le dossier Front et Back):
+créer un fichier config.json dans Front/src:
 
 Copier ce contenu:
 >{
