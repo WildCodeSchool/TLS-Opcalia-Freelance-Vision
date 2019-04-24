@@ -8,6 +8,7 @@ import 'react-dropzone-uploader/dist/styles.css';
 import Axios from 'axios';
 // import Dropzone from 'react-dropzone-uploader';
 // import Base64 from 'base64-img';
+import { IP } from '../config.json';
 
 
 class Profile extends Component {
@@ -44,7 +45,7 @@ class Profile extends Component {
     } = this.state;
     console.log(eMail);
 
-    Axios.post('http://localhost:4000/updateProfile', {
+    Axios.post(`http://${IP}:4000/updateProfile`, {
       eMail,
       addGreyCard: GreyCard,
       changeIdentifiant: identifiant,

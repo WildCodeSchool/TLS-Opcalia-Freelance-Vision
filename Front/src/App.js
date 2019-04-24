@@ -10,6 +10,7 @@ import Employee from './components/Employee';
 
 class App extends Component {
   render() {
+    console.log(process.env.REACT_APP_MY_VAR)
     const { profileType } = this.props;
     return (
       <div>

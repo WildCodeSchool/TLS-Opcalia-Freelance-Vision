@@ -9,6 +9,7 @@ import {
   Button,
   Form,
 } from 'semantic-ui-react';
+import { IP } from '../config.json';
 
 class UserList extends Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class UserList extends Component {
 
   swalCheck() {
     const { id, userAdd, type } = this.state;
-    return ( Swal.fire({
+    return (Swal.fire({
       title: "<strong>êtes vous en accord avec les informations de l'utilisateur ?</strong>",
       type: 'info',
       html:
@@ -61,7 +62,7 @@ class UserList extends Component {
     this.swalCheck().then((result) => {
       if (result.value) {
         // console.log('je suis la');
-        axios.post('http://localhost:4000/adduser', { userToAdd: userAdd, typeToAdd: type, id })
+        axios.post(`http://${IP}:4000/adduser`, { userToAdd: userAdd, typeToAdd: type, id })
           .then((response) => {
             console.log('response.data', response.data);
           });

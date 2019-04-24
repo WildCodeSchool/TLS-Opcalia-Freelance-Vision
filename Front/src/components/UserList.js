@@ -4,6 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { Table } from 'semantic-ui-react';
 import DisplayOneUser from './DisplayOneUser';
+import { IP } from '../config.json';
 
 
 class UserList extends Component {
@@ -14,7 +15,7 @@ class UserList extends Component {
 
   componentWillMount() {
     const { dispatch } = this.props;
-    axios.get('http://localhost:4000/getusers')
+    axios.get(`http://${IP}:4000/getusers`)
       .then((response) => {
         // handle success
         dispatch({ type: 'USER LIST', userTable: response.data });

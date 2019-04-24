@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/WildCodeSchool/TLS-Opcalia-Freelance-Vision/issues"
   },
-  "homepage": "https://github.com/WildCodeSchool/TLS-Opcalia-Freelance-Vision#readme"
+  "homepage": "https://github.com/WildCodeSchool/TLS-Opcalia-Freelance-Vision#readme",
+  "dependencies": {
+    "dotenv": "^7.0.0"
+  }
 }

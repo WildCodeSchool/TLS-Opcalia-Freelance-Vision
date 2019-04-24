@@ -6,7 +6,11 @@ const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 const connect = require('./configMysql');
 
+
 const port = 4000;
+
+
+
 
 const app = express();
 app.use(cors());
@@ -36,7 +40,6 @@ app.post('/adduser', (req, res) => {
   } else {
     type = 'Freelance';
   }
-
   connect.connect((err) => {
     if (err) {
       console.log('err');
