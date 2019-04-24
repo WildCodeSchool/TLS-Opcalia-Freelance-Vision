@@ -3,7 +3,6 @@
 # dependencies
 node_modules/ 
 /.pnp
-Back/configMysql.js
 .pnp.js
 
 # testing

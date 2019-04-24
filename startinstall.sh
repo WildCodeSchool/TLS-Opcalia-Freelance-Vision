@@ -1,0 +1,1 @@
+cd Back && npm install && cd .. && cd Front && npm install && cd ..

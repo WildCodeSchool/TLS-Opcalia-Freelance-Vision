@@ -1,0 +1,1 @@
+cd Back && nodemon serverNode.js & cd Front && npm start & cd .. 

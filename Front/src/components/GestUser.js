@@ -1,4 +1,7 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
+import { Button, Icon, } from 'semantic-ui-react';
 import UserList from './UserList';
 import AddUser from './AddUser';
 
@@ -6,7 +9,6 @@ class GestUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
       actualised: 'liste',
     };
     this.displayUserPage = this.displayUserPage.bind(this);
@@ -21,21 +23,28 @@ class GestUser extends Component {
   }
 
   render() {
-    const { data, actualised } = this.state;
-    // console.log(this.displayUsersName);
-    const renderItem = data;
-    console.log(renderItem);
-
-
+    const { actualised } = this.state;
     return (
       <div>
-        <h1>Gestion users</h1>
+        <h2 className="logo">Gestion utilisateur </h2>
         <section>
-          <div><button type="button" onClick={() => this.displayUserPage('Ajout')}>Ajouter un utilisateur</button><button type="button" onClick={() => this.displayUserPage('Liste')}>Liste utilisateurs</button></div>
+          <div>
+
+            <Button color="teal" icon labelPosition="left" onClick={() => this.displayUserPage('Ajout')}>
+              Ajouter utilisateur
+              <Icon name="plus circle" />
+            </Button>
+
+
+            <Button color="teal" icon labelPosition="left" onClick={() => this.displayUserPage('Liste')}>
+              Liste utilisateurs
+              <Icon name="list" />
+            </Button>
+          </div>
 
           {(actualised === 'liste') && (<UserList />)}
           {(actualised === 'add') && (<AddUser />)}
-          <hr />
+          <br />
           <div />
         </section>
       </div>

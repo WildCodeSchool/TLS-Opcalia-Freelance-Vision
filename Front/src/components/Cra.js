@@ -1,23 +1,30 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
+import { Table, Icon, Button } from 'semantic-ui-react';
 import dateFns from 'date-fns';
+import Axios from 'axios';
 import './Vision.css';
-
+import { IP } from '../config.json';
 
 class Cra extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      somme: 0,
       currentMonth: new Date(),
       days: this.createArrayDays(new Date()),
-      // totalRate: 0
     };
 
     this.nextMonth = this.nextMonth.bind(this);
     this.prevMonth = this.prevMonth.bind(this);
     this.createArrayDays = this.createArrayDays.bind(this);
     this.inputComment = this.inputComment.bind(this);
+    this.totalRate = this.totalRate.bind(this);
+    this.copyLine = this.copyLine.bind(this);
+    this.postCra = this.postCra.bind(this);
   }
 
   nextMonth() {
@@ -52,21 +59,32 @@ class Cra extends Component {
     const daysCopy = [...days];
     daysCopy[index].rate = event.target.value;
     this.setState({ days: daysCopy });
-    console.log('choiceRate', event.target.value, index);
+    this.totalRate(daysCopy);
     console.log(daysCopy[index].rate);
   }
 
-  // addRate() {
-  //   const totalRate = 0;
-  //   let addRate = 0;
-  //   const { days } = this.state;
-  //   for (let i = 0; i < days.lenght; i += 1) {
-  //     addRate[i] += 1;
-  //     addRate = totalRate;
-  //   }
-  //   console.log('totalRate', totalRate);
-  //   return totalRate;
-  // }
+  totalRate(days) {
+    let somme = 0;
+    // eslint-disable-next-line no-return-assign
+    days.map((item) => (
+      somme += Number(item.rate)
+    ));
+    this.setState({ somme });
+  }
+
+  postCra(event) {
+    event.preventDefault();
+    const { somme, days } = this.state;
+    console.log('daysDuPost', days);
+    Axios.post(`http://${IP}:4000/cra`, {
+      tableDays: days,
+      sommeCra: somme
+    })
+      .then(res => {
+        console.log(res);
+      });
+  }
+
 
   // eslint-disable-next-line class-methods-use-this
   createArrayDays(currentMonth) {
@@ -88,61 +106,104 @@ class Cra extends Component {
     return days;
   }
 
+  copyLine(index, days) {
+    const copyDays = [...days];
+    const newLine = {
+      dayName: days[index].dayName,
+      dayNumber: days[index].dayNumber,
+      rate: '',
+      comment: '',
+      isCopied: true
+    };
+    copyDays.splice(index + 1, 0, newLine);
+    this.setState({ days: copyDays });
+  }
+
+  deleteLine(index, days) {
+    const copyDays = [...days];
+    console.log('beforeCopyDays', copyDays);
+    if (days[index].isCopied === true) {
+      copyDays.splice(index, 1);
+    }
+    this.setState({ days: copyDays });
+    console.log('afterCopyDays', copyDays);
+  }
+
+  weekEndGreyStyle(days, index) {
+    let daysClass = '';
+    let copiedClass = '';
+    if (days[index].dayName === 'Sunday' || days[index].dayName === 'Saturday') { daysClass = 'weGrey'; }
+    if (days[index].isCopied === true) { copiedClass = 'copiedClass'; }
+    const myClassName = `${daysClass} ${copiedClass}`;
+
+    return myClassName;
+  }
+
   renderCell() {
     const { days } = this.state;
     return (
       <div>
-        <div>
-          {days.map((json, index) => (
-            <div>
-              <table className="container">
-                <th>
-                  <td className="borderDay">{json.dayNumber}</td>
-                </th>
-                <th>
-                  <td className="borderPresence">{json.dayName}</td>
-                </th>
-                <th>
-                  <span> Présence : </span>
-                  <span>
-                    <span> 0: </span>
-                    <input
-                      type="radio"
-                      id="zero"
-                      name="rate"
-                      value="0"
-                      onChange={event => this.choiceRate(index, event)}
-                    />
-                  </span>
-                  <span>
-                    <span> 1/2: </span>
-                    <input
-                      type="radio"
-                      id="demi"
-                      name="rate"
-                      value="0.5"
-                      onChange={event => this.choiceRate(index, event)}
-                    />
-                  </span>
-                  <span>
-                    <span> 1: </span>
-                    <input
-                      type="radio"
-                      id="un"
-                      name="rate"
-                      value="1"
-                      onChange={event => this.choiceRate(index, event)}
-                    />
-                  </span>
-                </th>
-                <th>
-                  <td><input className="inputCra" value={json.comment} onChange={event => this.inputComment(index, event)} /></td>
-                </th>
-              </table>
-            </div>
-          ))
-          }
-          <br />
+        <div className="scrollBoxCRA">
+          <Table celled>
+            <Table.Body>
+              {days.map((json, index) => (
+                <div key={index}>
+                  <Table.Row className={this.weekEndGreyStyle(days, index)}>
+                    <th>
+                      <Table.Cell>
+                        <Button color="teal" onClick={() => this.copyLine(index, days)} icon="plus circle" />
+                        <Button color="teal" onClick={() => this.deleteLine(index, days)} icon="minus circle" />
+                        {json.dayNumber}
+                      </Table.Cell>
+                    </th>
+                    <th>
+                      <Table.Cell>{json.dayName}</Table.Cell>
+                    </th>
+                    <th>
+                      <tr>
+                        <span> Présence : </span>
+                        <span>
+                          <span> 0: </span>
+                          <input
+                            defaultChecked
+                            type="radio"
+                            id="zero"
+                            name={`rate${index}`}
+                            value="0"
+                            onChange={event => this.choiceRate(index, event)}
+                          />
+                        </span>
+                        <span>
+                          <span> 1/2: </span>
+                          <input
+                            type="radio"
+                            id="demi"
+                            name={`rate${index}`}
+                            value="0.5"
+                            onChange={event => this.choiceRate(index, event)}
+                          />
+                        </span>
+                        <span>
+                          <span> 1: </span>
+                          <input
+                            type="radio"
+                            id="un"
+                            name={`rate${index}`}
+                            value="1"
+                            onChange={event => this.choiceRate(index, event)}
+                          />
+                        </span>
+                      </tr>
+                    </th>
+                    <th>
+                      <Table.Cell><input className="inputCra" value={json.comment} onChange={event => this.inputComment(index, event)} /></Table.Cell>
+                    </th>
+                  </Table.Row>
+                </div>
+              ))
+              }
+            </Table.Body>
+          </Table>
         </div>
       </div>
     );
@@ -171,15 +232,17 @@ class Cra extends Component {
   }
 
   render() {
+    const { somme } = this.state;
     return (
       <div>
-        <br /><br />
-        <div className="calendar">
-          {this.renderHeader()}
-          {this.renderCell()}
-          <h3><span className="logo">Nombre de </span><span className="logo1">jour travaillé: <p className="JourTravaillé">{}</p></span><br /></h3>
-          <input className="ButtonEnvoye" type="submit" value="soumettre" />
-        </div>
+        <form onSubmit={this.postCra}>
+          <div className="calendar">
+            {this.renderHeader()}
+            {this.renderCell()}
+            <h3><span className="logo">Nombre de </span><span className="logo1">jours travaillés: <span className="logo">{somme}</span></span><br /></h3>
+            <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Envoyer</Button>
+          </div>
+        </form>
       </div>
     );
   }

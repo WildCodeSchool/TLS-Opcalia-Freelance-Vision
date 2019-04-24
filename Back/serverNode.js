@@ -6,7 +6,10 @@ const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 const connect = require('./configMysql');
 
+
 const port = 4000;
+
+
 
 
 const app = express();
@@ -14,11 +17,18 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const jwtSecret = '1234';
+const jwtSecretAdmin = '1234';
 app.use(expressJwt({
-  secret: jwtSecret
+  secret: jwtSecretAdmin
 }).unless({
-  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser']
+  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra']
+}));
+
+const jwtSecretUser = '1234';
+app.use(expressJwt({
+  secret: jwtSecretUser
+}).unless({
+  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile','/cra']
 }));
 
 app.post('/adduser', (req, res) => {
@@ -26,23 +36,22 @@ app.post('/adduser', (req, res) => {
   console.log(req.body);
   let type = '';
   if (req.body.typeToAdd === 'Employé') {
-    type = 'E';
+    type = 'Employee';
   } else {
-    type = 'F';
+    type = 'Freelance';
   }
-
   connect.connect((err) => {
     if (err) {
       console.log('err');
     }
   });
 
-  const addUser = `INSERT INTO salariés (Identifiant, eMail, type) VALUES (${mySql.escape(req.body.id)}, ${mySql.escape(req.body.userToAdd)},${mySql.escape(type)} )`;
+  const addUser = `INSERT INTO salariés (Identifiant, eMail, userType) VALUES (${mySql.escape(req.body.id)}, ${mySql.escape(req.body.userToAdd)},${mySql.escape(type)} )`;
   connect.query(addUser, (err, resultAddUser) => {
     if (err) {
       console.log(err);
     }
-  
+
     // SELECT sur salariés en utilisant result1.insertId
     // attention le select renvoie un tableau et tu peux recup tableau[0]
     res.status(200).json(resultAddUser);
@@ -83,6 +92,35 @@ app.get('/getusers', (req, res) => {
   });
 });
 
+app.post('/updateProfile', (req, res) => {
+  console.log('req.body.GreyCard', req.body);
+  connect.connect((err) => {
+    if (err) {
+      console.log('err');
+    }
+
+  });
+  const changeUserInfo = `UPDATE salariés SET carteGrise =${mySql.escape(req.body.addGreyCard)} WHERE eMAil =${mySql.escape(req.body.eMail)}`;
+
+  connect.query(changeUserInfo, (err1, resultChange) => {
+    if (err1) {
+      console.log(err1);
+    }
+    console.log(resultChange);
+    res.status(200).json(resultChange);
+  });
+});
+
+app.post('/cra', (req, res) => {
+  console.log('updateCra', req.body);
+  
+  connect.connect((err) => {
+    if (err) {
+      console.log('err');
+    }
+  });
+});
+
 app.post('/login', (req, res) => {
   const notId = () => { res.status(200).json('badID'); };
   const badPass = () => { res.status(200).json('badPass'); };
@@ -114,27 +152,37 @@ app.post('/login', (req, res) => {
         if (resultSelectUser[0].Pass === password) {
           if (resultSelectUser[0].userType === 'Employee') {
             console.log('renvoie de employee');
-            const token = jwt.sign({
-            }, jwtSecret);
+            const tokenUser = jwt.sign({
+            }, jwtSecretUser);
             res.status(200).json({
               auth: true,
-              token,
-              result: resultSelectUser[0].userType
+              tokenUser,
+              result: resultSelectUser[0].userType,
+              nomProfile: resultSelectUser[0].Nom,
+              prenomProfile: resultSelectUser[0].Prenom,
+              identifiantProfile: resultSelectUser[0].Identifiant,
+              typeProfile: resultSelectUser[0].userType,
+              eMailProfile: resultSelectUser[0].eMail
             });
           } else if (resultSelectUser[0].userType === 'Freelance') {
-            const token = jwt.sign({
-            }, jwtSecret);
+            const tokenUser = jwt.sign({
+            }, jwtSecretUser);
             res.status(200).json({
               auth: true,
-              token,
-              result: resultSelectUser[0].userType
+              tokenUser,
+              result: resultSelectUser[0].userType,
+              nomProfile: resultSelectUser[0].Nom,
+              prenomProfile: resultSelectUser[0].Prenom,
+              identifiantProfile: resultSelectUser[0].Identifiant,
+              typeProfile: resultSelectUser[0].userType,
+              eMailProfile: resultSelectUser[0].eMail
             });
           } else {
-            const token = jwt.sign({
-            }, jwtSecret);
+            const tokenAdmin = jwt.sign({
+            }, jwtSecretAdmin);
             res.status(200).json({
               auth: true,
-              token,
+              tokenAdmin,
               result: resultSelectUser[0].userType
             });
           }

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
+import { connect } from 'react-redux';
 import axios from 'axios';
+import { Table, Button, Icon } from 'semantic-ui-react';
+import { IP } from '../config.json';
 
 
 class DisplayOneUser extends Component {
@@ -12,35 +15,47 @@ class DisplayOneUser extends Component {
     this.removeUser = this.removeUser.bind(this);
   }
 
-
   // eslint-disable-next-line class-methods-use-this
-  removeUser(id) {
-    console.log(typeof (id));
-    axios.post('http://localhost:4000/removeuser', { userToremove: id })
+  removeUser(identif) {
+    const { userTable, dispatch } = this.props;
+    console.log(typeof (identif));
+    axios.post(`http://${IP}:4000/removeuser`, { userToremove: identif })
       .then((response) => {
         console.log(response.data);
       });
+
+    // const copyTable = [...userTable];
+    const table = userTable.filter((item) => item.Identifiant !== identif);
+    dispatch({ type: 'USER LIST', userTable: table });
+    console.log(table);
   }
 
   render() {
     const {
-      userType, nom, id, prenom
+      userType, nom, id, prenom, userTable
     } = this.props;
+    console.log(userTable);
     return (
-      <div className="FormatProfile">
-        <br />
-        <br />
-        <p className="inline"><h2>Identifiant: &nbsp;</h2> {id}</p>
-        <p className="inline"><h2>Nom: &nbsp;</h2> {nom}</p>
-        <p className="inline"><h2>Prénom: &nbsp;</h2> {prenom}</p>
-        <p className="inline"><h2>Type: &nbsp;</h2>{userType} </p>
-        {(userType !== 'Admin') && (<input userType="button" value="Supprimer" onClick={() => this.removeUser(id)} />)}
-        <br />
-        <br />
-
-      </div>
+      <Table.Row>
+        <Table.Cell>{id}</Table.Cell>
+        <Table.Cell>{nom}</Table.Cell>
+        <Table.Cell>{prenom}</Table.Cell>
+        <Table.Cell>{userType}</Table.Cell>
+        <Table.Cell></Table.Cell>
+        <Table.Cell> {(userType !== 'Admin')
+          && (
+            <Button color="red" icon onClick={() => this.removeUser(id)}>
+              <Icon name="x" />
+            </Button>
+          )
+        }
+        </Table.Cell>
+      </Table.Row>
     );
   }
 }
+const mapStateToProps = (store) => ({
+  userTable: store.auth.userTable,
 
-export default DisplayOneUser;
+});
+export default connect(mapStateToProps)(DisplayOneUser);

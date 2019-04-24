@@ -4,6 +4,7 @@ import 'semantic-ui-css/semantic.min.css';
 import Axios from 'axios';
 import { connect } from 'react-redux';
 import './App.css';
+import { IP } from '../config.json';
 
 class LogIn extends Component {
   constructor(props) {
@@ -29,16 +30,24 @@ class LogIn extends Component {
   handleSubmit(event) {
     event.preventDefault();
     // to do add dispatch action profile loading true
-    Axios.post('http://localhost:4000/login', this.state)
+    Axios.post(`http://${IP}:4000/login`, this.state)
       .then(res => {
         const { dispatch } = this.props;
-        dispatch({ type: 'CREATE_TOKEN', token: res.data.token });
-        dispatch({ type: 'PROFILETYPE', profileType: res.data.result });
-        dispatch({
-          type: 'PROFILE', nomProfile: res.data.nomProfile, prenomProfile: res.data.prenomProfile, identifiantProfile: res.data.identifiantProfile, typeProfile: res.data.typeProfile, eMailProfile: res.data.eMailProfile
-        });
         console.log(res.data);
         this.setState({ res: res.data });
+        dispatch({ type: 'CREATE_TOKEN_USER', token: res.data.tokenUser });
+        dispatch({ type: 'CREATE_TOKEN_ADMIN', token: res.data.tokenAdmin });
+        dispatch({ type: 'PROFILETYPE', profileType: res.data.result });
+        dispatch({
+          type: 'PROFILE',
+          nomProfile: res.data.nomProfile,
+          prenomProfile: res.data.prenomProfile,
+          identifiantProfile: res.data.identifiantProfile,
+          typeProfile: res.data.typeProfile,
+          eMailProfile: res.data.eMailProfile,
+          passwordProfile: res.data.passwordProfile
+        });
+        console.log(res.data);
         // dispatch action profile loading
       });
   }

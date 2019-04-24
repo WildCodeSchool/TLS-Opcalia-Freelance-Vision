@@ -1,8 +1,16 @@
-export default function (store = {}, action) {
+export default function (store = { userTable: [] }, action) {
   switch (action.type) {
-    case 'CREATE TOKEN': {
-      const { token } = action;
-      return { ...store, token };
+    case 'CREATE TOKEN USER': {
+      const { tokenUser } = action;
+      return { ...store, tokenUser };
+    }
+    case 'CREATE TOKEN ADMIN': {
+      const { tokenAdmin } = action;
+      return { ...store, tokenAdmin };
+    }
+    case 'USER LIST': {
+      const { userTable } = action;
+      return { ...store, userTable };
     }
     case 'PROFILETYPE': {
       const { profileType } = action;
@@ -12,10 +20,16 @@ export default function (store = {}, action) {
     }
     case 'PROFILE': {
       const {
-        nomProfile, prenomProfile, identifiantProfile, typeProfile, eMailProfile
+        nomProfile, prenomProfile, identifiantProfile, typeProfile, eMailProfile, passwordProfile
       } = action;
       return {
-        ...store, nomProfile, prenomProfile, identifiantProfile, typeProfile, eMailProfile
+        ...store,
+        nomProfile,
+        prenomProfile,
+        identifiantProfile,
+        typeProfile,
+        eMailProfile,
+        passwordProfile
       };
     }
     default:
