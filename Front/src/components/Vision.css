@@ -201,5 +201,8 @@ td input.inputCra{
   height : 10px
 }
 .copiedClass{
-  background : blueviolet;
+  background :#61B6AE;
+}
+.weGrey{
+  background : rgb(212, 209, 209);
 }

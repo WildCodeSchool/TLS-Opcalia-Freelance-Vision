@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/WildCodeSchool/TLS-Opcalia-Freelance-Vision#readme",
   "dependencies": {
-    "dotenv": "^7.0.0"
+    "loadash": "^1.0.0",
+    "lodash": "^4.17.11"
   }
 }

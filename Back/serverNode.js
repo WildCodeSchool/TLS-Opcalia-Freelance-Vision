@@ -21,14 +21,14 @@ const jwtSecretAdmin = '1234';
 app.use(expressJwt({
   secret: jwtSecretAdmin
 }).unless({
-  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile']
+  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra']
 }));
 
 const jwtSecretUser = '1234';
 app.use(expressJwt({
   secret: jwtSecretUser
 }).unless({
-  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile']
+  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile','/cra']
 }));
 
 app.post('/adduser', (req, res) => {
@@ -108,6 +108,16 @@ app.post('/updateProfile', (req, res) => {
     }
     console.log(resultChange);
     res.status(200).json(resultChange);
+  });
+});
+
+app.post('/cra', (req, res) => {
+  console.log('updateCra', req.body);
+  
+  connect.connect((err) => {
+    if (err) {
+      console.log('err');
+    }
   });
 });
 
