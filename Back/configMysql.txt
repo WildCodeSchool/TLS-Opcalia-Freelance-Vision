@@ -4,8 +4,8 @@ const mySql = require('mysql');
 const connect = mySql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'Serval7*',
-  database: 'FreelanceVision'
+  password: '******',
+  database: 'YourDatabase'
 });
 
 module.exports = connect;

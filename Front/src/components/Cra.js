@@ -1,11 +1,12 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
 import { Table, Icon, Button } from 'semantic-ui-react';
 import dateFns from 'date-fns';
+import Axios from 'axios';
 import './Vision.css';
-
 
 class Cra extends Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class Cra extends Component {
     this.inputComment = this.inputComment.bind(this);
     this.totalRate = this.totalRate.bind(this);
     this.copyLine = this.copyLine.bind(this);
+    this.postCra = this.postCra.bind(this);
   }
 
   nextMonth() {
@@ -55,23 +57,33 @@ class Cra extends Component {
     const { days } = this.state;
     const daysCopy = [...days];
     daysCopy[index].rate = event.target.value;
-    console.log('days Copy', daysCopy);
     this.setState({ days: daysCopy });
     this.totalRate(daysCopy);
-    console.log('choiceRate', event.target.value, index);
     console.log(daysCopy[index].rate);
-    console.log('days', days);
   }
 
   totalRate(days) {
     let somme = 0;
-    console.log('somme', somme);
     // eslint-disable-next-line no-return-assign
     days.map((item) => (
       somme += Number(item.rate)
     ));
     this.setState({ somme });
   }
+
+  postCra(event) {
+    event.preventDefault();
+    const { somme, days } = this.state;
+    console.log('daysDuPost', days);
+    Axios.post('http://localhost:4000/cra', {
+      tableDays: days,
+      sommeCra: somme
+    })
+      .then(res => {
+        console.log(res);
+      });
+  }
+
 
   // eslint-disable-next-line class-methods-use-this
   createArrayDays(currentMonth) {
@@ -102,10 +114,28 @@ class Cra extends Component {
       comment: '',
       isCopied: true
     };
-    console.log(copyDays);
     copyDays.splice(index + 1, 0, newLine);
-    console.log(copyDays);
     this.setState({ days: copyDays });
+  }
+
+  deleteLine(index, days) {
+    const copyDays = [...days];
+    console.log('beforeCopyDays', copyDays);
+    if (days[index].isCopied === true) {
+      copyDays.splice(index, 1);
+    }
+    this.setState({ days: copyDays });
+    console.log('afterCopyDays', copyDays);
+  }
+
+  weekEndGreyStyle(days, index) {
+    let daysClass = '';
+    let copiedClass = '';
+    if (days[index].dayName === 'Sunday' || days[index].dayName === 'Saturday') { daysClass = 'weGrey'; }
+    if (days[index].isCopied === true) { copiedClass = 'copiedClass'; }
+    const myClassName = `${daysClass} ${copiedClass}`;
+
+    return myClassName;
   }
 
   renderCell() {
@@ -117,9 +147,13 @@ class Cra extends Component {
             <Table.Body>
               {days.map((json, index) => (
                 <div key={index}>
-                  <Table.Row className={days[index].isCopied ? 'copiedClass' : ''}>
+                  <Table.Row className={this.weekEndGreyStyle(days, index)}>
                     <th>
-                      <Table.Cell><Button color="teal" onClick={() => this.copyLine(index, days)} icon="plus circle" />{json.dayNumber}</Table.Cell>
+                      <Table.Cell>
+                        <Button color="teal" onClick={() => this.copyLine(index, days)} icon="plus circle" />
+                        <Button color="teal" onClick={() => this.deleteLine(index, days)} icon="minus circle" />
+                        {json.dayNumber}
+                      </Table.Cell>
                     </th>
                     <th>
                       <Table.Cell>{json.dayName}</Table.Cell>
@@ -130,6 +164,7 @@ class Cra extends Component {
                         <span>
                           <span> 0: </span>
                           <input
+                            defaultChecked
                             type="radio"
                             id="zero"
                             name={`rate${index}`}
@@ -199,12 +234,14 @@ class Cra extends Component {
     const { somme } = this.state;
     return (
       <div>
-        <div className="calendar">
-          {this.renderHeader()}
-          {this.renderCell()}
-          <h3><span className="logo">Nombre de </span><span className="logo1">jours travaillés: <span className="logo">{somme}</span></span><br /></h3>
-          <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Envoyer</Button>
-        </div>
+        <form onSubmit={this.postCra}>
+          <div className="calendar">
+            {this.renderHeader()}
+            {this.renderCell()}
+            <h3><span className="logo">Nombre de </span><span className="logo1">jours travaillés: <span className="logo">{somme}</span></span><br /></h3>
+            <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Envoyer</Button>
+          </div>
+        </form>
       </div>
     );
   }

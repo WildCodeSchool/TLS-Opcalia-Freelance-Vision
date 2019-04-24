@@ -9,21 +9,14 @@ import DisplayOneUser from './DisplayOneUser';
 class UserList extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-
-    // };
     this.AddProfileItem = this.AddProfileItem.bind(this);
   }
 
   componentWillMount() {
-    const t = this;
     const { dispatch } = this.props;
     axios.get('http://localhost:4000/getusers')
       .then((response) => {
         // handle success
-        console.log('JE SUIS UN LOG');
-        console.log(response.data);
-        t.setState({ data: response.data });
         dispatch({ type: 'USER LIST', userTable: response.data });
       });
   }

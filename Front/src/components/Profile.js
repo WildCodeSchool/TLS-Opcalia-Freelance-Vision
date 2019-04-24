@@ -21,9 +21,6 @@ class Profile extends Component {
     };
     this.postGreyCard = this.postGreyCard.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
-    // this.handleChangeStatus = this.handleChangeStatus.bind(this);
-    // this.getUploadParams = this.getUploadParams.bind(this);
   }
 
   // eslint-disable-next-line react/sort-comp
@@ -61,39 +58,7 @@ class Profile extends Component {
     const convert64 = btoa(filesSelected);
     console.log(JSON.stringify(filesSelected));
     console.log(convert64);
-
-
-    // const fileReader = new FileReader();
-
-    // // eslint-disable-next-line func-names
-    // fileReader.onload = function (fileLoadedEvent) {
-    //   const srcData = fileLoadedEvent.target.result; // <--- data: base64
-
-    //   const newImage = document.createElement('img');
-    //   newImage.src = srcData;
-
-    // document.getElementById('carteGrise').innerHTML = newImage.outerHTML;
-    // eslint-disable-next-line no-alert
-    // alert(`Converted Base64 version is ${document.getElementById('carteGrise').innerHTML}`);
-    // console.log(`Converted Base64 version is ${filesSelected}`);
-    // };
-    // fileReader.readAsDataURL(filesSelected);
   }
-
-
-  // getUploadParams({ meta }) {
-  //   const url = 'http://localhost:4000/updateProfile';
-  //   return { url, meta: { fileUrl: `${url}/${encodeURIComponent(meta.name)}` } };
-  // }
-
-  // handleChangeStatus({ meta }, status) {
-  //   console.log(status, meta);
-  // }
-
-  // handleSubmit(files, allFiles) {
-  //   console.log(files.map(f => f.meta));
-  //   allFiles.forEach(f => f.remove());
-  // }
 
   render() {
     const {
@@ -121,19 +86,7 @@ class Profile extends Component {
               <input className="ButtonEnvoye" id="carteGrise" name="GreyCard" type="file" onChange={this.handleChange} />
               <div id="carteGrise" />
             </div>
-            {/* <Dropzone
-              name="GreyCard"
-              getUploadParams={this.getUploadParams}
-              onChangeStatus={this.handleChangeStatus}
-              onSubmit={this.handleSubmit}
-              onChange={this.handleChange}
-              accept="image/*,audio/*,video/*"
-              inputContent={(extra) => (extra.reject ? 'Image, audio and video files only' : 'Drag Files')}
-            // styles={{
-            //   dropzoneReject: { borderColor: 'red', backgroundColor: '#DAA' },
-            //   inputLabel: (extra) => (extra.reject ? { color: 'red' } : {}),
-            // }}
-            /> */}
+
             <div>
               <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Envoyer</Button>
             </div>

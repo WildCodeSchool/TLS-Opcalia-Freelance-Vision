@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
@@ -19,6 +20,7 @@ class UserList extends Component {
       id: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.swalCheck = this.swalCheck.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -28,10 +30,9 @@ class UserList extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  handleSubmit(event) {
+  swalCheck() {
     const { id, userAdd, type } = this.state;
-    event.preventDefault();
-    Swal.fire({
+    return (Swal.fire({
       title: "<strong>êtes vous en accord avec les informations de l'utilisateur ?</strong>",
       type: 'info',
       html:
@@ -50,7 +51,14 @@ class UserList extends Component {
       cancelButtonText:
         '<i class="fa fa-thumbs-down"></i> Annuler',
       cancelButtonAriaLabel: 'Thumbs down',
-    }).then((result) => {
+    })
+    );
+  }
+
+  handleSubmit(event) {
+    const { id, userAdd, type } = this.state;
+    event.preventDefault();
+    this.swalCheck().then((result) => {
       if (result.value) {
         // console.log('je suis la');
         axios.post('http://localhost:4000/adduser', { userToAdd: userAdd, typeToAdd: type, id })
