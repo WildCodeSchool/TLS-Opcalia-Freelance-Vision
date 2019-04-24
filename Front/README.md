@@ -21,7 +21,12 @@ créer un fichier config.json à la racine du projet (avant le dossier Front et 
 
 Copier ce contenu:
 
->{ "IP": "localhost", "DB":{ "user": "appUser", "Pass": "appUser", "Database": "FreelanceVision", "PORT": "4080" } }
+>{ "IP": "localhost", "DB":{ "user": "appUser", "Pass": "PassUser", "Database": "FreelanceVision", "PORT": "4080" } }
+
+Configurez vos identifiants Mysql (user, Pass, Database et le PORT si besoin).
+
+
+
 
 -Trois types d'utilisateurs sont déjà disponibles dans la base de donnée:
 
