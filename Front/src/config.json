@@ -1,0 +1,9 @@
+{
+  "IP": "localhost",
+  "DB":{
+    "user": "root",
+    "Pass": "Serval7*",
+    "Database": "FreelanceVision",
+    "PORT": "3306"
+  }
+}

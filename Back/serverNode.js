@@ -5,11 +5,31 @@ const mySql = require('mysql');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 const connect = require('./configMysql');
+const multer = require('multer');
 
 
 const port = 4000;
 
+var storageProfileFiles = multer.diskStorage({
+  destination: function (req, file, cb) {
+  cb(null, 'profileFiles')
+},
+filename: function (req, file, cb) {
+  cb(null, Date.now() + '-' +file.originalname )
+}
+})
+var upload = multer({ storage : storageProfileFiles }).single('file')
 
+
+var storageJsutifs = multer.diskStorage({
+  destination: function (req, file, cb) {
+  cb(null, 'justifsFiles')
+},
+filename: function (req, file, cb) {
+  cb(null, Date.now() + '-' +file.originalname )
+}
+})
+var upload1 = multer({ storage : storageJsutifs }).single('file')
 
 
 const app = express();
@@ -21,14 +41,14 @@ const jwtSecretAdmin = '1234';
 app.use(expressJwt({
   secret: jwtSecretAdmin
 }).unless({
-  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra']
+  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra', '/noteDeFrais','/sendFiles', '/sendJustifs']
 }));
 
 const jwtSecretUser = '1234';
 app.use(expressJwt({
   secret: jwtSecretUser
 }).unless({
-  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile','/cra']
+  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra', '/noteDeFrais', '/sendFiles', '/sendJustifs']
 }));
 
 app.post('/adduser', (req, res) => {
@@ -93,27 +113,67 @@ app.get('/getusers', (req, res) => {
 });
 
 app.post('/updateProfile', (req, res) => {
-  console.log('req.body.GreyCard', req.body);
+  console.log('##### BODY : ', req.body);
   connect.connect((err) => {
     if (err) {
       console.log('err');
     }
-
   });
-  const changeUserInfo = `UPDATE salariés SET carteGrise =${mySql.escape(req.body.addGreyCard)} WHERE eMAil =${mySql.escape(req.body.eMail)}`;
+  const changeUserInfo = `UPDATE salariés SET Nom = '${mySql.escape(req.body.changeNom)}',
+                                          SET Prenom ='${mySql.escape(req.body.changePrenom)}',
+                                          SET Identifiant ='${mySql.escape(req.body.changeIdentifiant)}',
+                                          WHERE eMAil =${mySql.escape(req.body.eMail)}`;
 
   connect.query(changeUserInfo, (err1, resultChange) => {
     if (err1) {
       console.log(err1);
     }
-    console.log(resultChange);
+    console.log('resultChange',resultChange);
     res.status(200).json(resultChange);
   });
 });
 
+app.post('/sendFiles',function(req, res) {
+     
+  upload(req, res, function (err) {
+         if (err instanceof multer.MulterError) {
+             return res.status(500).json(err)
+         } else if (err) {
+             return res.status(500).json(err)
+         }
+    return res.status(200).send(req.file)
+
+  })
+
+});
+
+app.post('/sendJustifs',function(req, res) {
+     
+  upload1(req, res, function (err) {
+         if (err instanceof multer.MulterError) {
+             return res.status(500).json(err)
+         } else if (err) {
+             return res.status(500).json(err)
+         }
+    return res.status(200).send(req.file)
+
+  })
+
+});
+
 app.post('/cra', (req, res) => {
   console.log('updateCra', req.body);
-  
+
+  connect.connect((err) => {
+    if (err) {
+      console.log('err');
+    }
+  });
+});
+
+app.post('/noteDeFrais', (req, res) => {
+  console.log('updateNoteDeFrais', req.body);
+
   connect.connect((err) => {
     if (err) {
       console.log('err');
