@@ -10,16 +10,26 @@ const multer = require('multer');
 
 const port = 4000;
 
-var storage = multer.diskStorage({
+var storageProfileFiles = multer.diskStorage({
   destination: function (req, file, cb) {
-  cb(null, 'Files')
+  cb(null, 'profileFiles')
 },
 filename: function (req, file, cb) {
   cb(null, Date.now() + '-' +file.originalname )
 }
 })
+var upload = multer({ storage : storageProfileFiles }).single('file')
 
-var upload = multer({ storage: storage }).single('file')
+
+var storageJsutifs = multer.diskStorage({
+  destination: function (req, file, cb) {
+  cb(null, 'justifsFiles')
+},
+filename: function (req, file, cb) {
+  cb(null, Date.now() + '-' +file.originalname )
+}
+})
+var upload1 = multer({ storage : storageJsutifs }).single('file')
 
 
 const app = express();
@@ -31,14 +41,14 @@ const jwtSecretAdmin = '1234';
 app.use(expressJwt({
   secret: jwtSecretAdmin
 }).unless({
-  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra', '/noteDeFrais','/sendFiles']
+  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra', '/noteDeFrais','/sendFiles', '/sendJustifs']
 }));
 
 const jwtSecretUser = '1234';
 app.use(expressJwt({
   secret: jwtSecretUser
 }).unless({
-  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra', '/noteDeFrais', '/sendFiles']
+  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra', '/noteDeFrais', '/sendFiles', '/sendJustifs']
 }));
 
 app.post('/adduser', (req, res) => {
@@ -126,6 +136,20 @@ app.post('/updateProfile', (req, res) => {
 app.post('/sendFiles',function(req, res) {
      
   upload(req, res, function (err) {
+         if (err instanceof multer.MulterError) {
+             return res.status(500).json(err)
+         } else if (err) {
+             return res.status(500).json(err)
+         }
+    return res.status(200).send(req.file)
+
+  })
+
+});
+
+app.post('/sendJustifs',function(req, res) {
+     
+  upload1(req, res, function (err) {
          if (err instanceof multer.MulterError) {
              return res.status(500).json(err)
          } else if (err) {

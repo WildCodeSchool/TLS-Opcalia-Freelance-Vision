@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { DateInput } from 'semantic-ui-calendar-react';
 import { Table, Button, Icon } from 'semantic-ui-react';
 import Axios from 'axios';
+import { Progress } from 'reactstrap';
 import { IP } from '../config.json';
 import './Vision.css';
 
@@ -15,11 +16,20 @@ class NoteDeFrais extends Component {
     this.state = {
       date: '',
       costs: [],
-      total: 0
+      total: 0,
+      loaded: 0
     };
     this.inputComment = this.inputComment.bind(this);
     this.postNoteDeFrais = this.postNoteDeFrais.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleFileChange = this.handleFileChange.bind(this);
+    this.postFiles = this.postFiles.bind(this);
+
+
+  }
+
+  handleFileChange(event) {
+    this.setState({ [event.target.name]: event.target.files[0] });
   }
 
   postNoteDeFrais(event) {
@@ -27,6 +37,24 @@ class NoteDeFrais extends Component {
     const { costs } = this.state;
     Axios.post(`http://${IP}:4000/noteDeFrais`, {
       tableCosts: costs,
+    })
+      .then(res => {
+        console.log(res);
+      });
+  }
+
+  postFiles(event) {
+    event.preventDefault();
+    const { greyCard } = this.state;
+    const file = new FormData();
+    file.append('file', greyCard);
+    console.log('greyCard', greyCard);
+    Axios.post(`http://${IP}:4000/sendJustifs`, file, {
+      onUploadProgress: ProgressEvent => {
+        this.setState({
+          loaded: (ProgressEvent.loaded / ProgressEvent.total * 100),
+        });
+      }
     })
       .then(res => {
         console.log(res);
@@ -92,7 +120,7 @@ class NoteDeFrais extends Component {
   }
 
   render() {
-    const { costs } = this.state;
+    const { costs, loaded } = this.state;
     console.log(costs);
 
     return (
@@ -145,12 +173,17 @@ class NoteDeFrais extends Component {
             </Table>
           </div>
           <br />
-          <br />
           <Button color="teal" onClick={() => this.addEmptyLine(costs)} icon="plus circle" />
           <h3>Totaux : {this.calculTotaux()}<br /></h3>
           <br />
-          <br />
           <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Soumettre</Button>
+        </form><br />
+        <form onSubmit={this.postFiles}>
+          <h4>Sélectionner la pièce justificative à envoyer:</h4>
+          <div id="carteGrise" />
+          <input className="ButtonEnvoye" id="carteGrise" name="greyCard" type="file" onChange={this.handleFileChange} /><br />
+          <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Envoyer fichiers </Button>
+          <Progress max="100" color="success" value={loaded}>{Math.round(loaded, 2)}%</Progress>
         </form>
       </div>
     );

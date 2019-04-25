@@ -54,7 +54,8 @@ class Profile extends Component {
       });
   }
 
-  postFiles() {
+  postFiles(event) {
+    event.preventDefault();
     const { greyCard } = this.state;
     const file = new FormData();
     file.append('file', greyCard);
@@ -75,6 +76,7 @@ class Profile extends Component {
     const {
       nom, prénom, identifiant, userType, eMail
     } = this.props;
+    const { loaded } = this.state;
     return (
       <div>
         <div className="profile">
@@ -92,11 +94,13 @@ class Profile extends Component {
               <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Envoyer</Button>
             </div>
           </form>
-          <span>Sélectionner la carte grise à envoyer:</span>
-          <div id="carteGrise" />
-          <input className="ButtonEnvoye" id="carteGrise" name="greyCard" type="file" onChange={this.handleFileChange} /><br />
-          <Progress max="100" color="success" value={this.state.loaded}>{Math.round(this.state.loaded, 2)}%</Progress>
-          <Button type="button" color="teal"><Icon name="paper plane outline" onClick={this.postFiles} /> &nbsp; Envoyer fichiers </Button>
+          <form onSubmit={this.postFiles}>
+            <h4>Sélectionner la carte grise à envoyer:</h4>
+            <div id="carteGrise" />
+            <input className="ButtonEnvoye" id="carteGrise" name="greyCard" type="file" onChange={this.handleFileChange} /><br />
+            <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Envoyer fichiers </Button>
+            <Progress max="100" color="success" value={loaded}>{Math.round(loaded, 2)}%</Progress>
+          </form>
         </div>
       </div>
     );
