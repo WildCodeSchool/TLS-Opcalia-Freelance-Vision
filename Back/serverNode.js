@@ -118,17 +118,15 @@ app.get('/getusers', (req, res) => {
 
 app.post('/updateProfile', (req, res) => {
   console.log('##### BODY : ', req.body);
+  const {changeNom, changePrenom, changeIdentifiant, eMail, id} = req.body
   connect.connect((err) => {
     if (err) {
       console.log('err');
     }
   });
-  const changeUserInfo = `UPDATE salariés SET Nom = '${mySql.escape(req.body.changeNom)}',
-                                          SET Prenom ='${mySql.escape(req.body.changePrenom)}',
-                                          SET Identifiant ='${mySql.escape(req.body.changeIdentifiant)}',
-                                          WHERE eMAil =${mySql.escape(req.body.eMail)}`;
-
-  connect.query(changeUserInfo, (err1, resultChange) => {
+  const sql = `UPDATE salariés SET Nom = ?, Prenom = ?, Identifiant = ?, eMail = ? WHERE id = ?`;
+  const records = [changeNom, changePrenom, changeIdentifiant, eMail, id]
+  connect.query(sql, records, (err1, resultChange) => {
     if (err1) {
       console.log(err1);
     }
@@ -222,6 +220,7 @@ app.post('/login', (req, res) => {
               auth: true,
               tokenUser,
               result: resultSelectUser[0].userType,
+              id: resultSelectUser[0].ID,
               nomProfile: resultSelectUser[0].Nom,
               prenomProfile: resultSelectUser[0].Prenom,
               identifiantProfile: resultSelectUser[0].Identifiant,
@@ -235,6 +234,7 @@ app.post('/login', (req, res) => {
               auth: true,
               tokenUser,
               result: resultSelectUser[0].userType,
+              idProfile: resultSelectUser[0].ID,
               nomProfile: resultSelectUser[0].Nom,
               prenomProfile: resultSelectUser[0].Prenom,
               identifiantProfile: resultSelectUser[0].Identifiant,

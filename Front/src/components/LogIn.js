@@ -33,13 +33,14 @@ class LogIn extends Component {
     Axios.post(`http://${IP}:4000/login`, this.state)
       .then(res => {
         const { dispatch } = this.props;
-        console.log(res.data);
+        console.log('DATA', res.data);
         this.setState({ res: res.data });
         dispatch({ type: 'CREATE_TOKEN_USER', token: res.data.tokenUser });
         dispatch({ type: 'CREATE_TOKEN_ADMIN', token: res.data.tokenAdmin });
         dispatch({ type: 'PROFILETYPE', profileType: res.data.result });
         dispatch({
           type: 'PROFILE',
+          idProfile: res.data.id,
           nomProfile: res.data.nomProfile,
           prenomProfile: res.data.prenomProfile,
           identifiantProfile: res.data.identifiantProfile,
