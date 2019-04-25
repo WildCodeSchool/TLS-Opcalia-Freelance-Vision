@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './Vision.css';
+import './Vision.scss';
 import { Button, Icon } from 'semantic-ui-react';
 import 'react-dropzone-uploader/dist/styles.css';
 import Axios from 'axios';

@@ -7,7 +7,7 @@ import { Table, Button, Icon } from 'semantic-ui-react';
 import Axios from 'axios';
 import { Progress } from 'reactstrap';
 import { IP } from '../config.json';
-import './Vision.css';
+import './Vision.scss';
 
 
 class NoteDeFrais extends Component {

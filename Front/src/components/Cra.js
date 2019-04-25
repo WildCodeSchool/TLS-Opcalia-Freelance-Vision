@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import { Table, Icon, Button } from 'semantic-ui-react';
 import dateFns from 'date-fns';
 import Axios from 'axios';
-import './Vision.css';
+import './Vision.scss';
 import { IP } from '../config.json';
 
 class Cra extends Component {
