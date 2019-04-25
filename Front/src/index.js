@@ -2,13 +2,13 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import Register from './Register';
 import * as serviceWorker from './serviceWorker';
 import allReducers from './reducers';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const store = createStore(
   allReducers,

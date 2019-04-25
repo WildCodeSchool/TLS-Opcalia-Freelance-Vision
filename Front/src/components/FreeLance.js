@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Menu, Segment } from 'semantic-ui-react';
 import Profile from './Profile';
 import Cra from './Cra';
-import './Vision.css';
+import './Vision.scss';
 
 class FreeLance extends Component {
     constructor(props) {

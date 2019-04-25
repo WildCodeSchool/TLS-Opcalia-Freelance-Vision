@@ -20,11 +20,12 @@ export default function (store = { userTable: [] }, action) {
     }
     case 'PROFILE': {
       const {
-        nomProfile, prenomProfile, identifiantProfile, typeProfile, eMailProfile, passwordProfile
+        nomProfile, idProfile, prenomProfile, identifiantProfile, typeProfile, eMailProfile, passwordProfile
       } = action;
       return {
         ...store,
         nomProfile,
+        idProfile,
         prenomProfile,
         identifiantProfile,
         typeProfile,
