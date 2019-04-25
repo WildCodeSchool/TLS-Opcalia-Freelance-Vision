@@ -206,3 +206,14 @@ td input.inputCra{
 .weGrey{
   background : rgb(212, 209, 209);
 }
+.registerForm{
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15%;
+  background-color: teal;
+  padding: 4%;
+}
+.titleReg{
+  text-align: center;
+}

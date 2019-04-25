@@ -2,10 +2,13 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import './index.css';
 import App from './App';
+import Register from './Register';
 import * as serviceWorker from './serviceWorker';
 import allReducers from './reducers';
+
 
 const store = createStore(
   allReducers,
@@ -15,7 +18,12 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <div>
+        <Route exact path="/" component={App} />
+        <Route path="/register/:id/:mail" component={Register} />
+      </div>
+    </Router>
   </Provider>,
   document.getElementById('root')
 );
