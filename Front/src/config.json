@@ -1,8 +1,8 @@
 {
   "IP": "localhost",
   "DB":{
-    "user": "appUser",
-    "Pass": "titoul84400",
+    "user": "root",
+    "Pass": "Serval7*",
     "Database": "FreelanceVision",
     "PORT": "3306"
   }

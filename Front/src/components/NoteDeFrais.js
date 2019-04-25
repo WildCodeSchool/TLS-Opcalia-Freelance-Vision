@@ -1,9 +1,12 @@
+/* eslint-disable max-len */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { DateInput } from 'semantic-ui-calendar-react';
-import './Vision.css';
 import { Table, Button, Icon } from 'semantic-ui-react';
+import Axios from 'axios';
+import { IP } from '../config.json';
+import './Vision.css';
 
 
 class NoteDeFrais extends Component {
@@ -11,20 +14,62 @@ class NoteDeFrais extends Component {
     super(props);
     this.state = {
       date: '',
-      costs: []
+      costs: [],
+      total: 0
     };
     this.inputComment = this.inputComment.bind(this);
-    // this.createArrayCosts = this.createArrayCosts.bind(this);
+    this.postNoteDeFrais = this.postNoteDeFrais.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
   }
 
-  inputComment(index, event) {
+  postNoteDeFrais(event) {
+    event.preventDefault();
     const { costs } = this.state;
+    Axios.post(`http://${IP}:4000/noteDeFrais`, {
+      tableCosts: costs,
+    })
+      .then(res => {
+        console.log(res);
+      });
+  }
+
+  inputComment(index, event, key) {
+    const { costs } = this.state;
+    console.log('key', key);
     event.preventDefault();
     const costsCopy = [...costs];
-    costsCopy[index] = event.target.value;
+    if (key === 'Client') { costsCopy[index].Client = event.target.value; }
+    if (key === 'Description') { costsCopy[index].Description = event.target.value; }
+    if (key === 'KM') { costsCopy[index].KM = event.target.value; }
+    if (key === 'Forfait') { costsCopy[index].Forfait = event.target.value; }
+    if (key === 'Hôtel') { costsCopy[index].Hotel = event.target.value; }
+    if (key === 'Repas') { costsCopy[index].Repas = event.target.value; }
+    if (key === 'Divers') { costsCopy[index].Divers = event.target.value; }
+    console.log('beforeSetState', costsCopy);
+
     this.setState({ costs: costsCopy });
     console.log('inputComment', event.target.value, index);
+    this.totalLine(index);
+  }
+
+  totalLine(index) {
+    const { costs } = this.state;
+    const copyCost = [...costs];
+    let copyTotal = 0;
+    // eslint-disable-next-line no-return-assign
+    copyTotal += Number(copyCost[index].Hotel) + Number(copyCost[index].Repas) + Number(copyCost[index].Divers);
+    copyCost[index].Total = copyTotal;
+    this.setState({ costs: copyCost });
+  }
+
+  calculTotaux() {
+    const { costs } = this.state;
+    let total = 0;
+    // eslint-disable-next-line no-return-assign
+    costs.map((item) => (
+      total += Number(item.Total)
+    ));
+    return total;
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -40,7 +85,7 @@ class NoteDeFrais extends Component {
   // eslint-disable-next-line class-methods-use-this
   addEmptyLine(costs) {
     costs.push({
-      Date, Client: '', Description: '', KM: '', Forfait: '', Hôtel: '', Repas: '', Divers: ''
+      Date, Client: '', Description: '', KM: '', Forfait: '', Hotel: '', Repas: '', Divers: '', Total: 0
     });
     console.log(costs);
     this.setState({ costs });
@@ -52,58 +97,61 @@ class NoteDeFrais extends Component {
 
     return (
       <div>
-        <div className="scrollBoxNDF">
-          <Table celled fixed singleLine>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Date</Table.HeaderCell>
-                <Table.HeaderCell>Client</Table.HeaderCell>
-                <Table.HeaderCell>Description</Table.HeaderCell>
-                <Table.HeaderCell>KM</Table.HeaderCell>
-                <Table.HeaderCell>Forfait URSSAF</Table.HeaderCell>
-                <Table.HeaderCell>Hôtel</Table.HeaderCell>
-                <Table.HeaderCell>Repas</Table.HeaderCell>
-                <Table.HeaderCell>Divers(taxi/péage/tél)</Table.HeaderCell>
-                <Table.HeaderCell>Total Frais</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            {costs.map((json, index) => (
-              <Table.Body>
+        <form onSubmit={this.postNoteDeFrais}>
+          <div className="scrollBoxNDF">
+            <Table celled fixed singleLine>
+              <Table.Header>
                 <Table.Row>
-                  <Table.Cell>
-                    <DateInput
-                      name={json.date}
-                      placeholder="Date"
-                      value={json.value}
-                      iconPosition="left"
-                      className="style_input_date"
-                      onChange={(event, { name, value }) => this.handleDateChange(
-                        event,
-                        { name, value },
-                        index
-                      )}
-                    />
-                  </Table.Cell>
-                  <Table.Cell><input type="text" className="style_input" name="Client" value={json.Client} onChange={event => this.inputComment(index, event)} /></Table.Cell>
-                  <Table.Cell><input type="text" className="style_input" name="Description" value={json.Description} onChange={event => this.inputComment(index, event)} /></Table.Cell>
-                  <Table.Cell><input type="text" disabled="disabled" className="style_input" name="KM" value={json.KM} onChange={event => this.inputComment(index, event)} /></Table.Cell>
-                  <Table.Cell><input type="text" className="style_input" name="Forfait" value={json.Forfait} onChange={event => this.inputComment(index, event)} /></Table.Cell>
-                  <Table.Cell><input type="text" className="style_input" name="Hôtel" value={json.Hôtel} onChange={event => this.inputComment(index, event)} /></Table.Cell>
-                  <Table.Cell><input type="text" className="style_input" name="Repas" value={json.Repas} onChange={event => this.inputComment(index, event)} /></Table.Cell>
-                  <Table.Cell><input type="text" className="style_input" name="Divers" value={json.Divers} onChange={event => this.inputComment(index, event)} /></Table.Cell>
-                  <Table.Cell><input type="text" className="style_input" /></Table.Cell>
+                  <Table.HeaderCell>Date</Table.HeaderCell>
+                  <Table.HeaderCell>Client</Table.HeaderCell>
+                  <Table.HeaderCell>Description</Table.HeaderCell>
+                  <Table.HeaderCell>KM</Table.HeaderCell>
+                  <Table.HeaderCell>Forfait URSSAF</Table.HeaderCell>
+                  <Table.HeaderCell>Hôtel</Table.HeaderCell>
+                  <Table.HeaderCell>Repas</Table.HeaderCell>
+                  <Table.HeaderCell>Divers(taxi/péage/tél)</Table.HeaderCell>
+                  <Table.HeaderCell>Total Frais</Table.HeaderCell>
                 </Table.Row>
-              </Table.Body>
-            ))
-            }
-          </Table>
-        </div>
-        <br />
-        <br />
-        <Button color="teal" onClick={() => this.addEmptyLine(costs)} icon="plus circle" />
-        <br />
-        <br />
-        <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Soumettre</Button>
+              </Table.Header>
+              {costs.map((json, index) => (
+                <Table.Body>
+                  <Table.Row>
+                    <Table.Cell>
+                      <DateInput
+                        name={json.date}
+                        placeholder="Date"
+                        value={json.value}
+                        iconPosition="left"
+                        className="style_input_date"
+                        onChange={(event, { name, value }) => this.handleDateChange(
+                          event,
+                          { name, value },
+                          index
+                        )}
+                      />
+                    </Table.Cell>
+                    <Table.Cell><input type="text" className="style_input" name="Client" value={json.Client} onChange={event => this.inputComment(index, event, 'Client')} /></Table.Cell>
+                    <Table.Cell><input type="text" className="style_input" name="Description" value={json.Description} onChange={event => this.inputComment(index, event, 'Description')} /></Table.Cell>
+                    <Table.Cell><input type="text" disabled="disabled" className="style_input" name="KM" value={json.KM} onChange={event => this.inputComment(index, event, 'KM')} /></Table.Cell>
+                    <Table.Cell><input type="text" className="style_input" name="Forfait" value={json.Forfait} onChange={event => this.inputComment(index, event, 'Forfait')} /></Table.Cell>
+                    <Table.Cell><input type="number" className="style_input" name="Hôtel" value={json.Hotel} onChange={event => this.inputComment(index, event, 'Hôtel')} /></Table.Cell>
+                    <Table.Cell><input type="number" className="style_input" name="Repas" value={json.Repas} onChange={event => this.inputComment(index, event, 'Repas')} /></Table.Cell>
+                    <Table.Cell><input type="number" className="style_input" name="Divers" value={json.divers} onChange={event => this.inputComment(index, event, 'Divers')} /></Table.Cell>
+                    <Table.Cell><input type="text" className="style_input" name="Total" value={json.Total} /></Table.Cell>
+                  </Table.Row>
+                </Table.Body>
+              ))
+              }
+            </Table>
+          </div>
+          <br />
+          <br />
+          <Button color="teal" onClick={() => this.addEmptyLine(costs)} icon="plus circle" />
+          <h3>Totaux : {this.calculTotaux()}<br /></h3>
+          <br />
+          <br />
+          <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Soumettre</Button>
+        </form>
       </div>
     );
   }
