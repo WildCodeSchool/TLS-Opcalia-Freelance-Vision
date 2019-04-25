@@ -25,7 +25,9 @@ class Profile extends Component {
       identifiant: props.identifiant,
       email: props.eMail,
       type: props.userType,
-      loaded: 0
+      loaded: 0,
+      loadingFile: false,
+      loadingForm: false
     };
     this.postProfile = this.postProfile.bind(this);
     this.postFiles = this.postFiles.bind(this);
@@ -51,6 +53,7 @@ class Profile extends Component {
   postProfile(event) {
     event.preventDefault();
     const { eMail } = this.props;
+    this.setState({ loadingForm: true });
     const {
       identifiant,
       nom,
@@ -75,19 +78,22 @@ class Profile extends Component {
             theme: 'sunset',
             timeout: 2000,
           }).show();
-        } else {
-          new Noty({
-            text: 'Une erreur est survenue',
-            type: 'warning',
-            theme: 'sunset',
-          }).show();
+          this.setState({ loadingForm: false });
         }
+      }).catch(err => {
+        console.log(err);
+        new Noty({
+          text: 'Erreur',
+          type: 'warning',
+          theme: 'sunset',
+        }).show();
       });
   }
 
   postFiles(event) {
     event.preventDefault();
     const { greyCard } = this.state;
+    this.setState({ loadingFile: true });
     const file = new FormData();
     file.append('file', greyCard);
     console.log('greyCard', greyCard);
@@ -100,12 +106,29 @@ class Profile extends Component {
     })
       .then(res => {
         console.log(res);
+        if (res.status === 200) {
+          console.log('SUCCESS');
+          new Noty({
+            text: 'Fichier envoyé',
+            type: 'success',
+            theme: 'sunset',
+            timeout: 2000,
+          }).show();
+          this.setState({ loadingFile: false });
+        }
+      }).catch(err => {
+        console.log(err);
+        new Noty({
+          text: 'Erreur',
+          type: 'warning',
+          theme: 'sunset',
+        }).show();
       });
   }
 
   render() {
     const {
-      nom, prenom, identifiant, type, email, loaded
+      nom, prenom, identifiant, type, email, loaded, loadingFile, loadingForm
     } = this.state;
     console.log('state', this.state);
     const typeOptions = [
@@ -117,7 +140,7 @@ class Profile extends Component {
     return (
       <div>
         <div className="profile">
-          <Form onSubmit={this.postProfile}>
+          <Form onSubmit={this.postProfile} loading={loadingForm}>
             <Form.Field>
               <label>Nom:</label>
               <Input type="text" name="nom" id="nom" placeholder="Nom..." value={nom} onChange={this.handleChange} />
@@ -138,16 +161,20 @@ class Profile extends Component {
               <label>Type:</label>
               <Select name="type" placeholder="Type..." value={type} options={typeOptions} onChange={(e, { value }) => this.handleSelectChange(value)} />
             </Form.Field>
-            <div>
+            <div style={{ textAlign: 'right' }}>
               <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Sauvegarder</Button>
             </div>
           </Form>
           <Form onSubmit={this.postFiles}>
-            <h4>Sélectionner la carte grise à envoyer:</h4>
-            <div id="carteGrise" />
-            <input className="ButtonEnvoye" id="carteGrise" name="greyCard" type="file" onChange={this.handleFileChange} /><br />
-            <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Envoyer fichiers </Button>
-            <Progress max="100" color="success" value={loaded}>{Math.round(loaded, 2)}%</Progress>
+            <Form.Field>
+              <label>Carte grise:</label>
+              <input className="ButtonEnvoye" id="carteGrise" name="greyCard" type="file" onChange={this.handleFileChange} />
+              { loadingFile && (<Progress max="100" color="success" value={loaded}>{Math.round(loaded, 2)}%</Progress>)}
+            </Form.Field>
+            <div style={{ textAlign: 'right' }}>
+              <Button type="submit" color="teal" loading={loadingFile} disabled={loadingFile}><Icon name="paper plane outline" /> &nbsp; Envoyer fichiers </Button>
+            </div>
+
           </Form>
         </div>
       </div>
