@@ -67,6 +67,7 @@ class NoteDeFrais extends Component {
     if (key === 'Client') { costsCopy[index].Client = event.target.value; }
     if (key === 'Description') { costsCopy[index].Description = event.target.value; }
     if (key === 'KM') { costsCopy[index].KM = event.target.value; }
+    if (key === 'Deplacement') { costsCopy[index].Deplacement = event.target.value; }
     if (key === 'Forfait') { costsCopy[index].Forfait = event.target.value; }
     if (key === 'Hôtel') { costsCopy[index].Hotel = event.target.value; }
     if (key === 'Repas') { costsCopy[index].Repas = event.target.value; }
@@ -83,7 +84,7 @@ class NoteDeFrais extends Component {
     const copyCost = [...costs];
     let copyTotal = 0;
     // eslint-disable-next-line no-return-assign
-    copyTotal += Number(copyCost[index].Hotel) + Number(copyCost[index].Repas) + Number(copyCost[index].Divers);
+    copyTotal += Number(copyCost[index].KM) + Number(copyCost[index].Deplacement) + Number(copyCost[index].Forfait) + Number(copyCost[index].Hotel) + Number(copyCost[index].Repas) + Number(copyCost[index].Divers);
     copyCost[index].Total = copyTotal;
     this.setState({ costs: copyCost });
   }
@@ -111,7 +112,7 @@ class NoteDeFrais extends Component {
   // eslint-disable-next-line class-methods-use-this
   addEmptyLine(costs) {
     costs.push({
-      Date, Client: '', Description: '', KM: '', Forfait: '', Hotel: '', Repas: '', Divers: '', Total: 0
+      Date, Client: '', Description: '', KM: '', Deplacement: '', Forfait: '', Hotel: '', Repas: '', Divers: '', Total: 0
     });
     console.log(costs);
     this.setState({ costs });
@@ -139,6 +140,7 @@ class NoteDeFrais extends Component {
                   <Table.HeaderCell>Client</Table.HeaderCell>
                   <Table.HeaderCell>Description</Table.HeaderCell>
                   <Table.HeaderCell>KM</Table.HeaderCell>
+                  <Table.HeaderCell>Frais d'éplacement</Table.HeaderCell>
                   <Table.HeaderCell>Forfait URSSAF</Table.HeaderCell>
                   <Table.HeaderCell>Hôtel</Table.HeaderCell>
                   <Table.HeaderCell>Repas</Table.HeaderCell>
@@ -165,8 +167,9 @@ class NoteDeFrais extends Component {
                     </Table.Cell>
                     <Table.Cell><input type="text" className="style_input" name="Client" value={json.Client} onChange={event => this.inputComment(index, event, 'Client')} /></Table.Cell>
                     <Table.Cell><input type="text" className="style_input" name="Description" value={json.Description} onChange={event => this.inputComment(index, event, 'Description')} /></Table.Cell>
-                    <Table.Cell><input type="text" disabled="disabled" className="style_input" name="KM" value={json.KM} onChange={event => this.inputComment(index, event, 'KM')} /></Table.Cell>
-                    <Table.Cell><input type="text" className="style_input" name="Forfait" value={json.Forfait} onChange={event => this.inputComment(index, event, 'Forfait')} /></Table.Cell>
+                    <Table.Cell><input type="number" className="style_input" name="KM" value={json.KM} onChange={event => this.inputComment(index, event, 'KM')} /></Table.Cell>
+                    <Table.Cell><input type="number" className="style_input" name="Deplacement" value={json.Deplacement} onChange={event => this.inputComment(index, event, 'Deplacement')} /></Table.Cell>
+                    <Table.Cell><input type="number" className="style_input" name="Forfait" value={json.Forfait} onChange={event => this.inputComment(index, event, 'Forfait')} /></Table.Cell>
                     <Table.Cell><input type="number" className="style_input" name="Hôtel" value={json.Hotel} onChange={event => this.inputComment(index, event, 'Hôtel')} /></Table.Cell>
                     <Table.Cell><input type="number" className="style_input" name="Repas" value={json.Repas} onChange={event => this.inputComment(index, event, 'Repas')} /></Table.Cell>
                     <Table.Cell><input type="number" className="style_input" name="Divers" value={json.divers} onChange={event => this.inputComment(index, event, 'Divers')} /></Table.Cell>
@@ -184,7 +187,7 @@ class NoteDeFrais extends Component {
           <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Soumettre</Button>
         </form><br />
         <form onSubmit={this.postFiles}>
-          <h4>Sélectionner la pièce justificative à envoyer:</h4>
+          <h4>Sélectionnez vos pièces justificatives:</h4>
           <div id="carteGrise" />
           <input className="ButtonEnvoye" id="carteGrise" name="greyCard" type="file" multiple="multiple" onChange={this.handleFileChange} /><br />
           <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Envoyer fichiers </Button>
@@ -196,5 +199,3 @@ class NoteDeFrais extends Component {
 }
 
 export default NoteDeFrais;
-
-
