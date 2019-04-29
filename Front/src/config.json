@@ -1,8 +1,9 @@
 {
   "IP": "localhost",
+  "jwtSecret": "2342121431",
   "DB":{
-    "user": "root",
-    "Pass": "Serval7*",
+    "user": "appUser",
+    "Pass": "titoul84400",
     "Database": "FreelanceVision",
     "PORT": "3306"
   }

@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 const connect = require('./configMysql');
 const multer = require('multer');
+const config = require('../Front/src/config.json');
 
 
 const port = 4000;
@@ -37,18 +38,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const jwtSecretAdmin = '1234';
+const jwtSecret = config.jwtSecret;
 app.use(expressJwt({
-  secret: jwtSecretAdmin
+  secret: jwtSecret
 }).unless({
   path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra', '/noteDeFrais','/sendFiles', '/sendJustifs', '/configuser']
-}));
-
-const jwtSecretUser = '1234';
-app.use(expressJwt({
-  secret: jwtSecretUser
-}).unless({
-  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra', '/noteDeFrais', '/sendFiles', '/sendJustifs', '/configuser']
 }));
 
 app.post('/adduser', (req, res) => {
@@ -97,7 +91,7 @@ app.post('/removeuser', (req, res) => {
 
 app.post('/configuser', (req, res) => {
   console.log(req.body);
-  res.json('test')
+  res.json('test');
 })
 
 app.get('/getusers', (req, res) => {
@@ -215,7 +209,7 @@ app.post('/login', (req, res) => {
           if (resultSelectUser[0].userType === 'Employee') {
             console.log('renvoie de employee');
             const tokenUser = jwt.sign({
-            }, jwtSecretUser);
+            }, jwtSecret);
             res.status(200).json({
               auth: true,
               tokenUser,
@@ -229,7 +223,7 @@ app.post('/login', (req, res) => {
             });
           } else if (resultSelectUser[0].userType === 'Freelance') {
             const tokenUser = jwt.sign({
-            }, jwtSecretUser);
+            }, jwtSecret);
             res.status(200).json({
               auth: true,
               tokenUser,
@@ -243,7 +237,7 @@ app.post('/login', (req, res) => {
             });
           } else {
             const tokenAdmin = jwt.sign({
-            }, jwtSecretAdmin);
+            }, jwtSecret);
             res.status(200).json({
               auth: true,
               tokenAdmin,
