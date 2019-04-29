@@ -46,7 +46,8 @@ class LogIn extends Component {
           identifiantProfile: res.data.identifiantProfile,
           typeProfile: res.data.typeProfile,
           eMailProfile: res.data.eMailProfile,
-          passwordProfile: res.data.passwordProfile
+          passwordProfile: res.data.passwordProfile,
+          telephoneProfile: res.data.telephoneProfile
         });
         console.log(res.data);
         // dispatch action profile loading

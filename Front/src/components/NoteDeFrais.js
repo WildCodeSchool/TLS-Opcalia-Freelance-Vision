@@ -24,8 +24,6 @@ class NoteDeFrais extends Component {
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleFileChange = this.handleFileChange.bind(this);
     this.postFiles = this.postFiles.bind(this);
-
-
   }
 
   handleFileChange(event) {
@@ -119,6 +117,13 @@ class NoteDeFrais extends Component {
     this.setState({ costs });
   }
 
+  deleteLine(index, costs) {
+    const copyCosts = [...costs];
+    copyCosts.splice(index, 1);
+    this.setState({ costs: copyCosts });
+  }
+
+
   render() {
     const { costs, loaded } = this.state;
     console.log(costs);
@@ -165,7 +170,7 @@ class NoteDeFrais extends Component {
                     <Table.Cell><input type="number" className="style_input" name="Hôtel" value={json.Hotel} onChange={event => this.inputComment(index, event, 'Hôtel')} /></Table.Cell>
                     <Table.Cell><input type="number" className="style_input" name="Repas" value={json.Repas} onChange={event => this.inputComment(index, event, 'Repas')} /></Table.Cell>
                     <Table.Cell><input type="number" className="style_input" name="Divers" value={json.divers} onChange={event => this.inputComment(index, event, 'Divers')} /></Table.Cell>
-                    <Table.Cell><input type="text" className="style_input" name="Total" value={json.Total} /></Table.Cell>
+                    <Table.Cell><input type="text" className="style_input" name="Total" value={json.Total} /><Button color="teal" onClick={() => this.deleteLine(index, costs)} icon="minus circle" /></Table.Cell>
                   </Table.Row>
                 </Table.Body>
               ))
@@ -181,7 +186,7 @@ class NoteDeFrais extends Component {
         <form onSubmit={this.postFiles}>
           <h4>Sélectionner la pièce justificative à envoyer:</h4>
           <div id="carteGrise" />
-          <input className="ButtonEnvoye" id="carteGrise" name="greyCard" type="file" onChange={this.handleFileChange} /><br />
+          <input className="ButtonEnvoye" id="carteGrise" name="greyCard" type="file" multiple="multiple" onChange={this.handleFileChange} /><br />
           <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Envoyer fichiers </Button>
           <Progress max="100" color="success" value={loaded}>{Math.round(loaded, 2)}%</Progress>
         </form>
@@ -191,3 +196,5 @@ class NoteDeFrais extends Component {
 }
 
 export default NoteDeFrais;
+
+

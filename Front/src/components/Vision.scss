@@ -2,6 +2,7 @@
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 @import "~noty/src/noty.scss";
 @import "~noty/src/themes/sunset.scss";
+
 body {
   max-height: 100%;
   max-width: 100%;
@@ -168,6 +169,22 @@ td input.inputCra {
   width: 9.2em;
   height: 1em;
   margin-bottom: 1.5em;
+  ;
+  font-size: 1em
+}
+.style_input1{
+  border: none;
+  width: 7.8em;
+  height: 2.5em;
+  margin-bottom: 0.5em;
+  ;
+  font-size: 1em
+}
+.style_input{
+  border: none;
+  width: 9.2em;
+  height: 2.5em;
+  margin-bottom: 0.5em;
   ;
   font-size: 1em
 }

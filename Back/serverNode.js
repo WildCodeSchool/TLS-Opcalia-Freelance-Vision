@@ -13,24 +13,24 @@ const port = 4000;
 
 var storageProfileFiles = multer.diskStorage({
   destination: function (req, file, cb) {
-  cb(null, 'profileFiles')
-},
-filename: function (req, file, cb) {
-  cb(null, Date.now() + '-' +file.originalname )
-}
+    cb(null, 'profileFiles')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname)
+  }
 })
-var upload = multer({ storage : storageProfileFiles }).single('file')
+var upload = multer({ storage: storageProfileFiles }).single('file')
 
 
 var storageJsutifs = multer.diskStorage({
   destination: function (req, file, cb) {
-  cb(null, 'justifsFiles')
-},
-filename: function (req, file, cb) {
-  cb(null, Date.now() + '-' +file.originalname )
-}
+    cb(null, 'justifsFiles')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname)
+  }
 })
-var upload1 = multer({ storage : storageJsutifs }).single('file')
+var upload1 = multer({ storage: storageJsutifs }).single('file')
 
 
 const app = express();
@@ -42,7 +42,7 @@ const jwtSecret = config.jwtSecret;
 app.use(expressJwt({
   secret: jwtSecret
 }).unless({
-  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra', '/noteDeFrais','/sendFiles', '/sendJustifs', '/configuser']
+  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra', '/noteDeFrais', '/sendFiles', '/sendJustifs', '/configuser']
 }));
 
 app.post('/adduser', (req, res) => {
@@ -112,45 +112,45 @@ app.get('/getusers', (req, res) => {
 
 app.post('/updateProfile', (req, res) => {
   console.log('##### BODY : ', req.body);
-  const {changeNom, changePrenom, changeIdentifiant, eMail, id} = req.body
+  const { changeTelephone, changeNom, changePrenom, changeIdentifiant, changeEmail, id } = req.body
   connect.connect((err) => {
     if (err) {
       console.log('err');
     }
   });
-  const sql = `UPDATE salariés SET Nom = ?, Prenom = ?, Identifiant = ?, eMail = ? WHERE id = ?`;
-  const records = [changeNom, changePrenom, changeIdentifiant, eMail, id]
+  const sql = `UPDATE salariés SET Nom = ?, Prenom = ?, Identifiant = ?, eMail = ?, Telephone = ? WHERE id = ?`;
+  const records = [changeNom, changePrenom, changeIdentifiant, changeEmail, changeTelephone, id]
   connect.query(sql, records, (err1, resultChange) => {
     if (err1) {
       console.log(err1);
     }
-    console.log('resultChange',resultChange);
+    console.log('resultChange', resultChange);
     res.status(200).json(resultChange);
   });
 });
 
-app.post('/sendFiles',function(req, res) {
-     
+app.post('/sendFiles', function (req, res) {
+
   upload(req, res, function (err) {
-         if (err instanceof multer.MulterError) {
-             return res.status(500).json(err)
-         } else if (err) {
-             return res.status(500).json(err)
-         }
+    if (err instanceof multer.MulterError) {
+      return res.status(500).json(err)
+    } else if (err) {
+      return res.status(500).json(err)
+    }
     return res.status(200).send(req.file)
 
   })
 
 });
 
-app.post('/sendJustifs',function(req, res) {
-     
+app.post('/sendJustifs', function (req, res) {
+
   upload1(req, res, function (err) {
-         if (err instanceof multer.MulterError) {
-             return res.status(500).json(err)
-         } else if (err) {
-             return res.status(500).json(err)
-         }
+    if (err instanceof multer.MulterError) {
+      return res.status(500).json(err)
+    } else if (err) {
+      return res.status(500).json(err)
+    }
     return res.status(200).send(req.file)
 
   })
@@ -219,7 +219,8 @@ app.post('/login', (req, res) => {
               prenomProfile: resultSelectUser[0].Prenom,
               identifiantProfile: resultSelectUser[0].Identifiant,
               typeProfile: resultSelectUser[0].userType,
-              eMailProfile: resultSelectUser[0].eMail
+              eMailProfile: resultSelectUser[0].eMail,
+              telephoneProfile: resultSelectUser[0].Telephone
             });
           } else if (resultSelectUser[0].userType === 'Freelance') {
             const tokenUser = jwt.sign({
@@ -233,7 +234,9 @@ app.post('/login', (req, res) => {
               prenomProfile: resultSelectUser[0].Prenom,
               identifiantProfile: resultSelectUser[0].Identifiant,
               typeProfile: resultSelectUser[0].userType,
-              eMailProfile: resultSelectUser[0].eMail
+              eMailProfile: resultSelectUser[0].eMail,
+              telephoneProfile: resultSelectUser[0].Telephone
+
             });
           } else {
             const tokenAdmin = jwt.sign({

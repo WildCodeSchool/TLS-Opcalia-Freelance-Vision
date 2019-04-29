@@ -1,3 +1,6 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable max-len */
 import React, { Component } from 'react';
@@ -21,9 +24,10 @@ class Profile extends Component {
       id: props.id,
       greyCard: '',
       nom: props.nom,
+      telephone: props.telephone,
       prenom: props.prénom,
       identifiant: props.identifiant,
-      email: props.eMail,
+      eMail: props.eMail,
       type: props.userType,
       loaded: 0,
       loadingFile: false,
@@ -52,20 +56,22 @@ class Profile extends Component {
 
   postProfile(event) {
     event.preventDefault();
-    const { eMail } = this.props;
     this.setState({ loadingForm: true });
     const {
       identifiant,
       nom,
       prenom,
       id,
+      telephone,
+      eMail
     } = this.state;
     Axios.post(`http://${IP}:4000/updateProfile`, {
       id,
-      eMail,
+      changeEmail: eMail,
       changeIdentifiant: identifiant,
       changeNom: nom,
       changePrenom: prenom,
+      changeTelephone: telephone
     })
       .then(res => {
         console.log('RES', res);
@@ -128,11 +134,10 @@ class Profile extends Component {
 
   render() {
     const {
-      nom, prenom, identifiant, type, email, loaded, loadingFile, loadingForm
+      telephone, nom, prenom, identifiant, type, eMail, loaded, loadingFile, loadingForm
     } = this.state;
     console.log('state', this.state);
     const typeOptions = [
-      { key: 'admin', text: 'Administrateur', value: 'Admin' },
       { key: 'freelance', text: 'Freelance', value: 'Freelance' },
       { key: 'employee', text: 'Employee', value: 'Employee' }
     ];
@@ -143,19 +148,23 @@ class Profile extends Component {
           <Form onSubmit={this.postProfile} loading={loadingForm}>
             <Form.Field>
               <label>Nom:</label>
-              <Input type="text" name="nom" id="nom" placeholder="Nom..." value={nom} onChange={this.handleChange} />
+              <Input type="text" name="nom" id="nom" disabled="disabled" placeholder="Nom..." value={nom} onChange={this.handleChange} />
             </Form.Field>
             <Form.Field>
               <label>Prénom:</label>
-              <Input type="text" name="prenom" id="prenom" placeholder="Prénom..." value={prenom} onChange={this.handleChange} />
+              <Input type="text" name="prenom" id="prenom" disabled="disabled" placeholder="Prénom..." value={prenom} onChange={this.handleChange} />
+            </Form.Field>
+            <Form.Field>
+              <label>N° de téléphone:</label>
+              <Input type="text" name="telephone" id="telephone" value={telephone} placeholder="Téléphone..." onChange={this.handleChange} />
             </Form.Field>
             <Form.Field>
               <label>Identifiant:</label>
-              <Input type="text" name="identifiant" id="identifiant" value={identifiant} placeholder="Identifiant..." onChange={this.handleChange} />
+              <Input type="text" name="identifiant" id="identifiant" disabled="disabled" value={identifiant} placeholder="Identifiant..." onChange={this.handleChange} />
             </Form.Field>
             <Form.Field>
               <label>Email:</label>
-              <Input type="text" name="email" id="email" value={email} placeholder="Email..." onChange={this.handleChange} />
+              <Input type="text" name="eMail" id="email" value={eMail} placeholder="Email..." onChange={this.handleChange} />
             </Form.Field>
             <Form.Field>
               <label>Type:</label>
@@ -167,9 +176,9 @@ class Profile extends Component {
           </Form>
           <Form onSubmit={this.postFiles}>
             <Form.Field>
-              <label>Carte grise:</label>
-              <input className="ButtonEnvoye" id="carteGrise" name="greyCard" type="file" onChange={this.handleFileChange} />
-              { loadingFile && (<Progress max="100" color="success" value={loaded}>{Math.round(loaded, 2)}%</Progress>)}
+              <label>Pièces administratives (carte-grise, carte d'identité extrait de kbis etc...):</label>
+              <input className="ButtonEnvoye" id="carteGrise" name="greyCard" type="file" multiple="multiple" onChange={this.handleFileChange} />
+              {loadingFile && (<Progress max="100" color="success" value={loaded}>{Math.round(loaded, 2)}%</Progress>)}
             </Form.Field>
             <div style={{ textAlign: 'right' }}>
               <Button type="submit" color="teal" loading={loadingFile} disabled={loadingFile}><Icon name="paper plane outline" /> &nbsp; Envoyer fichiers </Button>
@@ -190,7 +199,8 @@ const mapStateToProps = (store) => ({
   identifiant: store.auth.identifiantProfile,
   userType: store.auth.typeProfile,
   eMail: store.auth.eMailProfile,
-  password: store.auth.passwordProfile
+  password: store.auth.passwordProfile,
+  telephone: store.auth.telephoneProfile
 });
 
 

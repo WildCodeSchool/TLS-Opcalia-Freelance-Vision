@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import {
-  Form, Message, Icon
+  Form, Message
 } from 'semantic-ui-react';
 import Noty from 'noty';
 import './components/Vision.scss';
@@ -15,9 +15,9 @@ class Register extends Component {
       fName: '',
       lName: '',
       id: '',
-      pass: '',
+      // pass: '',
       mail: '',
-      confirmPass: '',
+      // confirmPass: '',
       equalPass: false
     };
     this.handleChangeInput = this.handleChangeInput.bind(this);
@@ -106,7 +106,7 @@ class Register extends Component {
     const { match } = this.props;
     const { params } = match;
     const { id, mail } = params;
-    const { pass, confirmPass } = this.state;
+    // const { pass, confirmPass } = this.state;
     console.log(id, mail);
 
 
