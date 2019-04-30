@@ -15,9 +15,9 @@ class Register extends Component {
       fName: '',
       lName: '',
       id: '',
-      // pass: '',
+      pass: '',
       mail: '',
-      // confirmPass: '',
+      confirmPass: '',
       equalPass: false
     };
     this.handleChangeInput = this.handleChangeInput.bind(this);
@@ -106,7 +106,6 @@ class Register extends Component {
     const { match } = this.props;
     const { params } = match;
     const { id, mail } = params;
-    // const { pass, confirmPass } = this.state;
     console.log(id, mail);
 
 
@@ -127,7 +126,6 @@ class Register extends Component {
               <Form.Input disabled required name="mail" fluid label="E-mail" value={mail} placeholder="E-mail" width={6} onChange={this.handleChangeInput} />
               {this.matchPasswords()}
             </Form.Group>
-            {/* {(pass === confirmPass) && <Button content="Valider" />} */}
             {this.displayButton()}
           </Form>
           {this.displayError()}

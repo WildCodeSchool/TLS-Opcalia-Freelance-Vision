@@ -4,6 +4,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
 import { Table, Icon, Button } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import dateFns from 'date-fns';
 import Axios from 'axios';
 import './Vision.scss';
@@ -74,11 +75,20 @@ class Cra extends Component {
 
   postCra(event) {
     event.preventDefault();
-    const { somme, days } = this.state;
+    const { id } = this.props;
+    const { somme, days, currentMonth } = this.state;
+    const month = dateFns.format(currentMonth, 'MMMM');
+    const year = dateFns.format(currentMonth, 'YYYY');
+    console.log('mois: ', dateFns.format(currentMonth, 'MMMM'));
+    console.log('year: ', dateFns.format(currentMonth, 'YYYY'));
+
     console.log('daysDuPost', days);
     Axios.post(`http://${IP}:4000/cra`, {
       tableDays: days,
-      sommeCra: somme
+      sommeCra: somme,
+      month,
+      year,
+      id
     })
       .then(res => {
         console.log(res);
@@ -248,5 +258,8 @@ class Cra extends Component {
   }
 }
 
-
-export default Cra;
+const mapStateToProps = (store) => ({
+  token: store.auth.token,
+  id: store.auth.idProfile
+});
+export default connect(mapStateToProps)(Cra);

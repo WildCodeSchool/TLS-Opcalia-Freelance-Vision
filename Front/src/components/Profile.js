@@ -12,6 +12,7 @@ import {
 import 'react-dropzone-uploader/dist/styles.css';
 import Axios from 'axios';
 import { Progress } from 'reactstrap';
+import dateFns from 'date-fns';
 import Noty from 'noty';
 import { IP } from '../config.json';
 
@@ -100,10 +101,15 @@ class Profile extends Component {
     event.preventDefault();
     const { greyCard } = this.state;
     this.setState({ loadingFile: true });
+    const { id } = this.props;
     const file = new FormData();
+    const date = new Date();
+    const formatedDate = dateFns.format(date, 'MMMM YYYY');
+    console.log(formatedDate);
     file.append('file', greyCard);
+    console.log('File', file);
     console.log('greyCard', greyCard);
-    Axios.post(`http://${IP}:4000/sendFiles`, file, {
+    Axios.post(`http://${IP}:4000/sendFiles?id=${id}&date=${formatedDate}`, file, {
       onUploadProgress: ProgressEvent => {
         this.setState({
           loaded: (ProgressEvent.loaded / ProgressEvent.total * 100),
@@ -177,7 +183,7 @@ class Profile extends Component {
           <Form onSubmit={this.postFiles}>
             <Form.Field>
               <label>Pièces administratives (carte-grise, carte d'identité extrait de kbis etc...):</label>
-              <input className="ButtonEnvoye" id="carteGrise" name="greyCard" type="file" multiple="multiple" onChange={this.handleFileChange} />
+              <input className="ButtonEnvoye" id="carteGrise" name="greyCard" type="file" onChange={this.handleFileChange} />
               {loadingFile && (<Progress max="100" color="success" value={loaded}>{Math.round(loaded, 2)}%</Progress>)}
             </Form.Field>
             <div style={{ textAlign: 'right' }}>

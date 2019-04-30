@@ -22,7 +22,7 @@ var storageProfileFiles = multer.diskStorage({
 var upload = multer({ storage: storageProfileFiles }).single('file')
 
 
-var storageJsutifs = multer.diskStorage({
+var storageJustifs = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'justifsFiles')
   },
@@ -30,19 +30,20 @@ var storageJsutifs = multer.diskStorage({
     cb(null, Date.now() + '-' + file.originalname)
   }
 })
-var upload1 = multer({ storage: storageJsutifs }).single('file')
+var upload1 = multer({ storage: storageJustifs }).single('file')
 
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('justifsFiles'));
 
 const jwtSecret = config.jwtSecret;
 app.use(expressJwt({
   secret: jwtSecret
 }).unless({
-  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra', '/noteDeFrais', '/sendFiles', '/sendJustifs', '/configuser']
+  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra', '/noteDeFrais', '/sendFiles', '/sendJustifs', '/configuser', '/justifsFiles']
 }));
 
 app.post('/adduser', (req, res) => {
@@ -137,6 +138,19 @@ app.post('/sendFiles', function (req, res) {
     } else if (err) {
       return res.status(500).json(err)
     }
+    console.log('listfile', req.file);
+    connect.connect((err1) => {
+      if (err1) {
+        console.log('err1');
+      }
+    });
+    const InsertjustifyFiles = `INSERT INTO justiFiles (userID, date, img, typeFile) VALUES (${mySql.escape(req.query.id)}, ${mySql.escape(req.query.date)}, ${mySql.escape(req.file.filename)}, ${mySql.escape('profile')})`;
+    connect.query(InsertjustifyFiles, (err1, resultChange) => {
+      if (err1) {
+        console.log(err1);
+      }
+      console.log('resultChange', resultChange);
+    });
     return res.status(200).send(req.file)
 
   })
@@ -144,37 +158,78 @@ app.post('/sendFiles', function (req, res) {
 });
 
 app.post('/sendJustifs', function (req, res) {
-
+  console.log('date', req.query.date);
   upload1(req, res, function (err) {
     if (err instanceof multer.MulterError) {
       return res.status(500).json(err)
     } else if (err) {
       return res.status(500).json(err)
     }
+    
+    console.log('listfile', req.file);
+    connect.connect((err1) => {
+      if (err1) {
+        console.log('err1');
+      }
+    });
+    const InsertjustifyFiles = `INSERT INTO justiFiles (userID, date, img, typeFile) VALUES (${mySql.escape(req.query.id)}, ${mySql.escape(req.query.date)}, ${mySql.escape(req.file.filename)}, ${mySql.escape('noteDeFrais')})`;
+    connect.query(InsertjustifyFiles, (err1, resultChange) => {
+      if (err1) {
+        console.log(err1);
+      }
+      console.log('resultChange', resultChange);
+    });
     return res.status(200).send(req.file)
-
   })
 
-});
+})
 
 app.post('/cra', (req, res) => {
   console.log('updateCra', req.body);
+  const { tableDays, sommeCra, month, year, id } = req.body;
 
   connect.connect((err) => {
     if (err) {
       console.log('err');
     }
   });
+
+  const InsertCra = `INSERT INTO CRA (userID, Date, tableCra, somme) VALUES (${mySql.escape(id)}, ${mySql.escape(month + " " + year)}, ${mySql.escape(JSON.stringify(tableDays))}, ${mySql.escape(sommeCra)})`;
+  connect.query(InsertCra, (err, resultCra) => {
+    if (err) {
+      console.log(err);
+
+    }
+    console.log(resultCra);
+
+  })
 });
 
 app.post('/noteDeFrais', (req, res) => {
   console.log('updateNoteDeFrais', req.body);
 
+  const { tableCosts, id } = req.body;
+  let somme = 0;
+  tableCosts.map((item) => {
+    somme += item.Total
+  })
+  console.log(somme);
+
   connect.connect((err) => {
     if (err) {
       console.log('err');
     }
   });
+
+  const InsertFrais = `INSERT INTO noteDeFrais (userID, tableFrais, somme) VALUES (${mySql.escape(id)}, ${mySql.escape(JSON.stringify(tableCosts))}, ${mySql.escape(somme)})`;
+  connect.query(InsertFrais, (err, resultFrais) => {
+    if (err) {
+      console.log(err);
+
+    }
+    console.log(resultFrais);
+
+  })
 });
 
 app.post('/login', (req, res) => {

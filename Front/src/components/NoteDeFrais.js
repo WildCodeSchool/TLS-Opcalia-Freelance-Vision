@@ -5,7 +5,9 @@ import React, { Component } from 'react';
 import { DateInput } from 'semantic-ui-calendar-react';
 import { Table, Button, Icon } from 'semantic-ui-react';
 import Axios from 'axios';
+import { connect } from 'react-redux';
 import { Progress } from 'reactstrap';
+import dateFns from 'date-fns';
 import { IP } from '../config.json';
 import './Vision.scss';
 
@@ -32,9 +34,11 @@ class NoteDeFrais extends Component {
 
   postNoteDeFrais(event) {
     event.preventDefault();
+    const { id } = this.props;
     const { costs } = this.state;
     Axios.post(`http://${IP}:4000/noteDeFrais`, {
       tableCosts: costs,
+      id
     })
       .then(res => {
         console.log(res);
@@ -44,10 +48,15 @@ class NoteDeFrais extends Component {
   postFiles(event) {
     event.preventDefault();
     const { greyCard } = this.state;
+    const { id } = this.props;
     const file = new FormData();
+    const date = new Date();
+    const formatedDate = dateFns.format(date, 'MMMM YYYY');
+    console.log(formatedDate);
     file.append('file', greyCard);
+    console.log('File', file);
     console.log('greyCard', greyCard);
-    Axios.post(`http://${IP}:4000/sendJustifs`, file, {
+    Axios.post(`http://${IP}:4000/sendJustifs?id=${id}&date=${formatedDate}`, file, {
       onUploadProgress: ProgressEvent => {
         this.setState({
           loaded: (ProgressEvent.loaded / ProgressEvent.total * 100),
@@ -131,7 +140,7 @@ class NoteDeFrais extends Component {
 
     return (
       <div>
-        <form onSubmit={this.postNoteDeFrais}>
+        <form onSubmit={(event) => this.postNoteDeFrais(event)}>
           <div className="scrollBoxNDF">
             <Table celled fixed singleLine>
               <Table.Header>
@@ -198,4 +207,9 @@ class NoteDeFrais extends Component {
   }
 }
 
-export default NoteDeFrais;
+const mapStateToProps = (store) => ({
+  token: store.auth.token,
+  id: store.auth.idProfile
+});
+
+export default connect(mapStateToProps)(NoteDeFrais);
