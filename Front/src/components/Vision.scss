@@ -220,11 +220,16 @@ td input.inputCra {
   width: 100%;
   height: 30em
 }
+.scrollBoxNDF1 {
+  overflow-y: auto;
+  width: 100%;
+  min-height: 10em;
+  max-height: 20em;
+
+}
 
 .buttonAdd {
   display: inline-flex;
-  width: 10px;
-  height: 10px
 }
 
 .copiedClass {

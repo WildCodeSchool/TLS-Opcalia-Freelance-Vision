@@ -56,8 +56,6 @@ class UserList extends Component {
             {this.AddProfileItem()}
           </Table.Body>
         </Table>
-
-
       </div>
     );
   }

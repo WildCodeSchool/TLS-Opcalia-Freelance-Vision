@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable max-len */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable react/destructuring-assignment */

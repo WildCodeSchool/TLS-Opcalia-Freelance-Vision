@@ -44,9 +44,14 @@ class DisplayOneUser extends Component {
         <Table.Cell></Table.Cell>
         <Table.Cell> {(userType !== 'Admin')
           && (
-            <Button color="red" icon onClick={() => this.removeUser(id)}>
-              <Icon name="x" />
-            </Button>
+            <div>
+              <Button color="teal" content="CRA" href={`/tableCra/${id}`} target="blank" />
+              <Button color="teal" content="Note de frais" href={`/tableNoteDeFrais/${id}`} target="blank" />
+              <Button color="teal" content="fichier" />
+              <Button color="red" icon onClick={() => this.removeUser(id)}>
+                <Icon name="x" />
+              </Button>
+            </div>
           )
         }
         </Table.Cell>

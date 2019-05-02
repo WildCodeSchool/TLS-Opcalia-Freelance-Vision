@@ -168,11 +168,11 @@ class Profile extends Component {
           <Form onSubmit={this.postProfile} loading={loadingForm}>
             <Form.Field>
               <label>Nom:</label>
-              <Input type="text" name="nom" id="nom" disabled="disabled" placeholder="Nom..." value={nom} onChange={this.handleChange} />
+              <Input type="text" name="nom" id="nom" placeholder="Nom..." value={nom} onChange={this.handleChange} />
             </Form.Field>
             <Form.Field>
               <label>Prénom:</label>
-              <Input type="text" name="prenom" id="prenom" disabled="disabled" placeholder="Prénom..." value={prenom} onChange={this.handleChange} />
+              <Input type="text" name="prenom" id="prenom" placeholder="Prénom..." value={prenom} onChange={this.handleChange} />
             </Form.Field>
             <Form.Field>
               <label>N° de téléphone:</label>
@@ -180,7 +180,7 @@ class Profile extends Component {
             </Form.Field>
             <Form.Field>
               <label>Identifiant:</label>
-              <Input type="text" name="identifiant" id="identifiant" disabled="disabled" value={identifiant} placeholder="Identifiant..." onChange={this.handleChange} />
+              <Input type="text" name="identifiant" id="identifiant" value={identifiant} placeholder="Identifiant..." onChange={this.handleChange} />
             </Form.Field>
             <Form.Field>
               <label>Email:</label>

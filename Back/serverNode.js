@@ -43,7 +43,7 @@ const jwtSecret = config.jwtSecret;
 app.use(expressJwt({
   secret: jwtSecret
 }).unless({
-  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra', '/noteDeFrais', '/sendFiles', '/sendJustifs', '/configuser', '/justifsFiles']
+  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra', '/noteDeFrais', '/sendFiles', '/sendJustifs', '/configuser', '/justifsFiles', '/tableCra', '/tableNoteDeFrais', '/tableFiles']
 }));
 
 app.post('/adduser', (req, res) => {
@@ -62,7 +62,7 @@ app.post('/adduser', (req, res) => {
   });
 
 
-  const addUser = `INSERT INTO salariés (Identifiant, eMail, userType) VALUES (${mySql.escape(req.body.id)}, ${mySql.escape(req.body.userToAdd)},${mySql.escape(type)} )`;
+  const addUser = `INSERT INTO salariés (Identifiant, eMail, userType, Pass) VALUES (${mySql.escape(req.body.id)}, ${mySql.escape(req.body.userToAdd)},${mySql.escape(type)}, ${mySql.escape(req.body.password)} )`;
   connect.query(addUser, (err, resultAddUser) => {
     if (err) {
       console.log(err);
@@ -134,9 +134,8 @@ app.post('/updateProfile', (req, res) => {
       console.log('err');
     }
   });
-  const sql = `UPDATE salariés SET Nom = ?, Prenom = ?, Identifiant = ?, eMail = ?, Telephone = ? WHERE id = ?`;
-  const records = [changeNom, changePrenom, changeIdentifiant, changeEmail, changeTelephone, id]
-  connect.query(sql, records, (err1, resultChange) => {
+  const sql = `UPDATE salariés SET Nom=${mySql.escape(changeNom)}, Prenom=${mySql.escape(changePrenom)}, telephone=${mySql.escape(changeTelephone)}, eMail=${mySql.escape(changeEmail)} WHERE Identifiant=${mySql.escape(changeIdentifiant)};`
+  connect.query(sql, (err1, resultChange) => {
     if (err1) {
       console.log(err1);
     }
@@ -262,6 +261,54 @@ app.post('/login', (req, res) => {
       console.log('err');
     }
   });
+
+  app.post('/tableCra', (req, res) => {
+
+    connect.connect((err) => {
+      if (err) {
+        console.log('err');
+      }
+    })
+    const getTables = '    SELECT * FROM CRA;'
+    connect.query(getTables, (err, resultGetTables) => {
+      if (err) {
+        console.log(err);
+
+      }
+      console.log(resultGetTables[2]);
+      res.status(200).json(resultGetTables)
+    })
+
+  })
+
+  app.post('/tableNoteDeFrais', (req, res) => {
+
+    connect.connect((err) => {
+      if (err) {
+        console.log('err');
+      }
+    })
+    const getTablesFrais = '    SELECT * FROM noteDeFrais;'
+    connect.query(getTablesFrais, (err, resultGetTables) => {
+      if (err) {
+        console.log(err);
+
+      }
+      console.log(resultGetTables[2]);
+      res.status(200).json(resultGetTables)
+
+
+    })
+  })
+
+  app.post('/tableFiles', (req, res) => {
+
+    connect.connect((err) => {
+      if (err) {
+        console.log('err');
+      }
+    })
+  })
 
   const checkUserIsPresent = `SELECT COUNT(*) FROM salariés WHERE identifiant = ${mySql.escape(identifiant)}`;
   connect.query(checkUserIsPresent, (errCheck, resultCheckUser) => {

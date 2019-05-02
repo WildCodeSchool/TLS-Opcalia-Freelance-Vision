@@ -9,6 +9,9 @@ import Register from './Register';
 import * as serviceWorker from './serviceWorker';
 import allReducers from './reducers';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import displayCra from './components/displayCra';
+import displayNotedeFrais from './components/displayNoteDeFrais';
+import displayFiles from './components/displayFiles';
 
 const store = createStore(
   allReducers,
@@ -22,6 +25,9 @@ ReactDOM.render(
       <div>
         <Route exact path="/" component={App} />
         <Route path="/register/:id/:mail" component={Register} />
+        <Route path="/tableCra/:id" component={displayCra} />
+        <Route path="/tableNoteDeFrais/:id" component={displayNotedeFrais} />
+        <Route path="/tableFiles/:id" component={displayFiles} />
       </div>
     </Router>
   </Provider>,
