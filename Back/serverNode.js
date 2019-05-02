@@ -61,6 +61,7 @@ app.post('/adduser', (req, res) => {
     }
   });
 
+
   const addUser = `INSERT INTO salariés (Identifiant, eMail, userType) VALUES (${mySql.escape(req.body.id)}, ${mySql.escape(req.body.userToAdd)},${mySql.escape(type)} )`;
   connect.query(addUser, (err, resultAddUser) => {
     if (err) {
@@ -72,6 +73,20 @@ app.post('/adduser', (req, res) => {
     res.status(200).json(resultAddUser);
   });
 });
+
+app.post('/getImgProfile', (req, res) => {
+
+  connect.connect((err) => {
+    if (err) {
+      console.log('err');
+    }
+    const getImg = `SELECT * justiFiles WHERE userID=${mySql.escape(req.body.id)}AND date=${mySql.escape(req.body.formatedDate)}`
+    connect.query(getImg, (err, resultImg) => {
+      console.log(resultImg);
+      res.status(200).json(resulImg)
+    })
+  });
+})
 
 app.post('/removeuser', (req, res) => {
   console.log('remove', req.body.userToremove);
@@ -165,7 +180,7 @@ app.post('/sendJustifs', function (req, res) {
     } else if (err) {
       return res.status(500).json(err)
     }
-    
+
     console.log('listfile', req.file);
     connect.connect((err1) => {
       if (err1) {

@@ -1,8 +1,12 @@
-export default function (store = { userTable: [] }, action) {
+export default function (store = { userTable: [], uploadImg: [] }, action) {
   switch (action.type) {
     case 'CREATE TOKEN USER': {
       const { tokenUser } = action;
       return { ...store, tokenUser };
+    }
+    case 'CREATE UPLOAD IMG': {
+      const { uploadImg } = action;
+      return { ...store, uploadImg };
     }
     case 'CREATE TOKEN ADMIN': {
       const { tokenAdmin } = action;

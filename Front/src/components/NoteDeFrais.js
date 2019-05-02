@@ -53,8 +53,9 @@ class NoteDeFrais extends Component {
     const date = new Date();
     const formatedDate = dateFns.format(date, 'MMMM YYYY');
     console.log(formatedDate);
-    file.append('file', greyCard);
+    file.append('file', file);
     console.log('File', file);
+    file.append('file', greyCard);
     console.log('greyCard', greyCard);
     Axios.post(`http://${IP}:4000/sendJustifs?id=${id}&date=${formatedDate}`, file, {
       onUploadProgress: ProgressEvent => {

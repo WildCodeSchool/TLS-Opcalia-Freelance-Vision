@@ -55,6 +55,16 @@ class Profile extends Component {
     this.setState({ [event.target.name]: event.target.files[0] });
   }
 
+  componentWillMount() {
+    const { id } = this.props;
+    const date = new Date();
+    const formatedDate = dateFns.format(date, 'MMMM YYYY');
+    Axios.post(`http:${IP}:4000/getImgProfile`, { id, formatedDate })
+      .then(res => {
+        console.log(res);
+      });
+  }
+
   postProfile(event) {
     event.preventDefault();
     this.setState({ loadingForm: true });
@@ -117,8 +127,12 @@ class Profile extends Component {
       }
     })
       .then(res => {
+        const { dispatch, uploadImg } = this.props;
         console.log(res);
         if (res.status === 200) {
+          const tableImg = uploadImg;
+          tableImg.push(greyCard.name);
+          dispatch({ type: 'CREATE_UPLOAD_IMG', uploadImg: tableImg });
           console.log('SUCCESS');
           new Noty({
             text: 'Fichier envoyé',
@@ -206,7 +220,8 @@ const mapStateToProps = (store) => ({
   userType: store.auth.typeProfile,
   eMail: store.auth.eMailProfile,
   password: store.auth.passwordProfile,
-  telephone: store.auth.telephoneProfile
+  telephone: store.auth.telephoneProfile,
+  uploadImg: store.auth.uploadImg
 });
 
 
