@@ -1,20 +1,10 @@
-Présentation
-Projet de gestion de données administratives pour FreelanceVision société de portage salarial.
-Le projet s'articule autour de tableaux de relévé d'informations de présence et de frais pour crée des bases de données.
-
 
                                              
                                              Mise en ligne du projet
 
   **Installation du projet**
   
-Le projet est en ReactJs.
-
-Clôner la branche dev.
-
-A la racine du projet...
-
-Lancer l'installation:
+Pour lancer le programme:
 
 >npm run install
 
@@ -23,7 +13,7 @@ Démarrer le projet:
 >npm run launch
 
 
-créer un fichier config.json à la racine du projet (avant le dossier Front et Back):
+Créer un fichier config.json dans Front/src:
 
 Copier ce contenu:
 >{
@@ -36,7 +26,7 @@ Copier ce contenu:
   }
 }
 
--Trois types d'utilisateurs sont déjà disponibles dans la base de donnée:
+>Trois types d'utilisateurs sont déjà disponibles dans la base de donnée:
 ```
 
     Administrateur
@@ -52,4 +42,24 @@ Copier ce contenu:
  MDP: 1234
 
 ```
+Les modules utilisés:
+
+>reactjs
+
+>axios 
+
+>date-fns
+
+>express
+
+>mysql
+
+>multer
+
+>semantic-ui-calendar-react
+
+>semantic-ui-react
+
+>sweetalert
+
 
