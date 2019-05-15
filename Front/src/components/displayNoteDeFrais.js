@@ -26,16 +26,16 @@ class displayNoteDeFrais extends Component {
 
         for (let i = 0; i < res.data.length - 1; i += 1) {
           if (res.data[i].tableIndex > bigOrder) {
-            bigOrder = res.data[i].tableIndex;
+            bigOrder = res.data[i];
             console.log(bigOrder);
           }
         }
-        console.log('bigorder', res.data[bigOrder]);
-        const parseData = JSON.parse(res.data[bigOrder].tableFrais);
+        console.log('bigorder', bigOrder);
+        const parseData = JSON.parse(bigOrder.tableFrais);
         console.log(parseData);
         this.setState({
           tableFrais: parseData,
-          total: res.data[bigOrder].somme
+          total: bigOrder.somme
         });
       });
   }
