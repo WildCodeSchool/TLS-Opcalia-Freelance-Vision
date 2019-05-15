@@ -62,7 +62,7 @@ class displayCra extends Component {
                   <Table.Cell>{item.comment}</Table.Cell>
                 </Table.Row>
               ))}
-            </Table.Body>;
+            </Table.Body>
           </Table><br />
         </div><br />
         <Label key="big" size="big">
