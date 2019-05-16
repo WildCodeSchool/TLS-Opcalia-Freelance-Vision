@@ -30,7 +30,7 @@ class LogIn extends Component {
   handleSubmit(event) {
     event.preventDefault();
     // to do add dispatch action profile loading true
-    Axios.post(`https://${IP}:4000/login`, this.state)
+    Axios.post(`http://${IP}:4000/login`, this.state)
       .then(res => {
         const { dispatch } = this.props;
         console.log('DATA', res.data);

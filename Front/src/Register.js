@@ -68,7 +68,7 @@ class Register extends Component {
   handleSubmit() {
     console.log('SENT');
 
-    axios.post('https://localhost:4000/configuser', this.state)
+    axios.post('http://localhost:4000/configuser', this.state)
       .then(res => {
         console.log(res);
         new Noty({

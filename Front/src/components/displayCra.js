@@ -21,7 +21,7 @@ class displayCra extends Component {
     const { id } = params;
     console.log(id);
     console.log('ERTYUI');
-    Axios.post(`https://${IP}:4000/tableCra`, id)
+    Axios.post(`http://${IP}:4000/tableCra`, id)
       .then(res => {
         console.log(res.data);
         let bigOrder = 0;
