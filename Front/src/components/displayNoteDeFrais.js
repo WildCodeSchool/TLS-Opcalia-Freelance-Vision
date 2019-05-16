@@ -19,7 +19,7 @@ class displayNoteDeFrais extends Component {
     const { id } = params;
     console.log(id);
     console.log('ERTYUI');
-    Axios.post(`http://${IP}:4000/tableNoteDeFrais`, id)
+    Axios.post(`https://${IP}:4000/tableNoteDeFrais`, id)
       .then(res => {
         console.log(res.data);
         let bigOrder = 0;
