@@ -76,7 +76,7 @@ class Profile extends Component {
       telephone,
       eMail
     } = this.state;
-    Axios.post(`http://${IP}:4000/updateProfile`, {
+    Axios.post(`https://intra.freelance-vision.com/updateProfile`, {
       id,
       changeEmail: eMail,
       changeIdentifiant: identifiant,
@@ -119,7 +119,7 @@ class Profile extends Component {
     file.append('file', greyCard);
     console.log('File', file);
     console.log('greyCard', greyCard);
-    Axios.post(`http://${IP}:4000/sendFiles?id=${id}&date=${formatedDate}`, file, {
+    Axios.post(`https://intra.freelance-vision.com/sendFiles?id=${id}&date=${formatedDate}`, file, {
       onUploadProgress: ProgressEvent => {
         this.setState({
           loaded: (ProgressEvent.loaded / ProgressEvent.total * 100),

@@ -18,7 +18,7 @@ class displayNoteDeFrais extends Component {
     const { id } = this.props;
 
     console.log(id);
-    Axios.post(`http://${IP}:4000/tableNoteDeFrais`, id)
+    Axios.post(`https://intra.freelance-vision.com/tableNoteDeFrais`, id)
       .then(res => {
         console.log('data', res.data);
         let bigOrder = res.data[0];

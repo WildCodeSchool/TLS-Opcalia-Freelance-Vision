@@ -2,8 +2,8 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from 'react';
 import { Table, Label } from 'semantic-ui-react';
-import { connect } from 'react-redux';
 import Axios from 'axios';
+import { connect } from 'react-redux';
 import { IP } from '../config.json';
 
 
@@ -18,31 +18,36 @@ class displayCra extends Component {
 
   componentWillMount() {
     const { id } = this.props;
+
     console.log(id);
     console.log('ERTYUI');
     Axios.post(`https://intra.freelance-vision.com/tableCra`, id)
       .then(res => {
         console.log(res.data);
-        let bigOrder = res.data[0];
-        for (let i = 0; i < res.data.length; i += 1) {
-          if (res.data[i].order > bigOrder.order) {
-            bigOrder = res.data[i];
+        let bigOrder = 0;
+        for (let i = 0; i < res.data.length - 1; i += 1) {
+          if (res.data[i].order > bigOrder) {
+            bigOrder = res.data[i].order;
             console.log(bigOrder);
           }
         }
-        const parseData = JSON.parse(bigOrder.tableCra);
+        console.log('bigorder', res.data[bigOrder].tableCra);
+        const parseData = JSON.parse(res.data[bigOrder].tableCra);
 
         console.log(parseData);
 
         this.setState({
           tableCra: parseData,
-          totalJT: bigOrder.somme
+          totalJT: res.data[bigOrder].somme
         });
       });
   }
 
   render() {
     const { id } = this.props;
+    console.log('id is', id);
+
+
     const { tableCra, totalJT } = this.state;
     return (
       <div>
@@ -70,6 +75,6 @@ class displayCra extends Component {
   }
 }
 const mapStateToProps = (store) => ({
-  id: store.auth.id,
+  id: store.auth.id
 });
 export default connect(mapStateToProps)(displayCra);

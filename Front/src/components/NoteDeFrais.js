@@ -37,7 +37,7 @@ class NoteDeFrais extends Component {
     event.preventDefault();
     const { id } = this.props;
     const { costs } = this.state;
-    Axios.post(`http://${IP}:4000/noteDeFrais`, {
+    Axios.post(`https://intra.freelance-vision.com/noteDeFrais`, {
       tableCosts: costs,
       id
     })
@@ -58,7 +58,7 @@ class NoteDeFrais extends Component {
     console.log('File', file);
     file.append('file', greyCard);
     console.log('greyCard', greyCard);
-    Axios.post(`http://${IP}:4000/sendJustifs?id=${id}&date=${formatedDate}`, file, {
+    Axios.post(`https://intra.freelance-vision.com/sendJustifs?id=${id}&date=${formatedDate}`, file, {
       onUploadProgress: ProgressEvent => {
         this.setState({
           loaded: (ProgressEvent.loaded / ProgressEvent.total * 100),

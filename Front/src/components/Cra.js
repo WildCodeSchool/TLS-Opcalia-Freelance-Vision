@@ -83,7 +83,7 @@ class Cra extends Component {
     console.log('year: ', dateFns.format(currentMonth, 'YYYY'));
 
     console.log('daysDuPost', days);
-    Axios.post(`http://${IP}:4000/cra`, {
+    Axios.post(`https://intra.freelance-vision.com/cra`, {
       tableDays: days,
       sommeCra: somme,
       month,

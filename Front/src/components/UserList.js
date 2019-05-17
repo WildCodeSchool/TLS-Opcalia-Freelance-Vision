@@ -15,7 +15,7 @@ class UserList extends Component {
 
   componentWillMount() {
     const { dispatch } = this.props;
-    axios.get(`http://${IP}:4000/getusers`)
+    axios.get(`https://intra.freelance-vision.com/getusers`)
       .then((response) => {
         // handle success
         dispatch({ type: 'USER LIST', userTable: response.data });

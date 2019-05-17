@@ -21,7 +21,7 @@ class DisplayOneUser extends Component {
   removeUser(identif) {
     const { userTable, dispatch } = this.props;
     console.log(typeof (identif));
-    axios.post(`http://${IP}:4000/removeuser`, { userToremove: identif })
+    axios.post(`https://intra.freelance-vision.com/removeuser`, { userToremove: identif })
       .then((response) => {
         console.log(response.data);
       });
