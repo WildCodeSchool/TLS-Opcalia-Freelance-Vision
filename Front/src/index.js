@@ -25,8 +25,8 @@ ReactDOM.render(
       <div>
         <Route exact path="/" component={App} />
         <Route path="/register/:id/:mail" component={Register} />
-        <Route path="/tableCra/:id" component={displayCra} />
-        <Route path="/tableNoteDeFrais/:id" component={displayNotedeFrais} />
+        <Route path="/tableCra" component={displayCra} />
+        <Route path="/tableNoteDeFrais" component={displayNotedeFrais} />
         <Route path="/tableFiles/:id" component={displayFiles} />
       </div>
     </Router>

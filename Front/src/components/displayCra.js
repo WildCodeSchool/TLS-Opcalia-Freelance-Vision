@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from 'react';
 import { Table, Label } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import Axios from 'axios';
 import { IP } from '../config.json';
 
@@ -16,37 +17,32 @@ class displayCra extends Component {
   }
 
   componentWillMount() {
-    const { match } = this.props;
-    const { params } = match;
-    const { id } = params;
+    const { id } = this.props;
     console.log(id);
     console.log('ERTYUI');
     Axios.post(`http://${IP}:4000/tableCra`, id)
       .then(res => {
         console.log(res.data);
-        let bigOrder = 0;
-        for (let i = 0; i < res.data.length - 1; i += 1) {
-          if (res.data[i].order > bigOrder) {
-            bigOrder = res.data[i].order;
+        let bigOrder = res.data[0];
+        for (let i = 0; i < res.data.length; i += 1) {
+          if (res.data[i].order > bigOrder.order) {
+            bigOrder = res.data[i];
             console.log(bigOrder);
           }
         }
-        console.log('bigorder', res.data[bigOrder].tableCra);
-        const parseData = JSON.parse(res.data[bigOrder].tableCra);
+        const parseData = JSON.parse(bigOrder.tableCra);
 
         console.log(parseData);
 
         this.setState({
           tableCra: parseData,
-          totalJT: res.data[bigOrder].somme
+          totalJT: bigOrder.somme
         });
       });
   }
 
   render() {
-    const { match } = this.props;
-    const { params } = match;
-    const { id } = params;
+    const { id } = this.props;
     const { tableCra, totalJT } = this.state;
     return (
       <div>
@@ -73,5 +69,7 @@ class displayCra extends Component {
     );
   }
 }
-
-export default displayCra;
+const mapStateToProps = (store) => ({
+  id: store.auth.id,
+});
+export default connect(mapStateToProps)(displayCra);

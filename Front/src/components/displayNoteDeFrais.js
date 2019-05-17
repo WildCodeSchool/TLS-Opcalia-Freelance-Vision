@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Label } from 'semantic-ui-react';
 import Axios from 'axios';
+import { connect } from 'react-redux';
 import { IP } from '../config.json';
 
 
@@ -14,20 +15,18 @@ class displayNoteDeFrais extends Component {
   }
 
   componentWillMount() {
-    const { match } = this.props;
-    const { params } = match;
-    const { id } = params;
+    const { id } = this.props;
+
     console.log(id);
-    console.log('ERTYUI');
     Axios.post(`http://${IP}:4000/tableNoteDeFrais`, id)
       .then(res => {
-        console.log(res.data);
-        let bigOrder = 0;
+        console.log('data', res.data);
+        let bigOrder = res.data[0];
 
-        for (let i = 0; i < res.data.length - 1; i += 1) {
-          if (res.data[i].tableIndex > bigOrder) {
+        for (let i = 0; i < res.data.length; i += 1) {
+          if (res.data[i].tableIndex > bigOrder.tableIndex) {
             bigOrder = res.data[i];
-            console.log(bigOrder);
+            console.log('in boucle', bigOrder);
           }
         }
         console.log('bigorder', bigOrder);
@@ -41,9 +40,7 @@ class displayNoteDeFrais extends Component {
   }
 
   render() {
-    const { match } = this.props;
-    const { params } = match;
-    const { id } = params;
+    const { id } = this.props;
     const { tableFrais, total } = this.state;
     return (
       <div>
@@ -90,5 +87,7 @@ class displayNoteDeFrais extends Component {
     );
   }
 }
-
-export default displayNoteDeFrais;
+const mapStateToProps = (store) => ({
+  id: store.auth.id,
+});
+export default connect(mapStateToProps)(displayNoteDeFrais);

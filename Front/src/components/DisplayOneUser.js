@@ -1,6 +1,8 @@
+/* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Table, Button, Icon } from 'semantic-ui-react';
 import { IP } from '../config.json';
@@ -30,6 +32,11 @@ class DisplayOneUser extends Component {
     console.log(table);
   }
 
+  DispatchUserId(id) {
+    const { dispatch } = this.props;
+    dispatch({ type: 'USER ID', id });
+  }
+
   render() {
     const {
       userType, nom, id, prenom, userTable
@@ -45,8 +52,8 @@ class DisplayOneUser extends Component {
         <Table.Cell> {(userType !== 'Admin')
           && (
             <div>
-              <Button color="teal" content="CRA" href={`/tableCra/${id}`} target="blank" />
-              <Button color="teal" content="Note de frais" href={`/tableNoteDeFrais/${id}`} target="blank" />
+              <Button color="teal" as={Link} onClick={() => this.DispatchUserId(id)} content="CRA" to="/tableCra" />
+              <Button color="teal" as={Link} onClick={() => this.DispatchUserId(id)} content="Note de frais" to="/tableNoteDeFrais" />
               <Button color="teal" content="fichier" />
               <Button color="red" icon onClick={() => this.removeUser(id)}>
                 <Icon name="x" />
@@ -61,6 +68,5 @@ class DisplayOneUser extends Component {
 }
 const mapStateToProps = (store) => ({
   userTable: store.auth.userTable,
-
 });
 export default connect(mapStateToProps)(DisplayOneUser);

@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const bodyParser = require('body-parser');
 const mySql = require('mysql');
 const jwt = require('jsonwebtoken');
@@ -35,6 +36,7 @@ var upload1 = multer({ storage: storageJustifs }).single('file')
 
 const app = express();
 app.use(cors());
+app.use(express.static(path.join(__dirname, '/../Front/build')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('justifsFiles'));
@@ -43,8 +45,9 @@ const jwtSecret = config.jwtSecret;
 app.use(expressJwt({
   secret: jwtSecret
 }).unless({
-  path: ['/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra', '/noteDeFrais', '/sendFiles', '/sendJustifs', '/configuser', '/justifsFiles', '/tableCra', '/tableNoteDeFrais', '/tableFiles']
+  path: ['/', '/tableNoteDeFrais', '/lib/noty.js', '/lib/noty.css', '/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra', '/noteDeFrais', '/sendFiles', '/sendJustifs', '/configuser', '/justifsFiles', '/tableCra', '/tableNoteDeFrais', '/tableFiles']
 }));
+
 
 app.post('/adduser', (req, res) => {
   console.log('adduser');
@@ -98,6 +101,7 @@ app.post('/removeuser', (req, res) => {
   });
   const deleteUser = `DELETE FROM salariés WHERE Identifiant = ${mySql.escape(req.body.userToremove)} `;
   connect.query(deleteUser, (err, resultDeleteUser) => {
+
     if (err) {
       console.log(err);
     }
@@ -374,6 +378,9 @@ app.post('/login', (req, res) => {
   });
 });
 
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname + '/../Front/public/index.html'));
+});
 
 app.listen(port, () => {
   console.log(`server started on ${port}`);

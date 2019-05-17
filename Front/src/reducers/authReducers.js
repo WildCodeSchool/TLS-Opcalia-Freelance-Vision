@@ -12,6 +12,10 @@ export default function (store = { userTable: [], uploadImg: [] }, action) {
       const { tokenAdmin } = action;
       return { ...store, tokenAdmin };
     }
+    case 'USER ID': {
+      const { id } = action;
+      return { ...store, id };
+    }
     case 'USER LIST': {
       const { userTable } = action;
       return { ...store, userTable };
