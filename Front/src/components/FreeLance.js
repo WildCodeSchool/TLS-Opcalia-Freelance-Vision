@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Menu, Segment } from 'semantic-ui-react';
-import NoteDeFrais from './NoteDeFrais';
 import Profile from './Profile';
 import Cra from './Cra';
-import './Vision.css';
+import './Vision.scss';
 
 class FreeLance extends Component {
     constructor(props) {
@@ -26,18 +25,13 @@ class FreeLance extends Component {
                 active={activeItem === 'Profil'}
                 onClick={this.handleItemClick}
               />
-              <Menu.Item
-                name='Note de frais'
-                active={activeItem === 'Note de frais'}
-                onClick={this.handleItemClick}
-              />
-              <p className="titleSpace">Espace Freelancek</p>
+      
+              <p className="titleSpace">Espace Freelance</p>
             </Menu>
           </Segment>
 
           {(activeItem === 'Cra') && (<Cra />)}
           {(activeItem === 'Profil') && (<Profile />)}
-          {(activeItem === 'Note de frais') && (<NoteDeFrais />)}
 
         </div>
       </div>

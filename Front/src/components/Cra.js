@@ -4,10 +4,12 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
 import { Table, Icon, Button } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import dateFns from 'date-fns';
+import Noty from 'noty';
 import Axios from 'axios';
-import './Vision.css';
-import { IP } from '../config.json';
+import './Vision.scss';
+import { urlServer } from '../config.json';
 
 class Cra extends Component {
   constructor(props) {
@@ -74,17 +76,41 @@ class Cra extends Component {
 
   postCra(event) {
     event.preventDefault();
-    const { somme, days } = this.state;
+    const { id, tokenUser } = this.props;
+    const { somme, days, currentMonth } = this.state;
+    const month = dateFns.format(currentMonth, 'MMMM');
+    const year = dateFns.format(currentMonth, 'YYYY');
+    const config = {
+      headers: {
+        Authorization: `Bearer ${tokenUser}`
+      }
+    };
+    console.log('mois: ', dateFns.format(currentMonth, 'MMMM'));
+    console.log('year: ', dateFns.format(currentMonth, 'YYYY'));
+    console.log(config);
+    
     console.log('daysDuPost', days);
-    Axios.post(`http://${IP}:4000/cra`, {
+    Axios.post(`${urlServer}/cra`, {
       tableDays: days,
-      sommeCra: somme
-    })
+      sommeCra: somme,
+      month,
+      year,
+      id
+    }, config)
       .then(res => {
-        console.log(res);
+        console.log(res.data.response);
+
+        if (res.data.response === 'success') {
+          console.log('noty');
+          new Noty({
+            text: "Compte rendu d'activité enregistré",
+            type: 'success',
+            theme: 'sunset',
+            timeout: 2000,
+          }).show();
+        }
       });
   }
-
 
   // eslint-disable-next-line class-methods-use-this
   createArrayDays(currentMonth) {
@@ -240,7 +266,7 @@ class Cra extends Component {
             {this.renderHeader()}
             {this.renderCell()}
             <h3><span className="logo">Nombre de </span><span className="logo1">jours travaillés: <span className="logo">{somme}</span></span><br /></h3>
-            <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Envoyer</Button>
+            <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Enregistrer</Button>
           </div>
         </form>
       </div>
@@ -248,5 +274,8 @@ class Cra extends Component {
   }
 }
 
-
-export default Cra;
+const mapStateToProps = (store) => ({
+  tokenUser: store.auth.tokenUser,
+  id: store.auth.idProfile
+});
+export default connect(mapStateToProps)(Cra);

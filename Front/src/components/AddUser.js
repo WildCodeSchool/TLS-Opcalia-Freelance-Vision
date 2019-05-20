@@ -3,13 +3,15 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { connect } from 'react-redux';
+import generator from 'generate-password';
 import {
   Input,
   Select,
   Button,
   Form,
 } from 'semantic-ui-react';
-import { IP } from '../config.json';
+import { urlServer } from '../config.json';
 
 class UserList extends Component {
   constructor(props) {
@@ -19,6 +21,10 @@ class UserList extends Component {
       userAdd: '',
       type: 'Freelance',
       id: '',
+      password: generator.generate({
+        length: 8,
+        numbers: true
+      }),
     };
     this.handleChange = this.handleChange.bind(this);
     this.swalCheck = this.swalCheck.bind(this);
@@ -57,12 +63,22 @@ class UserList extends Component {
   }
 
   handleSubmit(event) {
-    const { id, userAdd, type } = this.state;
+    const {
+      id, userAdd, type, password
+    } = this.state;
+    const { tokenUser } = this.props;
     event.preventDefault();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${tokenUser}`
+      }
+    };
     this.swalCheck().then((result) => {
       if (result.value) {
         // console.log('je suis la');
-        axios.post(`http://${IP}:4000/adduser`, { userToAdd: userAdd, typeToAdd: type, id })
+        axios.post(`${urlServer}/adduser`, {
+          userToAdd: userAdd, typeToAdd: type, id, password
+        }, config)
           .then((response) => {
             console.log('response.data', response.data);
           });
@@ -76,16 +92,15 @@ class UserList extends Component {
   }
 
   render() {
-    const types = ['Freelance', 'Employé'].map(item => ({
+    const { handleChange, handleSubmit } = this;
+    const { password } = this.state;
 
+    const types = ['Freelance', 'Employé'].map(item => ({
       key: item,
       text: item,
       value: item,
-
-
     }));
 
-    const { handleChange, handleSubmit } = this;
     return (
       <div className="add">
         <Form onSubmit={handleSubmit}>
@@ -96,6 +111,9 @@ class UserList extends Component {
             <Input required onChange={handleChange} name="userAdd" placeholder="Adresse e-mail" type="text" icon="mail" iconPosition="left" />
           </Form.Field>
           <Form.Field>
+            <Input required onChange={handleChange} name="password" placeholder="Mot de passe" type="text" value={password} icon="key" iconPosition="left" />
+          </Form.Field>
+          <Form.Field>
             <Select placeholder="Selectionner un type d'utilisateur" options={types} name="type" onChange={handleChange} />
           </Form.Field>
           <Button className="buttonAdd" type="submit" content="Ajouter" icon="check" labelPosition="right" />
@@ -104,5 +122,7 @@ class UserList extends Component {
     );
   }
 }
-
-export default UserList;
+const mapStateToProps = (store) => ({
+  tokenUser: store.auth.tokenUser,
+});
+export default connect(mapStateToProps)(UserList);

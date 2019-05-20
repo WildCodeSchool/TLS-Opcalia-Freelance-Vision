@@ -6,7 +6,7 @@ import { Menu, Segment } from 'semantic-ui-react';
 import NoteDeFrais from './NoteDeFrais';
 import Profile from './Profile';
 import Cra from './Cra';
-import './Vision.css';
+import './Vision.scss';
 
 class Employee extends Component {
   constructor(props) {
