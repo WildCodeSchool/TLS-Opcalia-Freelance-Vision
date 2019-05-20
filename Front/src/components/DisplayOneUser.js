@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Table, Button, Icon } from 'semantic-ui-react';
-import { IP } from '../config.json';
+import { urlServer } from '../config.json';
 
 
 class DisplayOneUser extends Component {
@@ -26,7 +26,7 @@ class DisplayOneUser extends Component {
       }
     };
     console.log(typeof (identif));
-    axios.post(`http://${IP}/removeuser`, { userToremove: identif }, config)
+    axios.post(`${urlServer}/removeuser`, { userToremove: identif }, config)
       .then((response) => {
         console.log(response.data);
       });

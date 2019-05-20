@@ -14,7 +14,7 @@ import Axios from 'axios';
 import { Progress } from 'reactstrap';
 import dateFns from 'date-fns';
 import Noty from 'noty';
-import { IP } from '../config.json';
+import { urlServer } from '../config.json';
 
 
 class Profile extends Component {
@@ -64,7 +64,7 @@ class Profile extends Component {
       }
     };
     const formatedDate = dateFns.format(date, 'MMMM YYYY');
-    Axios.post(`http:${IP}:4000/getImgProfile`, { id, formatedDate }, config)
+    Axios.post(`${urlServer}:4000/getImgProfile`, { id, formatedDate }, config)
       .then(res => {
         console.log(res);
       });
@@ -87,7 +87,7 @@ class Profile extends Component {
       telephone,
       eMail
     } = this.state;
-    Axios.post(`http://${IP}/updateProfile`, {
+    Axios.post(`${urlServer}/updateProfile`, {
       id,
       changeEmail: eMail,
       changeIdentifiant: identifiant,
@@ -135,11 +135,11 @@ class Profile extends Component {
     file.append('file', greyCard);
     console.log('File', file);
     console.log('greyCard', greyCard);
-    Axios.post(`http://${IP}/sendFiles?id=${id}&date=${formatedDate}`, file, {
+    Axios.post(`${urlServer}/sendFiles?id=${id}&date=${formatedDate}`, file, config, {
       onUploadProgress: ProgressEvent => {
         this.setState({
           loaded: (ProgressEvent.loaded / ProgressEvent.total * 100),
-        }, config);
+        });
       }
     })
       .then(res => {

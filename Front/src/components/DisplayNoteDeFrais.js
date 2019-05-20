@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Table, Label } from 'semantic-ui-react';
 import Axios from 'axios';
 import { connect } from 'react-redux';
-import { IP } from '../config.json';
+import { urlServer } from '../config.json';
 
 
 class displayNoteDeFrais extends Component {
@@ -22,7 +22,7 @@ class displayNoteDeFrais extends Component {
         Authorization: `Bearer ${tokenUser}`
       }
     };
-    Axios.post(`http://${IP}/tableNoteDeFrais`, id, config)
+    Axios.post(`${urlServer}/tableNoteDeFrais`, id, config)
       .then(res => {
         console.log('data', res.data);
         let bigOrder = res.data[0];

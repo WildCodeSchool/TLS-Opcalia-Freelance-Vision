@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import Axios from 'axios';
 import { Progress } from 'reactstrap';
 import dateFns from 'date-fns';
-import { IP } from '../config.json';
+import { urlServer } from '../config.json';
 import './Vision.scss';
 
 
@@ -42,7 +42,7 @@ class NoteDeFrais extends Component {
         Authorization: `Bearer ${tokenUser}`
       }
     };
-    Axios.post(`http://${IP}/noteDeFrais`, {
+    Axios.post(`${urlServer}/noteDeFrais`, {
       tableCosts: costs,
       id
     }, config)
@@ -68,13 +68,13 @@ class NoteDeFrais extends Component {
     console.log('File', file);
     file.append('file', greyCard);
     console.log('greyCard', greyCard);
-    Axios.post(`http://${IP}/sendJustifs?id=${id}&date=${formatedDate}`, file, {
+    Axios.post(`${urlServer}/sendJustifs?id=${id}&date=${formatedDate}`, file, config, {
       onUploadProgress: ProgressEvent => {
         this.setState({
           loaded: (ProgressEvent.loaded / ProgressEvent.total * 100),
         });
       }
-    }, config)
+    })
       .then(res => {
         console.log(res);
       });

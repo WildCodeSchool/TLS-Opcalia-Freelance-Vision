@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { Table, Label } from 'semantic-ui-react';
 import Axios from 'axios';
 import { connect } from 'react-redux';
-import { IP } from '../config.json';
+import { urlServer } from '../config.json';
 
 
 class displayCra extends Component {
@@ -25,7 +25,7 @@ class displayCra extends Component {
         Authorization: `Bearer ${tokenUser}`
       }
     };
-    Axios.post(`http://${IP}/tableCra`, id, config)
+    Axios.post(`${urlServer}/tableCra`, id, config)
       .then(res => {
         console.log(res.data);
         let bigOrder = 0;

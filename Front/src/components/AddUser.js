@@ -11,7 +11,7 @@ import {
   Button,
   Form,
 } from 'semantic-ui-react';
-import { IP } from '../config.json';
+import { urlServer } from '../config.json';
 
 class UserList extends Component {
   constructor(props) {
@@ -76,7 +76,7 @@ class UserList extends Component {
     this.swalCheck().then((result) => {
       if (result.value) {
         // console.log('je suis la');
-        axios.post(`http://${IP}/adduser`, {
+        axios.post(`${urlServer}/adduser`, {
           userToAdd: userAdd, typeToAdd: type, id, password
         }, config)
           .then((response) => {

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { Table } from 'semantic-ui-react';
 import DisplayOneUser from './DisplayOneUser';
-import { IP } from '../config.json';
+import { urlServer } from '../config.json';
 
 
 class UserList extends Component {
@@ -20,7 +20,7 @@ class UserList extends Component {
         Authorization: `Bearer ${tokenUser}`
       }
     };
-    axios.post(`http://${IP}/getusers`, { route: 'getUser' }, config)
+    axios.post(`${urlServer}/getusers`, { route: 'getUser' }, config)
       .then((response) => {
         // handle success
         dispatch({ type: 'USER LIST', userTable: response.data });

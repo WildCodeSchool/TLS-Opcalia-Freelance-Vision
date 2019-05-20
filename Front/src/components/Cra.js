@@ -9,7 +9,7 @@ import dateFns from 'date-fns';
 import Noty from 'noty';
 import Axios from 'axios';
 import './Vision.scss';
-import { IP } from '../config.json';
+import { urlServer } from '../config.json';
 
 class Cra extends Component {
   constructor(props) {
@@ -90,7 +90,7 @@ class Cra extends Component {
     console.log(config);
     
     console.log('daysDuPost', days);
-    Axios.post(`http://${IP}/cra`, {
+    Axios.post(`${urlServer}/cra`, {
       tableDays: days,
       sommeCra: somme,
       month,

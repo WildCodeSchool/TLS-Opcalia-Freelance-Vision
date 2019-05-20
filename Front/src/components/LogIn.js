@@ -4,7 +4,7 @@ import 'semantic-ui-css/semantic.min.css';
 import Axios from 'axios';
 import { connect } from 'react-redux';
 import './App.css';
-import { IP } from '../config.json';
+import { urlServer } from '../config.json';
 
 class LogIn extends Component {
   constructor(props) {
@@ -30,7 +30,7 @@ class LogIn extends Component {
   handleSubmit(event) {
     event.preventDefault();
     // to do add dispatch action profile loading true
-    Axios.post(`http://${IP}/login`, this.state)
+    Axios.post(`${urlServer}/login`, this.state)
       .then(res => {
         const { dispatch } = this.props;
         console.log('DATA', res.data);

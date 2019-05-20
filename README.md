@@ -23,7 +23,7 @@ Créer un fichier config.json dans Front/src:
 
 Copier ce contenu:
 >{
-  "IP": "localhost",
+  "urlServer": "localhost",
   "DB":{
     "user": "appUser",
     "Pass": "appUser",
