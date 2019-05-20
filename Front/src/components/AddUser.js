@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { connect } from 'react-redux';
 import generator from 'generate-password';
 import {
   Input,
@@ -65,13 +66,19 @@ class UserList extends Component {
     const {
       id, userAdd, type, password
     } = this.state;
+    const { tokenUser } = this.props;
     event.preventDefault();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${tokenUser}`
+      }
+    };
     this.swalCheck().then((result) => {
       if (result.value) {
         // console.log('je suis la');
-        axios.post('https://intra.freelance-vision.com/adduser', {
+        axios.post(`http://${IP}/adduser`, {
           userToAdd: userAdd, typeToAdd: type, id, password
-        })
+        }, config)
           .then((response) => {
             console.log('response.data', response.data);
           });
@@ -83,18 +90,15 @@ class UserList extends Component {
       }
     });
   }
-  
+
   render() {
     const { handleChange, handleSubmit } = this;
     const { password } = this.state;
-    
-    const types = ['Freelance', 'Employé'].map(item => ({
 
+    const types = ['Freelance', 'Employé'].map(item => ({
       key: item,
       text: item,
       value: item,
-
-
     }));
 
     return (
@@ -118,5 +122,7 @@ class UserList extends Component {
     );
   }
 }
-
-export default UserList;
+const mapStateToProps = (store) => ({
+  tokenUser: store.auth.tokenUser,
+});
+export default connect(mapStateToProps)(UserList);

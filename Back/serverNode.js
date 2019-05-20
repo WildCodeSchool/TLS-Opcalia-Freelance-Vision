@@ -43,9 +43,9 @@ app.use(express.static('justifsFiles'));
 
 const jwtSecret = config.jwtSecret;
 app.use(expressJwt({
-  secret: jwtSecret
+  secret: jwtSecret,
 }).unless({
-  path: ['/', '/tableNoteDeFrais', '/lib/noty.js', '/lib/noty.css', '/login', '/signup', '/getusers', '/removeuser', '/adduser', '/updateProfile', '/cra', '/noteDeFrais', '/sendFiles', '/sendJustifs', '/configuser', '/justifsFiles', '/tableCra', '/tableNoteDeFrais', '/tableFiles']
+  path: ['/', '/lib/noty.js', '/lib/noty.css', '/login', '/signup', '/tableFiles']
 }));
 
 
@@ -114,7 +114,7 @@ app.post('/configuser', (req, res) => {
   res.json('test');
 })
 
-app.get('/getusers', (req, res) => {
+app.post('/getusers', (req, res) => {
   connect.connect((err) => {
     if (err) {
       console.log(err);
@@ -172,7 +172,6 @@ app.post('/sendFiles', function (req, res) {
     return res.status(200).send(req.file)
 
   })
-
 });
 
 app.post('/sendJustifs', function (req, res) {
@@ -203,6 +202,8 @@ app.post('/sendJustifs', function (req, res) {
 })
 
 app.post('/cra', (req, res) => {
+  console.log('Header',req.header);
+  
   console.log('updateCra', req.body);
   const { tableDays, sommeCra, month, year, id } = req.body;
 
@@ -217,8 +218,10 @@ app.post('/cra', (req, res) => {
     if (err) {
       console.log(err);
 
+    } else {
+      res.status(200).json({response: 'success'})
     }
-    console.log(resultCra);
+
 
   })
 });
@@ -360,11 +363,11 @@ app.post('/login', (req, res) => {
 
             });
           } else {
-            const tokenAdmin = jwt.sign({
+            const tokenUser = jwt.sign({
             }, jwtSecret);
             res.status(200).json({
               auth: true,
-              tokenAdmin,
+              tokenUser,
               result: resultSelectUser[0].userType
             });
           }

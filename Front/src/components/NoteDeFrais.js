@@ -5,8 +5,8 @@
 import React, { Component } from 'react';
 import { DateInput } from 'semantic-ui-calendar-react';
 import { Table, Button, Icon } from 'semantic-ui-react';
-import Axios from 'axios';
 import { connect } from 'react-redux';
+import Axios from 'axios';
 import { Progress } from 'reactstrap';
 import dateFns from 'date-fns';
 import { IP } from '../config.json';
@@ -35,12 +35,17 @@ class NoteDeFrais extends Component {
 
   postNoteDeFrais(event) {
     event.preventDefault();
-    const { id } = this.props;
+    const { id, tokenUser } = this.props;
     const { costs } = this.state;
-    Axios.post(`https://intra.freelance-vision.com/noteDeFrais`, {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${tokenUser}`
+      }
+    };
+    Axios.post(`http://${IP}/noteDeFrais`, {
       tableCosts: costs,
       id
-    })
+    }, config)
       .then(res => {
         console.log(res);
       });
@@ -49,8 +54,13 @@ class NoteDeFrais extends Component {
   postFiles(event) {
     event.preventDefault();
     const { greyCard } = this.state;
-    const { id } = this.props;
+    const { id, tokenUser } = this.props;
     const file = new FormData();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${tokenUser}`
+      }
+    };
     const date = new Date();
     const formatedDate = dateFns.format(date, 'MMMM YYYY');
     console.log(formatedDate);
@@ -58,13 +68,13 @@ class NoteDeFrais extends Component {
     console.log('File', file);
     file.append('file', greyCard);
     console.log('greyCard', greyCard);
-    Axios.post(`https://intra.freelance-vision.com/sendJustifs?id=${id}&date=${formatedDate}`, file, {
+    Axios.post(`http://${IP}/sendJustifs?id=${id}&date=${formatedDate}`, file, {
       onUploadProgress: ProgressEvent => {
         this.setState({
           loaded: (ProgressEvent.loaded / ProgressEvent.total * 100),
         });
       }
-    })
+    }, config)
       .then(res => {
         console.log(res);
       });
@@ -210,8 +220,7 @@ class NoteDeFrais extends Component {
 }
 
 const mapStateToProps = (store) => ({
-  token: store.auth.token,
+  tokenUser: store.auth.tokenUser,
   id: store.auth.idProfile
 });
-
 export default connect(mapStateToProps)(NoteDeFrais);

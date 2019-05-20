@@ -56,10 +56,15 @@ class Profile extends Component {
   }
 
   componentWillMount() {
-    const { id } = this.props;
+    const { id, tokenUser } = this.props;
     const date = new Date();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${tokenUser}`
+      }
+    };
     const formatedDate = dateFns.format(date, 'MMMM YYYY');
-    Axios.post(`http:${IP}:4000/getImgProfile`, { id, formatedDate })
+    Axios.post(`http:${IP}:4000/getImgProfile`, { id, formatedDate }, config)
       .then(res => {
         console.log(res);
       });
@@ -67,7 +72,13 @@ class Profile extends Component {
 
   postProfile(event) {
     event.preventDefault();
+    const { tokenUser } = this.props;
     this.setState({ loadingForm: true });
+    const config = {
+      headers: {
+        Authorization: `Bearer ${tokenUser}`
+      }
+    };
     const {
       identifiant,
       nom,
@@ -76,14 +87,14 @@ class Profile extends Component {
       telephone,
       eMail
     } = this.state;
-    Axios.post(`https://intra.freelance-vision.com/updateProfile`, {
+    Axios.post(`http://${IP}/updateProfile`, {
       id,
       changeEmail: eMail,
       changeIdentifiant: identifiant,
       changeNom: nom,
       changePrenom: prenom,
       changeTelephone: telephone
-    })
+    }, config)
       .then(res => {
         console.log('RES', res);
 
@@ -111,7 +122,12 @@ class Profile extends Component {
     event.preventDefault();
     const { greyCard } = this.state;
     this.setState({ loadingFile: true });
-    const { id } = this.props;
+    const { id, tokenUser } = this.props;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${tokenUser}`
+      }
+    };
     const file = new FormData();
     const date = new Date();
     const formatedDate = dateFns.format(date, 'MMMM YYYY');
@@ -119,11 +135,11 @@ class Profile extends Component {
     file.append('file', greyCard);
     console.log('File', file);
     console.log('greyCard', greyCard);
-    Axios.post(`https://intra.freelance-vision.com/sendFiles?id=${id}&date=${formatedDate}`, file, {
+    Axios.post(`http://${IP}/sendFiles?id=${id}&date=${formatedDate}`, file, {
       onUploadProgress: ProgressEvent => {
         this.setState({
           loaded: (ProgressEvent.loaded / ProgressEvent.total * 100),
-        });
+        }, config);
       }
     })
       .then(res => {

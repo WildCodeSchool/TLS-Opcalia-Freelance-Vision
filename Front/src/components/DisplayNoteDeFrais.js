@@ -15,10 +15,14 @@ class displayNoteDeFrais extends Component {
   }
 
   componentWillMount() {
-    const { id } = this.props;
-
+    const { id, tokenUser } = this.props;
     console.log(id);
-    Axios.post(`https://intra.freelance-vision.com/tableNoteDeFrais`, id)
+    const config = {
+      headers: {
+        Authorization: `Bearer ${tokenUser}`
+      }
+    };
+    Axios.post(`http://${IP}/tableNoteDeFrais`, id, config)
       .then(res => {
         console.log('data', res.data);
         let bigOrder = res.data[0];
@@ -89,5 +93,7 @@ class displayNoteDeFrais extends Component {
 }
 const mapStateToProps = (store) => ({
   id: store.auth.id,
+  userTable: store.auth.userTable,
+  tokenUser: store.auth.tokenUser,
 });
 export default connect(mapStateToProps)(displayNoteDeFrais);

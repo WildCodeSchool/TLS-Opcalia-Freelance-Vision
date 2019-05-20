@@ -19,9 +19,14 @@ class DisplayOneUser extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   removeUser(identif) {
-    const { userTable, dispatch } = this.props;
+    const { userTable, dispatch, tokenUser } = this.props;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${tokenUser}`
+      }
+    };
     console.log(typeof (identif));
-    axios.post(`https://intra.freelance-vision.com/removeuser`, { userToremove: identif })
+    axios.post(`http://${IP}/removeuser`, { userToremove: identif }, config)
       .then((response) => {
         console.log(response.data);
       });
@@ -68,5 +73,6 @@ class DisplayOneUser extends Component {
 }
 const mapStateToProps = (store) => ({
   userTable: store.auth.userTable,
+  tokenUser: store.auth.tokenUser,
 });
 export default connect(mapStateToProps)(DisplayOneUser);

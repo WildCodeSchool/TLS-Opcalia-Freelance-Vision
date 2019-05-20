@@ -17,11 +17,15 @@ class displayCra extends Component {
   }
 
   componentWillMount() {
-    const { id } = this.props;
-
+    const { id, tokenUser } = this.props;
     console.log(id);
     console.log('ERTYUI');
-    Axios.post(`https://intra.freelance-vision.com/tableCra`, id)
+    const config = {
+      headers: {
+        Authorization: `Bearer ${tokenUser}`
+      }
+    };
+    Axios.post(`http://${IP}/tableCra`, id, config)
       .then(res => {
         console.log(res.data);
         let bigOrder = 0;
@@ -75,6 +79,7 @@ class displayCra extends Component {
   }
 }
 const mapStateToProps = (store) => ({
-  id: store.auth.id
+  id: store.auth.id,
+  tokenUser: store.auth.tokenUser,
 });
 export default connect(mapStateToProps)(displayCra);

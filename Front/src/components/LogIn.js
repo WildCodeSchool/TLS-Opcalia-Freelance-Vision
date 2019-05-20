@@ -30,13 +30,13 @@ class LogIn extends Component {
   handleSubmit(event) {
     event.preventDefault();
     // to do add dispatch action profile loading true
-    Axios.post(`https://intra.freelance-vision.com/login`, this.state)
+    Axios.post(`http://${IP}/login`, this.state)
       .then(res => {
         const { dispatch } = this.props;
         console.log('DATA', res.data);
         this.setState({ res: res.data });
-        dispatch({ type: 'CREATE_TOKEN_USER', token: res.data.tokenUser });
-        dispatch({ type: 'CREATE_TOKEN_ADMIN', token: res.data.tokenAdmin });
+        dispatch({ type: 'CREATE TOKEN USER', tokenUser: res.data.tokenUser });
+        // dispatch({ type: 'CREATE_TOKEN_ADMIN', token: res.data.tokenAdmin });
         dispatch({ type: 'PROFILETYPE', profileType: res.data.result });
         dispatch({
           type: 'PROFILE',
@@ -102,4 +102,8 @@ class LogIn extends Component {
     );
   }
 }
-export default connect()(LogIn);
+const mapStateToProps = (store) => ({
+  tokenUser: store.auth.tokenUser,
+  id: store.auth.idProfile
+});
+export default connect(mapStateToProps)(LogIn);

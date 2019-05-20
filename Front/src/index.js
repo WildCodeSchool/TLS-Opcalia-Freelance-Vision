@@ -5,13 +5,11 @@ import ReactDOM from 'react-dom';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 import './index.css';
 import App from './App';
-import Register from './Register';
 import * as serviceWorker from './serviceWorker';
 import allReducers from './reducers';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import displayCra from './components/displayCra';
-import displayNotedeFrais from './components/displayNoteDeFrais';
-import displayFiles from './components/displayFiles';
+import DisplayCra from './components/DisplayCra';
+import DisplayNotedeFrais from './components/DisplayNoteDeFrais';
 
 const store = createStore(
   allReducers,
@@ -24,10 +22,8 @@ ReactDOM.render(
     <Router>
       <div>
         <Route exact path="/" component={App} />
-        <Route path="/register/:id/:mail" component={Register} />
-        <Route path="/tableCra" component={displayCra} />
-        <Route path="/tableNoteDeFrais" component={displayNotedeFrais} />
-        <Route path="/tableFiles/:id" component={displayFiles} />
+        <Route path="/tableCra" component={DisplayCra} />
+        <Route path="/tableNoteDeFrais" component={DisplayNotedeFrais} />
       </div>
     </Router>
   </Provider>,

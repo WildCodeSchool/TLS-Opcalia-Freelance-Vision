@@ -14,8 +14,13 @@ class UserList extends Component {
   }
 
   componentWillMount() {
-    const { dispatch } = this.props;
-    axios.get(`https://intra.freelance-vision.com/getusers`)
+    const { dispatch, tokenUser } = this.props;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${tokenUser}`
+      }
+    };
+    axios.post(`http://${IP}/getusers`, { route: 'getUser' }, config)
       .then((response) => {
         // handle success
         dispatch({ type: 'USER LIST', userTable: response.data });
@@ -63,5 +68,6 @@ class UserList extends Component {
 
 const mapStateToProps = (store) => ({
   userTable: store.auth.userTable,
+  tokenUser: store.auth.tokenUser,
 });
 export default connect(mapStateToProps)(UserList);
