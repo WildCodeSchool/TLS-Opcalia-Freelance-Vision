@@ -72,8 +72,7 @@ app.post('/adduser', (req, res) => {
     }
 
     // SELECT sur salariés en utilisant result1.insertId
-    // attention le select renvoie un tableau et tu peux recup tableau[0]
-    res.status(200).json(resultAddUser);
+    // attention le select renvoie un tableau et tu peux recup tableau[0]cra    res.status(200).json(resultAddUser);
   });
 });
 
@@ -207,7 +206,7 @@ app.post('/cra', (req, res) => {
 
   connect.connect((err) => {
     if (err) {
-      console.log(err);
+      console.log('err');
     }
   });
 
@@ -217,7 +216,6 @@ app.post('/cra', (req, res) => {
       console.log(err);
 
     } else {
-	console.log(resultCra)
       res.status(200).json({response: 'success'})
     }
 
@@ -264,7 +262,7 @@ app.post('/login', (req, res) => {
 
   connect.connect((err) => {
     if (err) {
-      console.log(err);
+      console.log('err');
     }
   });
 

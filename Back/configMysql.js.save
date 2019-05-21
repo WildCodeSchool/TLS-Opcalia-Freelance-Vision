@@ -1,0 +1,11 @@
+const mySql = require('mysql');
+const config = require('../Front/src/config.json')
+
+const connect = mySql.createConnection( host: 'localhost:8079',
+  user: 'phpmyadmin',
+  password:'azerty1234',
+  database: 'freelanceVision'
+});
+
+module.exports = connect;
+

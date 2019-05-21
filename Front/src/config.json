@@ -1,5 +1,5 @@
 {
-  "urlServer": "http://localhost:4000",
+  "urlServer": "https://intra.freelance-vision.com",
   "jwtSecret": "2342121431",
   "DB":{
     "user": "appUser",
