@@ -1,6 +1,8 @@
+/* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
-import { Button, Form, Message } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
+import Noty from 'noty';
 import Axios from 'axios';
 import { connect } from 'react-redux';
 import './App.css';
@@ -34,7 +36,6 @@ class LogIn extends Component {
       .then(res => {
         const { dispatch } = this.props;
         console.log('DATA', res.data);
-        this.setState({ res: res.data });
         dispatch({ type: 'CREATE TOKEN USER', tokenUser: res.data.tokenUser });
         // dispatch({ type: 'CREATE_TOKEN_ADMIN', token: res.data.tokenAdmin });
         dispatch({ type: 'PROFILETYPE', profileType: res.data.result });
@@ -50,31 +51,36 @@ class LogIn extends Component {
           telephoneProfile: res.data.telephoneProfile
         });
         console.log(res.data);
+        this.checkError(res.data);
         // dispatch action profile loading
+      }).catch(err => {
+        console.log(err);
+        new Noty({
+          text: 'Erreur, connection au server impossible',
+          type: 'error',
+          theme: 'sunset',
+          timeout: 2000,
+        }).show();
       });
   }
 
-  checkError() {
-    const { res } = this.state;
+  checkError(res) {
     if (res === 'badID') {
-      return (
-        <Message negative>
-          <Message.Header>
-            Identifiant incorrect !
-          </Message.Header>
-        </Message>
-      );
+      new Noty({
+        text: 'Mauvais identifiant',
+        type: 'error',
+        theme: 'sunset',
+        timeout: 2000,
+      }).show();
     }
     if (res === 'badPass') {
-      return (
-        <Message negative>
-          <Message.Header>
-            Mot de passe incorrect !
-          </Message.Header>
-        </Message>
-      );
+      new Noty({
+        text: 'Mauvais mot de passe',
+        type: 'error',
+        theme: 'sunset',
+        timeout: 2000,
+      }).show();
     }
-    return null;
   }
 
   render() {
@@ -96,7 +102,6 @@ class LogIn extends Component {
           <Form.Field>
           </Form.Field>
           <Button type="submit">Valider</Button>
-          {this.checkError()}
         </Form>
       </div>
     );
