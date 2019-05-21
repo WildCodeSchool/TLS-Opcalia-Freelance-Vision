@@ -88,7 +88,6 @@ class Cra extends Component {
     console.log('mois: ', dateFns.format(currentMonth, 'MMMM'));
     console.log('year: ', dateFns.format(currentMonth, 'YYYY'));
     console.log(config);
-    
     console.log('daysDuPost', days);
     Axios.post(`${urlServer}/cra`, {
       tableDays: days,
