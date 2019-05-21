@@ -2,8 +2,8 @@
   "urlServer": "http://localhost:4000",
   "jwtSecret": "2342121431",
   "DB":{
-    "user": "appUser",
-    "Pass": "titoul84400",
+    "user": "root",
+    "Pass": "mimicaca",
     "Database": "FreelanceVision",
     "PORT": "3306"
   }

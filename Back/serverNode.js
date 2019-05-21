@@ -247,8 +247,11 @@ app.post('/noteDeFrais', (req, res) => {
       console.log(err);
 
     }
-    console.log(resultFrais);
-res.status(200).json("ok")
+    else {
+      console.log(resultFrais);
+  res.status(200).json("success")
+
+    }
   })
 });
 

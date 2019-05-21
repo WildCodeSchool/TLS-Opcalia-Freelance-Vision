@@ -111,8 +111,8 @@ class Profile extends Component {
       }).catch(err => {
         console.log(err);
         new Noty({
-          text: 'Erreur',
-          type: 'warning',
+          text: 'Connection au serveur impossible',
+          type: 'error',
           theme: 'sunset',
         }).show();
       });
@@ -161,8 +161,8 @@ class Profile extends Component {
       }).catch(err => {
         console.log(err);
         new Noty({
-          text: 'Erreur',
-          type: 'warning',
+          text: 'Connection au serveur impossible',
+          type: 'error',
           theme: 'sunset',
         }).show();
       });

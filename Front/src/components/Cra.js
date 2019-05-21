@@ -108,6 +108,14 @@ class Cra extends Component {
             timeout: 2000,
           }).show();
         }
+      }).catch(err => {
+        console.log(err);
+        new Noty({
+          text: 'Connection avec le serveur impossible',
+          type: 'error',
+          theme: 'sunset',
+          timeout: 2000,
+        }).show();
       });
   }
 
@@ -265,7 +273,7 @@ class Cra extends Component {
             {this.renderHeader()}
             {this.renderCell()}
             <h3><span className="logo">Nombre de </span><span className="logo1">jours travaillés: <span className="logo">{somme}</span></span><br /></h3>
-            <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Enregistrer</Button>
+            <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Sauvegarder</Button>
           </div>
         </form>
       </div>

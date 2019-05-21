@@ -3,10 +3,10 @@ const mySql = require('mysql');
 const config = require('../config.json')
 
 const connect = mySql.createConnection({
-  host: config.urlServer,
+  host: localhost,
   user: 'root',
-  password: '******',
-  database: 'YourDatabase'
+  password: 'mimicaca',
+  database: 'FreelanceVision'
 });
 
 module.exports = connect;

@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import { DateInput } from 'semantic-ui-calendar-react';
 import { Table, Button, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import Noty from 'noty';
 import Axios from 'axios';
 import { Progress } from 'reactstrap';
 import dateFns from 'date-fns';
@@ -17,6 +18,7 @@ class NoteDeFrais extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loadingFile: false,
       date: '',
       costs: [],
       total: 0,
@@ -48,12 +50,29 @@ class NoteDeFrais extends Component {
     }, config)
       .then(res => {
         console.log(res);
+        if (res.data === 'success') {
+          new Noty({
+            text: 'Note de frais enregistré avec succès',
+            type: 'success',
+            theme: 'sunset',
+            timeout: 2000,
+          }).show();
+        }
+      }).catch(err => {
+        console.log(err);
+        new Noty({
+          text: 'Connection avec le serveur impossible',
+          type: 'error',
+          theme: 'sunset',
+          timeout: 2000,
+        }).show();
       });
   }
 
   postFiles(event) {
     event.preventDefault();
     const { greyCard } = this.state;
+    this.setState({ loadingFile: true });
     const { id, tokenUser } = this.props;
     const file = new FormData();
     const config = {
@@ -76,13 +95,31 @@ class NoteDeFrais extends Component {
       }
     })
       .then(res => {
-        console.log(res);
+        console.log('RES', res);
+
+        if (res.status === 200) {
+          console.log('SUCCESS');
+          new Noty({
+            text: 'Informations mises à jour',
+            type: 'success',
+            theme: 'sunset',
+            timeout: 2000,
+          }).show();
+          this.setState({ loadingForm: false });
+        }
+      }).catch(err => {
+        console.log(err);
+        new Noty({
+          text: 'Connection au serveur impossible',
+          type: 'error',
+          theme: 'sunset',
+        }).show();
       });
   }
 
   inputComment(index, event, key) {
     const { costs } = this.state;
-    console.log('key', key);
+    console.log('keyInput', key);
     event.preventDefault();
     const costsCopy = [...costs];
     if (key === 'Client') { costsCopy[index].Client = event.target.value; }
@@ -147,7 +184,9 @@ class NoteDeFrais extends Component {
 
 
   render() {
-    const { costs, loaded } = this.state;
+    const { costs, loaded, loadingFile } = this.state;
+    console.log(loaded);
+    
     console.log(costs);
 
     return (
@@ -202,17 +241,17 @@ class NoteDeFrais extends Component {
             </Table>
           </div>
           <br />
-          <Button color="teal" onClick={() => this.addEmptyLine(costs)} icon="plus circle" />
+          <Button type="button" color="teal" onClick={() => this.addEmptyLine(costs)} icon="plus circle" />
           <h3>Totaux : {this.calculTotaux()}<br /></h3>
           <br />
-          <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Soumettre</Button>
+          <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Sauvegarder</Button>
         </form><br />
         <form onSubmit={this.postFiles}>
           <h4>Sélectionnez vos pièces justificatives:</h4>
           <div id="carteGrise" />
           <input className="ButtonEnvoye" id="carteGrise" name="greyCard" type="file" multiple="multiple" onChange={this.handleFileChange} /><br />
           <Button type="submit" color="teal"><Icon name="paper plane outline" /> &nbsp; Envoyer fichiers </Button>
-          <Progress max="100" color="success" value={loaded}>{Math.round(loaded, 2)}%</Progress>
+          {loadingFile && (<Progress max="100" color="success" value={loaded}>{Math.round(loaded, 2)}%</Progress>)}
         </form>
       </div>
     );
