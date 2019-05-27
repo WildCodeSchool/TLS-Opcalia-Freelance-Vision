@@ -29,6 +29,26 @@ class Cra extends Component {
     this.postCra = this.postCra.bind(this);
   }
 
+  componentDidMount() {
+    const { identifiant, tokenUser } = this.props;
+    const { currentMonth } = this.state;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${tokenUser}`
+      }
+    };
+    const month = dateFns.format(currentMonth, 'MMMM');
+    const year = dateFns.format(currentMonth, 'YYYY');
+    console.log("IDDDD", identifiant);
+
+    Axios.post('http://localhost:4000/getCraOfMonth', {
+      Date: `${month} ${year}`,
+      userID: identifiant,
+    }, config).then(res => {
+      console.log(res.data);
+    });
+  }
+
   nextMonth() {
     const { currentMonth } = this.state;
     const nextMonth = dateFns.addMonths(currentMonth, 1);
@@ -138,6 +158,7 @@ class Cra extends Component {
     }
     return days;
   }
+
 
   copyLine(index, days) {
     const copyDays = [...days];
@@ -283,6 +304,5 @@ class Cra extends Component {
 
 const mapStateToProps = (store) => ({
   tokenUser: store.auth.tokenUser,
-  id: store.auth.idProfile
 });
 export default connect(mapStateToProps)(Cra);

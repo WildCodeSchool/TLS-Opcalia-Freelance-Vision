@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
 import { Menu, Segment } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import NoteDeFrais from './NoteDeFrais';
 import Profile from './Profile';
 import Cra from './Cra';
@@ -16,6 +17,7 @@ class Employee extends Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
   render() {
     const { activeItem } = this.state;
+    const { id } = this.props;
     return (
       <div>
           
@@ -37,7 +39,7 @@ class Employee extends Component {
         </Menu>
       </Segment>
 
-      {(activeItem === 'Cra') && (<Cra/>)}
+      {(activeItem === 'Cra') && (<Cra identifiant={id} />)}
       {(activeItem === 'Profil') && (<Profile/>)}
       {(activeItem === 'Note de frais') && (<NoteDeFrais/>)}
 
@@ -46,5 +48,8 @@ class Employee extends Component {
     );
   }
 }
-
-export default Employee;
+const mapStateToProps = (store) => ({
+  tokenUser: store.auth.tokenUser,
+  id: store.auth.identifiantProfile
+});
+export default connect(mapStateToProps)(Employee);

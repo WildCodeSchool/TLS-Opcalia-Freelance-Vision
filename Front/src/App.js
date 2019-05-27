@@ -10,7 +10,7 @@ import Employee from './components/Employee';
 
 class App extends Component {
   render() {
-    console.log(process.env.REACT_APP_MY_VAR)
+  
     const { profileType } = this.props;
     return (
       <div>
@@ -28,6 +28,7 @@ class App extends Component {
 }
 const mapStateToProps = (store) => ({
   token: store.auth.token,
-  profileType: store.auth.profileType
+  profileType: store.auth.profileType,
+  id: store.auth.identifiantProfile
 });
 export default connect(mapStateToProps)(App);

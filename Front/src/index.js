@@ -8,8 +8,8 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import allReducers from './reducers';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import DisplayCra from './components/DisplayCra';
-import DisplayNotedeFrais from './components/DisplayNoteDeFrais';
+import NoteDeFrais from './components/NoteDeFrais';
+import Cra from './components/Cra';
 
 const store = createStore(
   allReducers,
@@ -22,8 +22,8 @@ ReactDOM.render(
     <Router>
       <div>
         <Route exact path="/" component={App} />
-        <Route path="/tableCra" component={DisplayCra} />
-        <Route path="/tableNoteDeFrais" component={DisplayNotedeFrais} />
+        <Route path="/tableCra" component={Cra} />
+        <Route path="/tableNoteDeFrais" component={NoteDeFrais} />
       </div>
     </Router>
   </Provider>,

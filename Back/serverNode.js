@@ -201,6 +201,11 @@ app.post('/sendJustifs', function (req, res) {
 
 })
 
+app.post('/getCraOfMonth', function (req, res) {
+  console.log("request", req.body);
+  
+})
+
 app.post('/cra', (req, res) => {
   console.log('updateCra', req.body);
   const { tableDays, sommeCra, month, year, id } = req.body;
@@ -211,18 +216,41 @@ app.post('/cra', (req, res) => {
     }
   });
 
-  const InsertCra = `INSERT INTO CRA (userID, Date, tableCra, somme) VALUES (${mySql.escape(id)}, ${mySql.escape(month + " " + year)}, ${mySql.escape(JSON.stringify(tableDays))}, ${mySql.escape(sommeCra)})`;
-  connect.query(InsertCra, (err, resultCra) => {
+  const checkCra = `SELECT COUNT(*) AS total FROM CRA WHERE Date=${mySql.escape(month + " " + year)}`;
+  connect.query(checkCra, (err, resultCheck) => {
     if (err) {
       console.log(err);
 
     } else {
-	console.log(resultCra)
-      res.status(200).json({response: 'success'})
+      console.log('resultCheck: ', resultCheck[0].total)
+      if (resultCheck[0].total === 0) {
+        console.log('rien');
+        const insertCra = `INSERT INTO CRA (userID, tableCra, somme, Date) VALUES (${mySql.escape(id)} ,${mySql.escape(JSON.stringify(tableDays))}, ${mySql.escape(sommeCra)}, ${mySql.escape(month + " " + year)})`;
+        connect.query(insertCra, (err, resultCra) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(resultCra)
+            res.status(200).json({ response: 'success' })
+          }
+        })
+
+      } else {
+        console.log('pas rien');
+        const updateCra = `UPDATE CRA SET tableCra=${mySql.escape(JSON.stringify(tableDays))}, somme=${mySql.escape(sommeCra)} WHERE Date=${mySql.escape(month + " " + year)}`;
+        connect.query(updateCra, (err, resultCra) => {
+          if (err) {
+            console.log(err);
+
+          } else {
+            console.log(resultCra)
+            res.status(200).json({ response: 'success' })
+          }
+        })
+      }
     }
-
-
   })
+
 });
 
 app.post('/noteDeFrais', (req, res) => {
@@ -249,7 +277,7 @@ app.post('/noteDeFrais', (req, res) => {
     }
     else {
       console.log(resultFrais);
-  res.status(200).json("success")
+      res.status(200).json("success")
 
     }
   })
