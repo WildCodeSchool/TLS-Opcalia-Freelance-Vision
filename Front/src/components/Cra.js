@@ -19,7 +19,6 @@ class Cra extends Component {
       currentMonth: new Date(),
       days: this.createArrayDays(new Date()),
     };
-
     this.nextMonth = this.nextMonth.bind(this);
     this.prevMonth = this.prevMonth.bind(this);
     this.createArrayDays = this.createArrayDays.bind(this);
