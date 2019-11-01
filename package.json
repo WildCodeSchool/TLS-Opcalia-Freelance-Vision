@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/WildCodeSchool/TLS-Opcalia-Freelance-Vision#readme",
   "dependencies": {
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "product": "^1.2.2",
     "products": "^3.0.3",
     "reactstrap": "^8.0.0",
